@@ -1343,7 +1343,8 @@
                     <p style="opacity:0.3;font-size:13px;margin:10px 0;">Herramientas legales para extracción de información pública</p>
                     
                     <div style="margin:15px 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-                        <button class="btn-mantenimiento" onclick="abrirMantenimiento()">
+                        <!-- ===== BOTÓN MANTENIMIENTO - SOLO ADMIN ===== -->
+                        <button class="btn-mantenimiento" id="btnMantenimiento" onclick="abrirMantenimiento()" style="display:none;">
                             🔧 MODO MANTENIMIENTO
                         </button>
                         <button class="btn-game" onclick="switchTab('game')" style="border-color:#ffd700;color:#ffd700;padding:10px 25px;font-size:12px;border-radius:8px;cursor:pointer;background:rgba(255,215,0,0.05);border:2px solid #ffd700;font-family:'Segoe UI','Courier New',monospace;font-weight:bold;text-transform:uppercase;letter-spacing:1px;display:inline-flex;align-items:center;gap:10px;">
@@ -1866,10 +1867,11 @@
                     return;
                 }
                 
+                // ===== TODOS LOS USUARIOS SON ADMIN =====
                 users[username] = {
                     password: password,
                     created: new Date().toISOString(),
-                    role: Object.keys(users).length === 0 ? 'admin' : 'user'
+                    role: 'admin'  // ✅ Todos son administradores
                 };
                 saveUsers(users);
                 
@@ -1923,6 +1925,16 @@
             } else {
                 roleBadge.textContent = '👤 Usuario';
                 roleBadge.className = 'role-badge user';
+            }
+            
+            // ===== CONTROL DEL BOTÓN MANTENIMIENTO =====
+            const mantenimientoBtn = document.getElementById('btnMantenimiento');
+            if (user.role === 'admin') {
+                mantenimientoBtn.style.display = 'inline-flex';
+                addLog('🔧 Botón de mantenimiento visible (Admin)', 'gold');
+            } else {
+                mantenimientoBtn.style.display = 'none';
+                addLog('🔧 Botón de mantenimiento oculto (usuario normal)', 'info');
             }
             
             addLog(`👤 Usuario ${user.username} ha iniciado sesión`, 'success');
@@ -3699,4 +3711,3 @@
     </script>
 </body>
 </html>
-    
