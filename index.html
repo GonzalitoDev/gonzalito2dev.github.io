@@ -6,7 +6,350 @@
     <title>ELISEO v6.0 ZONAHACK - Panel de Control</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ... (mantener los estilos existentes) ... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 20px 30px;
+            border-bottom: 2px solid #00ff88;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0,255,136,0.3);
+        }
+        
+        .header .status {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(0,255,136,0.15);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            font-size: 14px;
+        }
+        
+        .dashboard {
+            padding: 20px 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(0,255,136,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.1);
+            border-color: #00ff88;
+        }
+        
+        .card .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #00ff88;
+        }
+        
+        .card .value {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card .label {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .main-content {
+            padding: 0 30px 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        
+        .panel {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(0,255,136,0.1);
+        }
+        
+        .panel h2 {
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bot-item {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid #00ff88;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .bot-item .info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .bot-item .name {
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .bot-item .token {
+            font-size: 12px;
+            color: #666;
+            font-family: monospace;
+        }
+        
+        .bot-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .bot-status.active {
+            background: rgba(0,255,136,0.2);
+            color: #00ff88;
+        }
+        
+        .bot-status.inactive {
+            background: rgba(255,255,255,0.1);
+            color: #888;
+        }
+        
+        .bot-status.error {
+            background: rgba(255,0,0,0.2);
+            color: #ff4444;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            margin: 2px;
+        }
+        
+        .btn-primary {
+            background: #00ff88;
+            color: #0a0a0f;
+        }
+        
+        .btn-primary:hover {
+            background: #00cc77;
+            transform: scale(1.05);
+        }
+        
+        .btn-danger {
+            background: #ff4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #cc0000;
+        }
+        
+        .btn-warning {
+            background: #ffaa00;
+            color: #0a0a0f;
+        }
+        
+        .btn-warning:hover {
+            background: #cc8800;
+        }
+        
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 11px;
+        }
+        
+        .add-bot-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .add-bot-form input {
+            flex: 1;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #e0e0e0;
+            min-width: 200px;
+        }
+        
+        .add-bot-form input:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+        
+        .raid-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .raid-controls input, .raid-controls select {
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #e0e0e0;
+        }
+        
+        .raid-controls input:focus, .raid-controls select:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+        
+        .raid-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .log-container {
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .log-entry {
+            font-size: 12px;
+            font-family: monospace;
+            padding: 2px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        
+        .log-entry .time {
+            color: #666;
+        }
+        
+        .log-entry .msg {
+            color: #00ff88;
+        }
+        
+        .ip-log {
+            background: rgba(255,255,255,0.03);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ip-log .ip {
+            font-family: monospace;
+            color: #00ccff;
+        }
+        
+        .ip-log .country {
+            color: #ffaa00;
+        }
+        
+        .raid-progress {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .raid-progress .bar {
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .raid-progress .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -55,7 +398,7 @@
                 <div class="add-bot-form">
                     <input type="text" id="botToken" placeholder="Token del Bot" required>
                     <input type="text" id="botName" placeholder="Nombre del Bot" value="Bot_ELISEO">
-                    <button class="btn btn-primary" onclick="addBot()">Agregar Bot</button>
+                    <button class="btn btn-primary" onclick="addBot()"><i class="fas fa-plus"></i> Agregar Bot</button>
                 </div>
                 
                 <div id="botList"></div>
@@ -74,12 +417,21 @@
                     <input type="text" id="raidMessage" placeholder="Mensaje" style="grid-column: span 2;" value="RAID MASSIVE by ELISEO v6.0 🔥">
                 </div>
                 <div class="raid-actions">
-                    <button class="btn btn-primary" onclick="startRaid()">
+                    <button class="btn btn-primary" onclick="startRaid()" id="startRaidBtn">
                         <i class="fas fa-play"></i> Iniciar RAID
                     </button>
                     <button class="btn btn-warning" onclick="stopRaid()">
                         <i class="fas fa-stop"></i> Detener
                     </button>
+                </div>
+                <div class="raid-progress" id="raidProgress">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span id="progressText">Enviando mensajes...</span>
+                        <span id="progressCount">0/0</span>
+                    </div>
+                    <div class="bar">
+                        <div class="fill" id="progressFill"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -91,7 +443,7 @@
                 <h2><i class="fas fa-shield-alt"></i> Detección de IP</h2>
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                     <input type="text" id="ipToCheck" placeholder="IP a verificar (opcional)" style="flex: 1; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #e0e0e0;">
-                    <button class="btn btn-primary" onclick="detectIP()">Detectar</button>
+                    <button class="btn btn-primary" onclick="detectIP()"><i class="fas fa-search"></i> Detectar</button>
                 </div>
                 <div id="ipResult" style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 15px; margin-bottom: 15px; display: none;"></div>
                 
@@ -114,10 +466,8 @@
 
     <script>
         // ============================================================
-        // NUEVO: Backend real con Discord API y gestión avanzada de bots
+        // CLASE PARA MANEJAR BOTS DE DISCORD
         // ============================================================
-
-        // Clase para manejar bots de Discord
         class DiscordBot {
             constructor(token, name) {
                 this.token = token;
@@ -125,15 +475,14 @@
                 this.id = Date.now();
                 this.status = 'inactive';
                 this.is_running = false;
-                this.channels = [];
                 this.guilds = [];
                 this.user = null;
-                this.interval = null;
-                this.raidInterval = null;
                 this.isRaiding = false;
+                this.raidInterval = null;
+                this.sentCount = 0;
+                this.totalCount = 0;
             }
 
-            // Iniciar el bot (conexión a Discord)
             async start() {
                 try {
                     const response = await fetch('https://discord.com/api/v10/users/@me', {
@@ -143,7 +492,7 @@
                     });
 
                     if (!response.ok) {
-                        throw new Error('Token inválido');
+                        throw new Error('Token inválido o sin permisos');
                     }
 
                     const userData = await response.json();
@@ -151,7 +500,6 @@
                     this.status = 'active';
                     this.is_running = true;
 
-                    // Obtener guilds y canales
                     await this.loadGuilds();
                     this.updateUI();
                     
@@ -163,17 +511,15 @@
                 }
             }
 
-            // Detener el bot
             stop() {
                 this.is_running = false;
                 this.status = 'inactive';
-                this.channels = [];
-                this.guilds = [];
-                if (this.interval) clearInterval(this.interval);
+                if (this.isRaiding) {
+                    this.stopRaid();
+                }
                 this.updateUI();
             }
 
-            // Cargar guilds y canales del bot
             async loadGuilds() {
                 try {
                     const response = await fetch('https://discord.com/api/v10/users/@me/guilds', {
@@ -184,21 +530,13 @@
 
                     if (response.ok) {
                         const guilds = await response.json();
-                        this.guilds = guilds.map(g => g.name);
-                        
-                        // Simular canales
-                        this.channels = guilds.map(g => ({
-                            id: g.id,
-                            name: g.name,
-                            type: 'text'
-                        }));
+                        this.guilds = guilds;
                     }
                 } catch (error) {
                     console.error('Error loading guilds:', error);
                 }
             }
 
-            // Enviar mensaje a un canal
             async sendMessage(channelId, message) {
                 try {
                     const response = await fetch(`https://discord.com/api/v10/channels/${channelId}/messages`, {
@@ -212,22 +550,35 @@
                         })
                     });
 
-                    return response.ok;
+                    if (!response.ok) {
+                        const error = await response.text();
+                        console.error('Error sending message:', error);
+                        return false;
+                    }
+
+                    return true;
                 } catch (error) {
+                    console.error('Error sending message:', error);
                     return false;
                 }
             }
 
-            // Iniciar un RAID
             startRaid(channelId, message, count, workers) {
                 if (this.isRaiding) return false;
                 
                 this.isRaiding = true;
-                let sent = 0;
-                let failed = 0;
+                this.sentCount = 0;
+                this.totalCount = count;
+                
+                // Mostrar progreso
+                document.getElementById('raidProgress').style.display = 'block';
+                document.getElementById('progressText').textContent = `RAID en curso con ${this.name}`;
+                
+                const startTime = Date.now();
+                let failedCount = 0;
 
                 this.raidInterval = setInterval(() => {
-                    if (sent >= count) {
+                    if (this.sentCount >= count || !this.isRaiding) {
                         this.stopRaid();
                         return;
                     }
@@ -235,44 +586,55 @@
                     // Enviar mensaje
                     this.sendMessage(channelId, message).then(success => {
                         if (success) {
-                            sent++;
+                            this.sentCount++;
                             stats.total_messages++;
                             updateStats();
-                            addLog(`📨 Mensaje enviado por ${this.name} (${sent}/${count})`);
                         } else {
-                            failed++;
+                            failedCount++;
                         }
                     });
 
-                    // Actualizar progreso cada 10 mensajes
-                    if (sent % 10 === 0) {
-                        document.getElementById('raidProgress').textContent = `Enviados: ${sent}/${count}`;
-                    }
+                    // Actualizar progreso
+                    const progress = (this.sentCount / count) * 100;
+                    document.getElementById('progressFill').style.width = `${Math.min(progress, 100)}%`;
+                    document.getElementById('progressCount').textContent = `${this.sentCount}/${count}`;
+                    
+                    // Actualizar estadísticas de workers
+                    stats.active_workers = workers;
+                    updateStats();
 
-                }, 1000 / workers); // Control de velocidad
+                }, Math.max(100, 1000 / workers));
 
                 return true;
             }
 
-            // Detener RAID
             stopRaid() {
                 if (this.raidInterval) {
                     clearInterval(this.raidInterval);
                     this.raidInterval = null;
                 }
                 this.isRaiding = false;
+                this.sentCount = 0;
+                this.totalCount = 0;
+                
+                document.getElementById('raidProgress').style.display = 'none';
+                document.getElementById('progressFill').style.width = '0%';
+                
+                stats.active_workers = 0;
+                updateStats();
+                
                 addLog(`⛔ RAID detenido para ${this.name}`);
             }
 
             updateUI() {
-                // Actualizar interfaz
                 renderBots();
                 updateStats();
+                updateRaidSelect();
             }
         }
 
         // ============================================================
-        // ESTADO GLOBAL MEJORADO
+        // ESTADO GLOBAL
         // ============================================================
         let bots = [];
         let stats = {
@@ -281,29 +643,24 @@
             total_bots: 0,
             active_workers: 0
         };
-        let ipLogs = [];
         let raidActive = false;
         let activeRaidBot = null;
-        let raidInterval = null;
 
         // ============================================================
-        // FUNCIONES MEJORADAS
+        // FUNCIONES PRINCIPALES
         // ============================================================
 
-        // Función para añadir bot (REAL)
+        // Añadir bot
         async function addBot() {
             const token = document.getElementById('botToken').value.trim();
             const name = document.getElementById('botName').value.trim() || 'Bot_ELISEO';
             
             if (!token) {
-                alert('Ingresa un token de bot válido');
+                alert('⚠️ Ingresa un token de bot válido');
                 return;
             }
 
-            // Crear nueva instancia del bot
             const bot = new DiscordBot(token, name);
-            
-            // Intentar iniciar para verificar token
             const result = await bot.start();
             
             if (result.success) {
@@ -312,17 +669,15 @@
                 document.getElementById('botToken').value = '';
                 renderBots();
                 updateStats();
-                addLog(`✅ Bot ${name} agregado y conectado como ${result.user.username}`);
-                
-                // Actualizar select de raids
                 updateRaidSelect();
+                addLog(`✅ Bot ${name} agregado y conectado como ${result.user.username}`);
             } else {
-                alert(`Error al conectar el bot: ${result.error}`);
+                alert(`❌ Error al conectar el bot: ${result.error}`);
                 addLog(`❌ Error al agregar bot: ${result.error}`);
             }
         }
 
-        // Función para iniciar bot (REAL)
+        // Iniciar bot
         async function startBot(id) {
             const bot = bots.find(b => b.id === id);
             if (!bot) return;
@@ -336,42 +691,58 @@
             
             if (result.success) {
                 addLog(`✅ Bot ${bot.name} iniciado como ${result.user.username}`);
+                renderBots();
+                updateStats();
                 updateRaidSelect();
             } else {
-                alert(`Error al iniciar bot: ${result.error}`);
+                alert(`❌ Error al iniciar bot: ${result.error}`);
+                addLog(`❌ Error al iniciar bot: ${result.error}`);
             }
-            
-            renderBots();
-            updateStats();
         }
 
-        // Función para detener bot (REAL)
+        // Detener bot
         async function stopBot(id) {
             const bot = bots.find(b => b.id === id);
             if (!bot) return;
             
             if (bot.isRaiding) {
                 bot.stopRaid();
+                if (activeRaidBot === bot) {
+                    raidActive = false;
+                    activeRaidBot = null;
+                    document.getElementById('startRaidBtn').innerHTML = '<i class="fas fa-play"></i> Iniciar RAID';
+                }
             }
             
             bot.stop();
             addLog(`⏹️ Bot ${bot.name} detenido`);
-            updateRaidSelect();
             renderBots();
             updateStats();
+            updateRaidSelect();
         }
 
-        // Función para eliminar bot (REAL)
+        // Eliminar bot
         async function deleteBot(id) {
             if (!confirm('¿Estás seguro de eliminar este bot?')) return;
             
             const bot = bots.find(b => b.id === id);
-            if (bot && bot.is_running) {
-                bot.stop();
+            if (bot) {
+                if (bot.isRaiding) {
+                    bot.stopRaid();
+                }
+                if (bot.is_running) {
+                    bot.stop();
+                }
             }
             
             bots = bots.filter(b => b.id !== id);
             stats.total_bots = bots.length;
+            
+            if (activeRaidBot === bot) {
+                raidActive = false;
+                activeRaidBot = null;
+                document.getElementById('startRaidBtn').innerHTML = '<i class="fas fa-play"></i> Iniciar RAID';
+            }
             
             renderBots();
             updateStats();
@@ -379,7 +750,7 @@
             addLog(`🗑️ Bot eliminado`);
         }
 
-        // Función para iniciar RAID (REAL)
+        // Iniciar RAID
         async function startRaid() {
             const botId = parseInt(document.getElementById('raidBot').value);
             const channelId = document.getElementById('raidChannel').value.trim();
@@ -388,44 +759,42 @@
             const message = document.getElementById('raidMessage').value || 'RAID MASSIVE by ELISEO v6.0 🔥';
 
             if (!botId || !channelId) {
-                alert('Selecciona un bot y un canal');
+                alert('⚠️ Selecciona un bot y un canal');
                 return;
             }
 
             if (raidActive) {
-                alert('Ya hay un RAID en curso');
+                alert('⚠️ Ya hay un RAID en curso');
                 return;
             }
 
             const bot = bots.find(b => b.id === botId);
             if (!bot || !bot.is_running) {
-                alert('El bot no está activo');
+                alert('⚠️ El bot no está activo');
                 return;
             }
 
-            // Iniciar RAID en el bot
+            // Iniciar RAID
             const started = bot.startRaid(channelId, message, count, workers);
             
             if (started) {
                 raidActive = true;
                 activeRaidBot = bot;
-                stats.active_workers = workers;
                 stats.total_raids++;
                 updateStats();
+                
+                document.getElementById('startRaidBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> RAID en curso';
                 addLog(`🚀 RAID iniciado en canal ${channelId} con ${workers} workers usando ${bot.name}`);
                 addLog(`📝 Mensaje: ${message.substring(0, 50)}...`);
-                
-                // Cambiar botón de estado
-                document.querySelector('.raid-actions .btn-primary').innerHTML = '<i class="fas fa-spinner fa-spin"></i> RAID en curso';
             } else {
-                alert('No se pudo iniciar el RAID');
+                alert('❌ No se pudo iniciar el RAID');
             }
         }
 
-        // Función para detener RAID (REAL)
+        // Detener RAID
         async function stopRaid() {
             if (!raidActive || !activeRaidBot) {
-                alert('No hay ningún RAID activo');
+                alert('⚠️ No hay ningún RAID activo');
                 return;
             }
             
@@ -433,9 +802,9 @@
             raidActive = false;
             stats.active_workers = 0;
             updateStats();
-            addLog('⛔ RAID detenido manualmente');
             
-            document.querySelector('.raid-actions .btn-primary').innerHTML = '<i class="fas fa-play"></i> Iniciar RAID';
+            document.getElementById('startRaidBtn').innerHTML = '<i class="fas fa-play"></i> Iniciar RAID';
+            addLog('⛔ RAID detenido manualmente');
         }
 
         // Actualizar select de raids
@@ -445,19 +814,21 @@
             
             const activeBots = bots.filter(b => b.status === 'active' && b.is_running);
             select.innerHTML = '<option value="">Seleccionar Bot</option>' + 
-                activeBots.map(b => `<option value="${b.id}">${b.name} (${b.user ? b.user.username : 'Desconocido'})</option>`).join('');
+                activeBots.map(b => {
+                    const username = b.user ? b.user.username : 'Desconocido';
+                    return `<option value="${b.id}">${b.name} (${username})</option>`;
+                }).join('');
             
             if (currentValue) {
                 select.value = currentValue;
             }
         }
 
-        // Función para detectar IP (mejorada con API real)
+        // Detectar IP
         async function detectIP() {
             const ip = document.getElementById('ipToCheck').value.trim() || '187.189.120.235';
             
             try {
-                // Usar API de ipinfo.io para geolocalización real
                 const response = await fetch(`https://ipinfo.io/${ip}/json`);
                 
                 if (!response.ok) {
@@ -466,7 +837,6 @@
                 
                 const data = await response.json();
                 
-                // Mostrar resultado
                 const resultDiv = document.getElementById('ipResult');
                 resultDiv.style.display = 'block';
                 resultDiv.innerHTML = `
@@ -480,13 +850,7 @@
                     </div>
                 `;
 
-                // Añadir a logs de IP
-                addIPLog(
-                    data.ip || ip, 
-                    data.country || 'Desconocido', 
-                    data.city || 'Desconocida', 
-                    data.org || 'Desconocido'
-                );
+                addIPLog(data.ip || ip, data.country || 'Desconocido', data.city || 'Desconocida', data.org || 'Desconocido');
                 addLog(`🌐 IP detectada: ${ip} (${data.country || 'Desconocido'})`);
             } catch (error) {
                 // Fallback a datos simulados
@@ -591,6 +955,7 @@
                         <span class="bot-status ${bot.status}">${bot.status}</span>
                         ${bot.is_running ? `<span style="color: #00ff88; font-size: 12px;"><i class="fas fa-circle"></i> ${bot.guilds.length} servidores</span>` : ''}
                         ${bot.isRaiding ? `<span style="color: #ffaa00; font-size: 12px;"><i class="fas fa-bolt"></i> RAID activo</span>` : ''}
+                        ${bot.user ? `<span style="color: #888; font-size: 11px;">${bot.user.username}#${bot.user.discriminator}</span>` : ''}
                     </div>
                     <div>
                         ${bot.status === 'inactive' || bot.status === 'error' ? 
@@ -611,32 +976,18 @@
             addLog('📡 Sistema de bots de Discord activo');
             addLog('🌐 Detección de IP mediante ipinfo.io');
             
-            // Ejemplos de IP
             addIPLog('187.189.120.235', 'México', 'Ciudad de México', 'Telmex');
             addIPLog('8.8.8.8', 'Estados Unidos', 'Mountain View', 'Google LLC');
             
-            // Estadísticas iniciales
             stats.total_messages = 45231;
             stats.total_raids = 12;
+            stats.total_bots = 0;
             updateStats();
-            
             updateRaidSelect();
         }
 
-        // Auto-refresh
-        setInterval(() => {
-            if (!raidActive) {
-                stats.total_messages += Math.floor(Math.random() * 3);
-                updateStats();
-            }
-        }, 5000);
-
-        // Iniciar
-        init();
-
         // Event listeners
         document.addEventListener('DOMContentLoaded', () => {
-            // Permitir Enter en campos de entrada
             document.getElementById('botToken').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') addBot();
             });
@@ -645,6 +996,9 @@
                 if (e.key === 'Enter') detectIP();
             });
         });
+
+        // Iniciar
+        init();
     </script>
 </body>
 </html>
