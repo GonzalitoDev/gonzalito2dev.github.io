@@ -91,6 +91,7 @@
         .logo .hunter { color: #ff6b35; }
         .logo .pro { color: #ffd700; font-size: 14px; animation: pulse 0.5s infinite; }
         .logo .eliseo { color: #ffffff; opacity: 0.2; font-size: 16px; }
+        .logo .bot { color: #5865F2; font-size: 14px; }
         
         .subtitle {
             font-size: 12px;
@@ -104,6 +105,7 @@
         .subtitle .highlight { color: #ff6b35; font-weight: bold; animation: pulse 1.5s infinite; }
         .subtitle .legal { color: #00ff88; font-weight: bold; }
         .subtitle .warning { color: #ffa500; font-weight: bold; }
+        .subtitle .discord { color: #5865F2; font-weight: bold; }
         
         .tabs {
             display: flex;
@@ -131,6 +133,8 @@
         
         .tab:hover { opacity: 0.6; }
         .tab.active { opacity: 1; border-bottom-color: #00d4ff; }
+        .tab.discord-tab { color: #5865F2; }
+        .tab.discord-tab.active { border-bottom-color: #5865F2; }
         
         .tab-content { display: none; animation: fadeIn 0.3s; }
         .tab-content.active { display: block; }
@@ -142,7 +146,7 @@
         
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 8px;
             margin-bottom: 15px;
             position: relative;
@@ -177,6 +181,7 @@
         .stat-item .number.pink { color: #ff69b4; }
         .stat-item .number.cyan { color: #00ffff; }
         .stat-item .number.red { color: #ff4444; }
+        .stat-item .number.discord { color: #5865F2; }
         
         .stat-item .label {
             font-size: 8px;
@@ -206,6 +211,8 @@
             text-align: center;
             font-weight: bold;
         }
+        
+        .panel-title.discord-title { color: #5865F2; }
         
         .btn {
             padding: 10px 20px;
@@ -253,6 +260,8 @@
         .btn-orange:hover:not(:disabled) { background: #ff6b35; color: #0a0a12; }
         .btn-green { border-color: #00ff88; color: #00ff88; }
         .btn-green:hover:not(:disabled) { background: #00ff88; color: #0a0a12; }
+        .btn-discord { border-color: #5865F2; color: #5865F2; }
+        .btn-discord:hover:not(:disabled) { background: #5865F2; color: #0a0a12; }
         
         .flex { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .mb-10 { margin-bottom: 10px; }
@@ -314,6 +323,7 @@
         .info-card .value.purple { color: #9b59b6; }
         .info-card .value.pink { color: #ff69b4; }
         .info-card .value.red { color: #ff4444; }
+        .info-card .value.discord { color: #5865F2; }
         
         .log-area {
             margin-top: 15px;
@@ -350,6 +360,7 @@
         .log-area .log-entry.purple { color: #9b59b6; }
         .log-area .log-entry.cyan { color: #00ffff; }
         .log-area .log-entry.orange { color: #ff6b35; }
+        .log-area .log-entry.discord { color: #5865F2; }
         
         .badge {
             display: inline-block;
@@ -367,6 +378,7 @@
         .badge-purple { border-color: #9b59b6; color: #9b59b6; }
         .badge-pink { border-color: #ff69b4; color: #ff69b4; }
         .badge-orange { border-color: #ff6b35; color: #ff6b35; }
+        .badge-discord { border-color: #5865F2; color: #5865F2; }
         
         .result-item {
             padding: 10px;
@@ -485,6 +497,7 @@
         .status-dot.orange { background: #ffa500; animation: pulse 0.5s infinite; }
         .status-dot.gold { background: #ffd700; animation: pulse 0.3s infinite; }
         .status-dot.blue { background: #00d4ff; animation: pulse 1.5s infinite; }
+        .status-dot.discord { background: #5865F2; animation: pulse 1s infinite; }
         
         .webhook-status {
             font-size: 10px;
@@ -525,6 +538,59 @@
         .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
         
+        .server-item {
+            padding: 8px 12px;
+            margin: 4px 0;
+            background: rgba(0,150,255,0.02);
+            border-radius: 4px;
+            border-left: 2px solid rgba(0,150,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .server-item:hover {
+            background: rgba(0,150,255,0.05);
+        }
+        
+        .server-item .name { color: #ffd700; }
+        .server-item .id { opacity: 0.2; font-size: 9px; }
+        
+        .member-item {
+            padding: 6px 10px;
+            margin: 3px 0;
+            background: rgba(0,150,255,0.02);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+        }
+        
+        .member-item:hover {
+            background: rgba(0,150,255,0.05);
+        }
+        
+        .channel-item {
+            padding: 6px 10px;
+            margin: 3px 0;
+            background: rgba(0,150,255,0.02);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+        }
+        
+        .role-item {
+            display: inline-block;
+            padding: 2px 8px;
+            margin: 2px;
+            border-radius: 4px;
+            font-size: 9px;
+            border: 1px solid rgba(0,150,255,0.1);
+        }
+        
         @media (max-width: 768px) {
             .container { padding: 12px; }
             .logo { font-size: 24px; }
@@ -556,17 +622,6 @@
             background: rgba(0,150,255,0.2);
             border-radius: 2px;
         }
-        
-        .domain-card {
-            padding: 10px;
-            margin: 5px 0;
-            background: rgba(0,150,255,0.03);
-            border-radius: 6px;
-            border-left: 3px solid #ff6b35;
-        }
-        
-        .domain-card .domain { color: #ffd700; font-weight: bold; }
-        .domain-card .info { opacity: 0.7; font-size: 11px; }
     </style>
 </head>
 <body>
@@ -578,11 +633,13 @@
                 <span class="hunter">HUNTER</span>
                 <span class="eliseo">ELISEO</span>
                 <span class="pro">⭐PRO</span>
+                <span class="bot">🤖 BOT</span>
             </div>
             <div class="subtitle">
                 🎯 Extracción de información pública y legal
                 <span class="legal">| ⚖️ Scraping Ético</span>
                 <span class="highlight">| ⚡ MODO PRO</span>
+                <span class="discord">| 🤖 Discord Bot</span>
                 <span class="warning">| 🌐 Múltiples Fuentes</span>
             </div>
         </div>
@@ -590,6 +647,7 @@
         <!-- TABS -->
         <div class="tabs">
             <div class="tab active" onclick="switchTab('home')">🏠 Inicio</div>
+            <div class="tab discord-tab" onclick="switchTab('discord')">🤖 Discord</div>
             <div class="tab" onclick="switchTab('phone')">📱 Teléfono</div>
             <div class="tab" onclick="switchTab('web')">🌐 Web</div>
             <div class="tab" onclick="switchTab('social')">📱 Social</div>
@@ -609,6 +667,10 @@
                 <div class="label">📊 Resultados</div>
             </div>
             <div class="stat-item">
+                <div class="number discord" id="statServers">0</div>
+                <div class="label">🏰 Servidores</div>
+            </div>
+            <div class="stat-item">
                 <div class="number gold" id="statPhone">0</div>
                 <div class="label">📱 Teléfonos</div>
             </div>
@@ -624,6 +686,10 @@
                 <div class="number purple" id="statDomains">0</div>
                 <div class="label">🌍 Dominios</div>
             </div>
+            <div class="stat-item">
+                <div class="number pink" id="statMembers">0</div>
+                <div class="label">👥 Miembros</div>
+            </div>
         </div>
         
         <!-- TAB: HOME -->
@@ -637,6 +703,11 @@
                     <p style="opacity:0.3;font-size:13px;margin:10px 0;">Herramientas legales para extracción de información pública</p>
                     
                     <div class="grid-4" style="margin:15px 0;">
+                        <div style="background:rgba(88,101,242,0.02);border:1px solid rgba(88,101,242,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('discord')">
+                            <div style="font-size:28px;">🤖</div>
+                            <div style="font-size:11px;font-weight:bold;color:#5865F2;margin-top:5px;">Discord Bot</div>
+                            <div style="font-size:9px;opacity:0.2;">Conectar y extraer</div>
+                        </div>
                         <div style="background:rgba(0,150,255,0.02);border:1px solid rgba(0,150,255,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('phone')">
                             <div style="font-size:28px;">📱</div>
                             <div style="font-size:11px;font-weight:bold;color:#00d4ff;margin-top:5px;">Teléfono</div>
@@ -647,11 +718,6 @@
                             <div style="font-size:11px;font-weight:bold;color:#00ff88;margin-top:5px;">Web Scraping</div>
                             <div style="font-size:9px;opacity:0.2;">Extracción de datos</div>
                         </div>
-                        <div style="background:rgba(255,107,53,0.02);border:1px solid rgba(255,107,53,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('social')">
-                            <div style="font-size:28px;">📱</div>
-                            <div style="font-size:11px;font-weight:bold;color:#ff6b35;margin-top:5px;">Social Media</div>
-                            <div style="font-size:9px;opacity:0.2;">Perfiles públicos</div>
-                        </div>
                         <div style="background:rgba(155,89,182,0.02);border:1px solid rgba(155,89,182,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('domain')">
                             <div style="font-size:28px;">🌍</div>
                             <div style="font-size:11px;font-weight:bold;color:#9b59b6;margin-top:5px;">Dominios</div>
@@ -660,6 +726,7 @@
                     </div>
                     
                     <div class="flex" style="justify-content:center;">
+                        <button class="btn btn-discord" onclick="switchTab('discord')">🤖 Discord</button>
                         <button class="btn btn-cyan" onclick="switchTab('phone')">📱 Teléfono</button>
                         <button class="btn btn-green" onclick="switchTab('web')">🌐 Web</button>
                         <button class="btn btn-orange" onclick="switchTab('social')">📱 Social</button>
@@ -669,14 +736,76 @@
                     
                     <div style="margin-top:15px;padding:10px;background:rgba(255,215,0,0.03);border:1px solid rgba(255,215,0,0.05);border-radius:8px;">
                         <span class="badge badge-gold">⭐ MODO PRO</span>
-                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">+20 Fuentes de información</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">+25 Fuentes de información</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🤖 Discord Bot</span>
                         <span style="font-size:10px;opacity:0.3;margin-left:8px;">| ⚖️ Uso Legal</span>
                         <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🌐 Sin API Key</span>
-                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🚀 Resultados Reales</span>
                     </div>
                     
                     <div style="margin-top:10px;padding:8px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.05);border-radius:8px;">
                         <span style="font-size:9px;opacity:0.4;">⚠️ Esta herramienta solo utiliza fuentes públicas y legales</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB: DISCORD BOT -->
+        <div id="tab-discord" class="tab-content">
+            <div class="panel">
+                <div class="panel-title discord-title">🤖 DISCORD BOT - CONEXIÓN REAL</div>
+                
+                <p style="opacity:0.3;font-size:11px;margin-bottom:10px;">Conecta tu bot de Discord para extraer información de servidores</p>
+                
+                <div class="flex mb-10">
+                    <input type="password" id="botToken" placeholder="Token del Bot de Discord" style="flex:1;min-width:200px;">
+                    <button class="btn btn-discord" onclick="connectDiscord()">🔗 Conectar</button>
+                    <button class="btn btn-danger" onclick="disconnectDiscord()">⛔ Desconectar</button>
+                </div>
+                
+                <div id="discordStatus" class="info-card" style="background:rgba(88,101,242,0.02);border-color:rgba(88,101,242,0.1);">
+                    <div class="label">🤖 ESTADO DEL BOT</div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+                        <span class="status-dot red" id="discordDot"></span>
+                        <span class="value" id="discordStatusText" style="font-size:12px;">Desconectado</span>
+                    </div>
+                </div>
+                
+                <div id="discordInfo" style="display:none;">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="label">👤 Nombre</div>
+                            <div class="value discord" id="botName">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="label">🆔 ID</div>
+                            <div class="value" id="botId">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="label">🏰 Servidores</div>
+                            <div class="value gold" id="botGuilds">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="label">👥 Miembros totales</div>
+                            <div class="value pink" id="botMembers">-</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top:10px;">
+                        <div class="flex mb-10">
+                            <input type="text" id="guildIdInput" placeholder="ID del servidor..." style="flex:1;min-width:150px;">
+                            <button class="btn btn-cyan" onclick="fetchGuildInfo()">🏰 Info Servidor</button>
+                            <button class="btn btn-purple" onclick="fetchMembers()">👥 Miembros</button>
+                            <button class="btn btn-pink" onclick="fetchChannels()">📢 Canales</button>
+                            <button class="btn btn-gold" onclick="fetchRoles()">🎭 Roles</button>
+                            <button class="btn btn-green" onclick="fetchInvites()">📨 Invites</button>
+                        </div>
+                    </div>
+                    
+                    <div id="discordResults" style="display:none;">
+                        <div class="info-card">
+                            <div class="label">📊 RESULTADOS DE DISCORD</div>
+                            <div id="discordContent"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -834,6 +963,7 @@
             <span id="webhookText">🔍 Sistema listo</span>
             <button class="btn btn-success" onclick="openWebhookModal()" style="padding:4px 12px;font-size:9px;">🔗 Configurar Webhook</button>
             <button class="btn btn-gold" onclick="exportResults()" style="padding:4px 12px;font-size:9px;">📊 Exportar</button>
+            <button class="btn btn-discord" onclick="sendToDiscord()" style="padding:4px 12px;font-size:9px;">📤 Enviar a Discord</button>
         </div>
     </div>
     
@@ -864,6 +994,15 @@
         let WEBHOOK_URL = '';
         let LOGS = [];
         let LAST_RESULTS = [];
+        
+        // Discord
+        let BOT_TOKEN = '';
+        let BOT_USER = null;
+        let BOT_GUILDS = [];
+        let BOT_MEMBERS = 0;
+        const DISCORD_API = 'https://discord.com/api/v10';
+        const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+        let USE_PROXY = false;
         
         // ============================================
         // FUNCIONES DE LOGS
@@ -977,7 +1116,8 @@
                 orange: 0xff6b35,
                 purple: 0x9b59b6,
                 pink: 0xff69b4,
-                green: 0x00ff88
+                green: 0x00ff88,
+                discord: 0x5865F2
             };
             
             const embed = {
@@ -999,20 +1139,362 @@
             }
         }
         
-        // ============================================
-        // FUNCIONES DE NAVEGACIÓN
-        // ============================================
-        
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+        function sendToDiscord() {
+            if (!WEBHOOK_URL) {
+                addLog('⚠️ Configura un webhook primero', 'error');
+                return;
+            }
             
-            document.getElementById(`tab-${tab}`).classList.add('active');
-            document.querySelector(`.tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+            if (LAST_RESULTS.length === 0) {
+                addLog('⚠️ No hay resultados para enviar', 'error');
+                return;
+            }
+            
+            const lastResult = LAST_RESULTS[LAST_RESULTS.length - 1];
+            sendToWebhook(`📊 **Último resultado:**\n${lastResult.type}: ${lastResult.data}`, 'discord');
+            addLog('📤 Resultado enviado a Discord', 'success');
         }
         
         // ============================================
-        // FUNCIONES DE TELÉFONO MEJORADAS
+        // FUNCIONES DE DISCORD BOT
+        // ============================================
+        
+        async function discordRequest(endpoint, method = 'GET', body = null) {
+            if (!BOT_TOKEN) {
+                addLog('⚠️ No hay token configurado', 'error');
+                return null;
+            }
+            
+            REQUEST_COUNT++;
+            document.getElementById('statRequests').textContent = REQUEST_COUNT;
+            
+            let url = `${DISCORD_API}${endpoint}`;
+            if (USE_PROXY) {
+                url = `${CORS_PROXY}${url}`;
+            }
+            
+            const headers = {
+                'Authorization': `Bot ${BOT_TOKEN}`,
+                'Content-Type': 'application/json'
+            };
+            
+            try {
+                const options = { method, headers };
+                if (body) options.body = JSON.stringify(body);
+                
+                const response = await fetch(url, options);
+                
+                if (!response.ok && USE_PROXY) {
+                    USE_PROXY = false;
+                    return await discordRequest(endpoint, method, body);
+                }
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    addLog(`❌ Error Discord ${response.status}: ${data.message || 'Desconocido'}`, 'error');
+                    return null;
+                }
+                
+                return data;
+            } catch (error) {
+                if (USE_PROXY) {
+                    USE_PROXY = false;
+                    return await discordRequest(endpoint, method, body);
+                }
+                addLog(`❌ Error de conexión: ${error.message}`, 'error');
+                return null;
+            }
+        }
+        
+        async function connectDiscord() {
+            const tokenInput = document.getElementById('botToken');
+            BOT_TOKEN = tokenInput.value.trim();
+            
+            if (!BOT_TOKEN) {
+                addLog('⚠️ Ingresa un token de bot válido', 'error');
+                return;
+            }
+            
+            addLog('🤖 Conectando a Discord API...', 'discord');
+            
+            const data = await discordRequest('/users/@me');
+            if (!data) {
+                addLog('❌ Error al conectar con el bot', 'error');
+                addLog('💡 Verifica el token y activa proxy si es necesario', 'info');
+                return;
+            }
+            
+            BOT_USER = data;
+            
+            document.getElementById('discordDot').className = 'status-dot green';
+            document.getElementById('discordStatusText').textContent = '✅ Conectado';
+            document.getElementById('discordStatusText').style.color = '#00ff88';
+            document.getElementById('discordInfo').style.display = 'block';
+            document.getElementById('botName').textContent = data.username + '#' + (data.discriminator || '0');
+            document.getElementById('botId').textContent = data.id;
+            
+            addLog(`✅ Conectado como ${data.username}#${data.discriminator}`, 'success');
+            
+            // Obtener servidores
+            const guilds = await discordRequest('/users/@me/guilds');
+            if (guilds) {
+                BOT_GUILDS = guilds;
+                document.getElementById('botGuilds').textContent = guilds.length;
+                document.getElementById('statServers').textContent = guilds.length;
+                addLog(`📋 ${guilds.length} servidores cargados`, 'info');
+                
+                // Contar miembros totales
+                let totalMembers = 0;
+                for (const guild of guilds) {
+                    try {
+                        const members = await discordRequest(`/guilds/${guild.id}/members?limit=1`);
+                        if (members && members.length > 0) {
+                            totalMembers += 1;
+                        }
+                    } catch (e) {}
+                }
+                BOT_MEMBERS = totalMembers;
+                document.getElementById('botMembers').textContent = totalMembers;
+                document.getElementById('statMembers').textContent = totalMembers;
+            }
+            
+            // Guardar token
+            localStorage.setItem('discord_hunter_token', BOT_TOKEN);
+        }
+        
+        function disconnectDiscord() {
+            BOT_TOKEN = '';
+            BOT_USER = null;
+            BOT_GUILDS = [];
+            BOT_MEMBERS = 0;
+            
+            document.getElementById('discordDot').className = 'status-dot red';
+            document.getElementById('discordStatusText').textContent = 'Desconectado';
+            document.getElementById('discordStatusText').style.color = '#ff4444';
+            document.getElementById('discordInfo').style.display = 'none';
+            document.getElementById('botGuilds').textContent = '-';
+            document.getElementById('botMembers').textContent = '-';
+            document.getElementById('discordResults').style.display = 'none';
+            
+            addLog('⛔ Desconectado de Discord', 'error');
+        }
+        
+        async function fetchGuildInfo() {
+            const guildId = document.getElementById('guildIdInput').value.trim();
+            if (!guildId) {
+                addLog('⚠️ Ingresa un ID de servidor', 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'none';
+            
+            const data = await discordRequest(`/guilds/${guildId}`);
+            if (!data) {
+                addLog(`❌ Servidor ${guildId} no encontrado`, 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'block';
+            const content = document.getElementById('discordContent');
+            
+            const created = new Date(parseInt(data.id) / 4194304 + 1420070400000).toLocaleDateString('es-ES');
+            
+            content.innerHTML = `
+                <div class="result-item">
+                    <div class="title">🏰 ${data.name}</div>
+                    <div class="content"><strong>🆔 ID:</strong> ${data.id}</div>
+                    <div class="content"><strong>👥 Miembros:</strong> ${data.approximate_member_count || 'Desconocido'}</div>
+                    <div class="content"><strong>📢 Canales:</strong> ${data.approximate_presence_count || 'Desconocido'}</div>
+                    <div class="content"><strong>🎭 Roles:</strong> ${data.roles?.length || 0}</div>
+                    <div class="content"><strong>📅 Creado:</strong> ${created}</div>
+                    <div class="source">📅 Información obtenida: ${new Date().toLocaleString()}</div>
+                </div>
+            `;
+            
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Servidor', data: `${data.name} (${data.id})` });
+            
+            addLog(`✅ Información del servidor ${data.name} obtenida`, 'success');
+            
+            if (WEBHOOK_URL) {
+                sendToWebhook(`🏰 **Servidor:** ${data.name}\n🆔 **ID:** ${data.id}\n👥 **Miembros:** ${data.approximate_member_count || 'Desconocido'}`, 'discord');
+            }
+        }
+        
+        async function fetchMembers() {
+            const guildId = document.getElementById('guildIdInput').value.trim();
+            if (!guildId) {
+                addLog('⚠️ Ingresa un ID de servidor', 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'none';
+            
+            addLog(`👥 Obteniendo miembros de ${guildId}...`, 'info');
+            
+            const data = await discordRequest(`/guilds/${guildId}/members?limit=100`);
+            if (!data) {
+                addLog(`❌ No se pudieron obtener los miembros`, 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'block';
+            const content = document.getElementById('discordContent');
+            
+            const memberHtml = data.slice(0, 50).map(m => {
+                const username = m.user?.username || 'Desconocido';
+                const discriminator = m.user?.discriminator || '0';
+                return `<div class="member-item">
+                    <span>${username}#${discriminator}</span>
+                    <span style="opacity:0.3;font-size:9px;">${m.user?.id || 'Sin ID'}</span>
+                </div>`;
+            }).join('');
+            
+            content.innerHTML = `
+                <div class="result-item">
+                    <div class="title">👥 Miembros del servidor (${data.length} total)</div>
+                    <div style="max-height:300px;overflow-y:auto;margin-top:5px;">
+                        ${memberHtml}
+                        ${data.length > 50 ? `<div style="opacity:0.2;font-size:9px;padding:5px;">... y ${data.length - 50} más</div>` : ''}
+                    </div>
+                    <div class="source">📅 ${new Date().toLocaleString()}</div>
+                </div>
+            `;
+            
+            document.getElementById('statMembers').textContent = data.length;
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Miembros', data: `${data.length} miembros` });
+            
+            addLog(`👥 ${data.length} miembros obtenidos`, 'success');
+        }
+        
+        async function fetchChannels() {
+            const guildId = document.getElementById('guildIdInput').value.trim();
+            if (!guildId) {
+                addLog('⚠️ Ingresa un ID de servidor', 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'none';
+            
+            const data = await discordRequest(`/guilds/${guildId}/channels`);
+            if (!data) {
+                addLog(`❌ No se pudieron obtener los canales`, 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'block';
+            const content = document.getElementById('discordContent');
+            
+            const types = {
+                0: '📢 Texto',
+                2: '🔊 Voz',
+                4: '📁 Categoría',
+                5: '📢 Anuncios',
+                13: '🎭 Stage'
+            };
+            
+            const channelHtml = data.map(c => 
+                `<div class="channel-item">
+                    <span>${types[c.type] || '📌'} ${c.name}</span>
+                    <span style="opacity:0.3;font-size:9px;">${c.id}</span>
+                </div>`
+            ).join('');
+            
+            content.innerHTML = `
+                <div class="result-item">
+                    <div class="title">📢 Canales (${data.length} total)</div>
+                    <div style="max-height:300px;overflow-y:auto;margin-top:5px;">
+                        ${channelHtml}
+                    </div>
+                    <div class="source">📅 ${new Date().toLocaleString()}</div>
+                </div>
+            `;
+            
+            document.getElementById('statChannels').textContent = data.length;
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Canales', data: `${data.length} canales` });
+            
+            addLog(`📢 ${data.length} canales obtenidos`, 'success');
+        }
+        
+        async function fetchRoles() {
+            const guildId = document.getElementById('guildIdInput').value.trim();
+            if (!guildId) {
+                addLog('⚠️ Ingresa un ID de servidor', 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'none';
+            
+            const data = await discordRequest(`/guilds/${guildId}/roles`);
+            if (!data) {
+                addLog(`❌ No se pudieron obtener los roles`, 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'block';
+            const content = document.getElementById('discordContent');
+            
+            const roleHtml = data.map(r => 
+                `<span class="role-item" style="color:#${r.color.toString(16).padStart(6, '0')};border-color:#${r.color.toString(16).padStart(6, '0')}40;">
+                    ${r.name}
+                </span>`
+            ).join(' ');
+            
+            content.innerHTML = `
+                <div class="result-item">
+                    <div class="title">🎭 Roles (${data.length} total)</div>
+                    <div style="margin-top:8px;">${roleHtml}</div>
+                    <div class="source">📅 ${new Date().toLocaleString()}</div>
+                </div>
+            `;
+            
+            document.getElementById('statRoles').textContent = data.length;
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Roles', data: `${data.length} roles` });
+            
+            addLog(`🎭 ${data.length} roles obtenidos`, 'success');
+        }
+        
+        async function fetchInvites() {
+            const guildId = document.getElementById('guildIdInput').value.trim();
+            if (!guildId) {
+                addLog('⚠️ Ingresa un ID de servidor', 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'none';
+            
+            const data = await discordRequest(`/guilds/${guildId}/invites`);
+            if (!data) {
+                addLog(`❌ No se pudieron obtener invitaciones`, 'error');
+                return;
+            }
+            
+            document.getElementById('discordResults').style.display = 'block';
+            const content = document.getElementById('discordContent');
+            
+            const inviteHtml = data.map(inv => 
+                `<div class="server-item">
+                    <span class="name">📨 ${inv.code}</span>
+                    <span style="opacity:0.3;font-size:9px;">${inv.uses || 0} usos | ${inv.max_uses || '∞'}</span>
+                </div>`
+            ).join('');
+            
+            content.innerHTML = `
+                <div class="result-item">
+                    <div class="title">📨 Invitaciones (${data.length} total)</div>
+                    ${inviteHtml || '<div style="opacity:0.3;">No hay invitaciones disponibles</div>'}
+                    <div class="source">📅 ${new Date().toLocaleString()}</div>
+                </div>
+            `;
+            
+            document.getElementById('statInvites').textContent = data.length;
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Invites', data: `${data.length} invitaciones` });
+            
+            addLog(`📨 ${data.length} invitaciones obtenidas`, 'success');
+        }
+        
+        // ============================================
+        // FUNCIONES DE TELÉFONO
         // ============================================
         
         function cleanPhoneNumber(phone) {
@@ -1064,14 +1546,12 @@
                 '598': { name: '🇺🇾 Uruguay', code: 'UY' }
             };
             
-            // Detectar país
             for (const [code, data] of Object.entries(countryData)) {
                 if (cleaned.startsWith(code) || cleaned.startsWith('+' + code)) {
                     info.country = data.name;
                     info.countryCode = data.code;
                     info.valid = true;
                     
-                    // Detectar operador para España
                     if (code === '34') {
                         const numberPart = cleaned.replace(/^\+34|^34/, '');
                         if (numberPart.startsWith('6') || numberPart.startsWith('7')) {
@@ -1117,28 +1597,30 @@
             
             SEARCH_COUNT++;
             RESULT_COUNT++;
-            updateStats();
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statResults').textContent = RESULT_COUNT;
+            document.getElementById('statPhone').textContent = parseInt(document.getElementById('statPhone').textContent) + 1;
             
             document.getElementById('phoneResults').style.display = 'block';
             const content = document.getElementById('phoneContent');
             content.innerHTML = `
-                <div class="phone-result">
-                    <div><strong>📱 Número:</strong> <span style="color:#ffd700;">${info.number}</span></div>
-                    <div><strong>🌍 País:</strong> <span class="location">${info.country}</span></div>
-                    <div><strong>📡 Operador:</strong> <span class="operator">${info.operator}</span></div>
-                    <div><strong>📊 Tipo:</strong> ${info.type}</div>
-                    <div><strong>🆔 Código:</strong> ${info.countryCode}</div>
-                    <div class="extra">ℹ️ Información obtenida de bases de datos públicas</div>
+                <div class="result-item">
+                    <div class="title">📱 Información del número</div>
+                    <div class="content"><strong>Número:</strong> <span style="color:#ffd700;">${info.number}</span></div>
+                    <div class="content"><strong>🌍 País:</strong> ${info.country}</div>
+                    <div class="content"><strong>📡 Operador:</strong> ${info.operator}</div>
+                    <div class="content"><strong>📊 Tipo:</strong> ${info.type}</div>
+                    <div class="content"><strong>🆔 Código:</strong> ${info.countryCode}</div>
+                    <div class="source">ℹ️ Información obtenida de bases de datos públicas</div>
                 </div>
             `;
             
-            const resultData = `Número: ${info.number}, País: ${info.country}, Operador: ${info.operator}, Tipo: ${info.type}`;
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Teléfono', data: resultData });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Teléfono', data: `${info.number} - ${info.country}` });
             
             addLog(`✅ Información del número ${info.number} obtenida`, 'success');
             
             if (WEBHOOK_URL) {
-                sendToWebhook(`📱 **Número:** ${info.number}\n🌍 **País:** ${info.country}\n📡 **Operador:** ${info.operator}\n📊 **Tipo:** ${info.type}`, 'gold');
+                sendToWebhook(`📱 **Número:** ${info.number}\n🌍 **País:** ${info.country}\n📡 **Operador:** ${info.operator}`, 'gold');
             }
         }
         
@@ -1162,7 +1644,9 @@
             
             SEARCH_COUNT++;
             RESULT_COUNT += 4;
-            updateStats();
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statResults').textContent = RESULT_COUNT;
+            document.getElementById('statPhone').textContent = parseInt(document.getElementById('statPhone').textContent) + 1;
             
             document.getElementById('phoneResults').style.display = 'block';
             
@@ -1170,34 +1654,28 @@
                 'spam': Math.random() > 0.7 ? '⚠️ Reportado como spam' : '✅ Sin reportes',
                 'active': Math.random() > 0.3 ? '✅ Activo' : '⚠️ Inactivo',
                 'voip': Math.random() > 0.85 ? '📞 VoIP' : '📱 Línea convencional',
-                'location': ['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Málaga', 'Bilbao'][Math.floor(Math.random() * 6)],
-                'company': ['Telefónica', 'Vodafone', 'Orange', 'Yoigo', 'MásMóvil', 'Euskaltel'][Math.floor(Math.random() * 6)]
+                'location': ['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Málaga', 'Bilbao'][Math.floor(Math.random() * 6)]
             };
             
             const content = document.getElementById('phoneContent');
             content.innerHTML = `
-                <div class="phone-result">
-                    <div><strong>📱 Número:</strong> <span style="color:#ffd700;">${info.number}</span></div>
-                    <div><strong>🌍 País:</strong> <span class="location">${info.country}</span></div>
-                    <div><strong>📡 Operador:</strong> <span class="operator">${info.operator}</span></div>
-                    <div><strong>📊 Tipo:</strong> ${info.type}</div>
-                    <div><strong>📍 Ubicación:</strong> ${simulatedData.location}</div>
-                    <div><strong>🏢 Compañía:</strong> ${simulatedData.company}</div>
-                    <div><strong>🛡️ Estado:</strong> ${simulatedData.spam}</div>
-                    <div><strong>📶 Actividad:</strong> ${simulatedData.active}</div>
-                    <div><strong>📞 Tipo de línea:</strong> ${simulatedData.voip}</div>
-                    <div class="extra">🔍 Búsqueda avanzada completada (${new Date().toLocaleString()})</div>
+                <div class="result-item">
+                    <div class="title">📱 Información completa del número</div>
+                    <div class="content"><strong>Número:</strong> <span style="color:#ffd700;">${info.number}</span></div>
+                    <div class="content"><strong>🌍 País:</strong> ${info.country}</div>
+                    <div class="content"><strong>📡 Operador:</strong> ${info.operator}</div>
+                    <div class="content"><strong>📊 Tipo:</strong> ${info.type}</div>
+                    <div class="content"><strong>📍 Ubicación:</strong> ${simulatedData.location}</div>
+                    <div class="content"><strong>🛡️ Estado:</strong> ${simulatedData.spam}</div>
+                    <div class="content"><strong>📶 Actividad:</strong> ${simulatedData.active}</div>
+                    <div class="content"><strong>📞 Tipo de línea:</strong> ${simulatedData.voip}</div>
+                    <div class="source">🔍 Búsqueda avanzada completada (${new Date().toLocaleString()})</div>
                 </div>
             `;
             
-            const resultData = `Número: ${info.number}, País: ${info.country}, Operador: ${info.operator}, Ubicación: ${simulatedData.location}`;
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Teléfono Completo', data: resultData });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Teléfono Completo', data: `${info.number} - ${simulatedData.location}` });
             
             addLog(`✅ Búsqueda completa del número ${info.number} realizada`, 'success');
-            
-            if (WEBHOOK_URL) {
-                sendToWebhook(`📱 **Número:** ${info.number}\n🌍 **País:** ${info.country}\n📡 **Operador:** ${info.operator}\n📍 **Ubicación:** ${simulatedData.location}\n🏢 **Compañía:** ${simulatedData.company}`, 'gold');
-            }
         }
         
         function validatePhone() {
@@ -1218,7 +1696,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE WEB SCRAPING MEJORADAS
+        // FUNCIONES DE WEB SCRAPING
         // ============================================
         
         async function scrapePage() {
@@ -1237,7 +1715,9 @@
             
             SEARCH_COUNT++;
             REQUEST_COUNT++;
-            updateStats();
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statRequests').textContent = REQUEST_COUNT;
+            document.getElementById('statPages').textContent = parseInt(document.getElementById('statPages').textContent) + 1;
             
             addLog(`🌐 Scrapeando: ${url}`, 'info');
             
@@ -1251,7 +1731,6 @@
                 
                 const html = await response.text();
                 
-                // Extraer información
                 const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
                 const title = titleMatch ? titleMatch[1].trim() : 'Sin título';
                 
@@ -1273,7 +1752,7 @@
                 const siteName = siteMatch ? siteMatch[1] : url;
                 
                 RESULT_COUNT += 6;
-                updateStats();
+                document.getElementById('statResults').textContent = RESULT_COUNT;
                 
                 document.getElementById('scrapeResults').style.display = 'block';
                 const content = document.getElementById('scrapeContent');
@@ -1294,12 +1773,11 @@
                 addLog(`✅ Scraping completado: ${title}`, 'success');
                 
                 if (WEBHOOK_URL) {
-                    sendToWebhook(`🌐 **Sitio:** ${siteName}\n📄 **Título:** ${title}\n📝 **Descripción:** ${description}\n✍️ **Autor:** ${author}`, 'cyan');
+                    sendToWebhook(`🌐 **Sitio:** ${siteName}\n📄 **Título:** ${title}\n📝 **Descripción:** ${description}`, 'cyan');
                 }
                 
             } catch (error) {
                 addLog(`❌ Error al scrapear: ${error.message}`, 'error');
-                addLog('💡 Verifica que la URL sea accesible públicamente', 'info');
             }
         }
         
@@ -1345,13 +1823,13 @@
                 }
                 
                 RESULT_COUNT += 3;
-                updateStats();
+                document.getElementById('statResults').textContent = RESULT_COUNT;
                 
                 document.getElementById('scrapeResults').style.display = 'block';
                 const content = document.getElementById('scrapeContent');
                 
                 let metaHtml = '';
-                const importantTags = ['title', 'description', 'keywords', 'author', 'og:title', 'og:description', 'twitter:card', 'viewport'];
+                const importantTags = ['title', 'description', 'keywords', 'author', 'og:title', 'og:description', 'twitter:card'];
                 const importantMetas = metaTags.filter(m => importantTags.includes(m.name));
                 
                 if (importantMetas.length > 0) {
@@ -1376,7 +1854,7 @@
                     </div>
                 `;
                 
-                LAST_RESULTS.push({ time: getTimestamp(), type: 'Meta Datos', data: `${metaTags.length} meta tags en ${url}` });
+                LAST_RESULTS.push({ time: getTimestamp(), type: 'Meta Datos', data: `${metaTags.length} meta tags` });
                 
                 addLog(`✅ ${metaTags.length} meta tags extraídos`, 'success');
                 
@@ -1420,7 +1898,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE REDES SOCIALES MEJORADAS
+        // FUNCIONES DE REDES SOCIALES
         // ============================================
         
         function searchSocial() {
@@ -1436,7 +1914,8 @@
             
             SEARCH_COUNT++;
             REQUEST_COUNT++;
-            updateStats();
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statRequests').textContent = REQUEST_COUNT;
             
             const platformNames = {
                 'twitter': 'Twitter/X',
@@ -1462,7 +1941,7 @@
             
             setTimeout(() => {
                 RESULT_COUNT++;
-                updateStats();
+                document.getElementById('statResults').textContent = RESULT_COUNT;
                 
                 document.getElementById('socialResults').style.display = 'block';
                 const content = document.getElementById('socialContent');
@@ -1493,7 +1972,7 @@
                     addLog(`✅ Perfil encontrado: ${username} en ${platformNames[platform]}`, 'success');
                     
                     if (WEBHOOK_URL) {
-                        sendToWebhook(`📱 **Perfil en ${platformNames[platform]}**\n👤 **Usuario:** ${username}\n🔗 **URL:** ${platformUrls[platform]}\n👥 **Seguidores:** ${followers}`, 'orange');
+                        sendToWebhook(`📱 **Perfil en ${platformNames[platform]}**\n👤 **Usuario:** ${username}\n👥 **Seguidores:** ${followers}`, 'orange');
                     }
                 } else {
                     content.innerHTML = `
@@ -1532,7 +2011,7 @@
             
             setTimeout(() => {
                 RESULT_COUNT += 3;
-                updateStats();
+                document.getElementById('statResults').textContent = RESULT_COUNT;
                 
                 document.getElementById('socialResults').style.display = 'block';
                 const content = document.getElementById('socialContent');
@@ -1571,7 +2050,7 @@
                     </div>
                 `;
                 
-                LAST_RESULTS.push({ time: getTimestamp(), type: 'Multi-Social', data: `${username} - ${foundCount}/${platforms.length} plataformas` });
+                LAST_RESULTS.push({ time: getTimestamp(), type: 'Multi-Social', data: `${username} - ${foundCount}/${platforms.length}` });
                 
                 addLog(`✅ Búsqueda multi-plataforma completada: ${foundCount} encontrados`, 'success');
                 
@@ -1579,7 +2058,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE EMAIL MEJORADAS
+        // FUNCIONES DE EMAIL
         // ============================================
         
         function searchEmail() {
@@ -1598,13 +2077,14 @@
             
             SEARCH_COUNT++;
             REQUEST_COUNT++;
-            updateStats();
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statRequests').textContent = REQUEST_COUNT;
             
             addLog(`✉️ Buscando información de: ${email}`, 'info');
             
             setTimeout(() => {
                 RESULT_COUNT += 2;
-                updateStats();
+                document.getElementById('statResults').textContent = RESULT_COUNT;
                 
                 document.getElementById('emailResults').style.display = 'block';
                 const content = document.getElementById('emailContent');
@@ -1635,7 +2115,7 @@
                 addLog(`✅ Información del email ${email} obtenida`, 'success');
                 
                 if (WEBHOOK_URL) {
-                    sendToWebhook(`✉️ **Email:** ${email}\n🌐 **Dominio:** ${domain}\n📱 **Redes asociadas:** ${hasSocial ? 'Sí' : 'No'}\n🔐 **Filtraciones:** ${hasBreach ? 'Reportado' : 'Sin reportes'}`, 'purple');
+                    sendToWebhook(`✉️ **Email:** ${email}\n🌐 **Dominio:** ${domain}\n📱 **Redes asociadas:** ${hasSocial ? 'Sí' : 'No'}`, 'purple');
                 }
                 
             }, 800 + Math.random() * 800);
@@ -1658,8 +2138,7 @@
                     'Tumblr (2013)',
                     'MySpace (2013)',
                     'Pwned (2016)',
-                    'Collection #1 (2019)',
-                    'Verification (2020)'
+                    'Collection #1 (2019)'
                 ];
                 
                 const numBreaches = Math.floor(Math.random() * 4);
@@ -1690,7 +2169,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE DOMINIO (NUEVAS)
+        // FUNCIONES DE DOMINIO
         // ============================================
         
         function lookupDomain() {
@@ -1704,32 +2183,30 @@
             
             SEARCH_COUNT++;
             REQUEST_COUNT++;
-            updateStats();
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statRequests').textContent = REQUEST_COUNT;
             
             addLog(`🌍 Buscando WHOIS de: ${domain}`, 'info');
             
             setTimeout(() => {
                 RESULT_COUNT += 3;
-                updateStats();
+                document.getElementById('statResults').textContent = RESULT_COUNT;
                 document.getElementById('statDomains').textContent = parseInt(document.getElementById('statDomains').textContent) + 1;
                 
                 document.getElementById('domainResults').style.display = 'block';
                 const content = document.getElementById('domainContent');
                 
-                const domains = ['com', 'org', 'net', 'es', 'io', 'dev'];
-                const tld = domains[Math.floor(Math.random() * domains.length)];
                 const registrar = ['GoDaddy', 'Namecheap', 'Google Domains', 'Cloudflare', 'Hetzner', 'OVH'][Math.floor(Math.random() * 6)];
                 const created = new Date(Date.now() - Math.random() * 31536000000 * 10).toLocaleDateString('es-ES');
                 const expires = new Date(Date.now() + Math.random() * 31536000000 * 3).toLocaleDateString('es-ES');
                 
                 content.innerHTML = `
-                    <div class="domain-card">
-                        <div class="domain">🌍 ${domain}</div>
-                        <div class="info"><strong>📋 TLD:</strong> .${tld}</div>
-                        <div class="info"><strong>🏢 Registrador:</strong> ${registrar}</div>
-                        <div class="info"><strong>📅 Fecha de creación:</strong> ${created}</div>
-                        <div class="info"><strong>⏰ Fecha de expiración:</strong> ${expires}</div>
-                        <div class="info"><strong>📡 Estado:</strong> Activo</div>
+                    <div class="result-item">
+                        <div class="title">🌍 WHOIS de ${domain}</div>
+                        <div class="content"><strong>🏢 Registrador:</strong> ${registrar}</div>
+                        <div class="content"><strong>📅 Fecha de creación:</strong> ${created}</div>
+                        <div class="content"><strong>⏰ Fecha de expiración:</strong> ${expires}</div>
+                        <div class="content"><strong>📡 Estado:</strong> Activo</div>
                         <div class="source">📅 WHOIS consultado: ${new Date().toLocaleString()}</div>
                     </div>
                 `;
@@ -1739,7 +2216,7 @@
                 addLog(`✅ WHOIS de ${domain} obtenido`, 'success');
                 
                 if (WEBHOOK_URL) {
-                    sendToWebhook(`🌍 **Dominio:** ${domain}\n🏢 **Registrador:** ${registrar}\n📅 **Creado:** ${created}\n⏰ **Expira:** ${expires}`, 'purple');
+                    sendToWebhook(`🌍 **Dominio:** ${domain}\n🏢 **Registrador:** ${registrar}\n📅 **Creado:** ${created}`, 'purple');
                 }
                 
             }, 1000 + Math.random() * 1000);
@@ -1758,7 +2235,7 @@
             
             setTimeout(() => {
                 RESULT_COUNT += 2;
-                updateStats();
+                document.getElementById('statResults').textContent = RESULT_COUNT;
                 
                 document.getElementById('domainResults').style.display = 'block';
                 const content = document.getElementById('domainContent');
@@ -1768,12 +2245,12 @@
                 const mx = [`mail.${domain}`, `smtp.${domain}`];
                 
                 content.innerHTML = `
-                    <div class="domain-card">
-                        <div class="domain">📡 DNS de ${domain}</div>
-                        <div class="info"><strong>🔗 A Record:</strong> ${ip}</div>
-                        <div class="info"><strong>📋 Name Servers:</strong> ${servers.slice(0, 2).join(', ')}</div>
-                        <div class="info"><strong>✉️ MX Records:</strong> ${mx.join(', ')}</div>
-                        <div class="info"><strong>🔒 DNSSEC:</strong> ${Math.random() > 0.5 ? '✅ Habilitado' : '❌ No habilitado'}</div>
+                    <div class="result-item">
+                        <div class="title">📡 DNS de ${domain}</div>
+                        <div class="content"><strong>🔗 A Record:</strong> ${ip}</div>
+                        <div class="content"><strong>📋 Name Servers:</strong> ${servers.slice(0, 2).join(', ')}</div>
+                        <div class="content"><strong>✉️ MX Records:</strong> ${mx.join(', ')}</div>
+                        <div class="content"><strong>🔒 DNSSEC:</strong> ${Math.random() > 0.5 ? '✅ Habilitado' : '❌ No habilitado'}</div>
                         <div class="source">📅 DNS consultado: ${new Date().toLocaleString()}</div>
                     </div>
                 `;
@@ -1786,25 +2263,15 @@
         }
         
         // ============================================
-        // FUNCIONES DE ESTADÍSTICAS
-        // ============================================
-        
-        function updateStats() {
-            document.getElementById('statSearches').textContent = SEARCH_COUNT;
-            document.getElementById('statResults').textContent = RESULT_COUNT;
-            document.getElementById('statRequests').textContent = REQUEST_COUNT;
-        }
-        
-        // ============================================
         // INICIALIZACIÓN
         // ============================================
         
         document.addEventListener('DOMContentLoaded', function() {
             addLog('🚀 Info Hunter PRO iniciado', 'info');
             addLog('💡 Herramientas de investigación legal', 'info');
-            addLog('⭐ MODO PRO ACTIVADO - 20+ funciones', 'gold');
+            addLog('⭐ MODO PRO ACTIVADO - 25+ funciones', 'gold');
+            addLog('🤖 Discord Bot integrado', 'discord');
             addLog('⚖️ Uso ético y responsable', 'green');
-            addLog('🌐 Nuevas funciones: Dominios, SSL, Validación', 'cyan');
             
             const savedWebhook = localStorage.getItem('info_hunter_webhook');
             if (savedWebhook) {
@@ -1814,21 +2281,27 @@
                 addLog('🔗 Webhook cargado desde almacenamiento', 'success');
             }
             
+            const savedToken = localStorage.getItem('discord_hunter_token');
+            if (savedToken) {
+                document.getElementById('botToken').value = savedToken;
+                addLog('🔑 Token de Discord cargado', 'info');
+                setTimeout(connectDiscord, 500);
+            }
+            
             // Placeholders
             document.getElementById('phoneInput').placeholder = '+34 600 000 000';
             document.getElementById('urlInput').placeholder = 'https://ejemplo.com';
             document.getElementById('socialInput').placeholder = 'usuario';
             document.getElementById('emailInput').placeholder = 'usuario@ejemplo.com';
             document.getElementById('domainInput').placeholder = 'ejemplo.com';
+            document.getElementById('guildIdInput').placeholder = 'ID del servidor Discord...';
         });
         
         console.log('🔍 Info Hunter PRO - ZONAHACK ELISEO');
         console.log('📡 Herramientas de investigación legal');
-        console.log('⭐ MODO PRO: 20+ funciones');
+        console.log('⭐ MODO PRO: 25+ funciones');
+        console.log('🤖 Discord Bot integrado');
         console.log('⚖️ Uso ético y responsable');
-        console.log('🌐 Sin necesidad de API keys');
-        console.log('🆕 Nuevas funciones: Dominios, SSL, Validación');
     </script>
 </body>
 </html>
-                        
