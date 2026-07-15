@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔍 INFO HUNTER PRO - ZONAHACK ELISEO</title>
     <style>
-        /* ===== ESTILOS COMPLETOS ===== */
+        /* ============================================
+           ESTILOS COMPLETOS (SIN CAMBIOS)
+           ============================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         @keyframes glitch {
@@ -853,7 +855,7 @@
                     <h2 style="color:#ffd700;font-size:24px;">INFO HUNTER PRO</h2>
                     <p style="opacity:0.3;font-size:13px;margin:10px 0;">Herramientas legales para extracción de información pública</p>
                     
-                    <!-- ===== BOTÓN DE MANTENIMIENTO ===== -->
+                    <!-- ===== BOTÓN DE MANTENIMIENTO CON EL GIF ===== -->
                     <div style="margin:15px 0;">
                         <button class="btn-mantenimiento" onclick="abrirMantenimiento()">
                             🔧 MODO MANTENIMIENTO
@@ -1145,12 +1147,13 @@
         </div>
     </div>
     
-    <!-- ===== MODAL: MANTENIMIENTO CON GIF ===== -->
+    <!-- ===== MODAL: MANTENIMIENTO CON EL GIF DE JESÚS BAILANDO ===== -->
     <div class="modal-mantenimiento" id="modalMantenimiento">
         <div class="modal-content">
+            <!-- GIF de Jesús bailando (descargado desde el pin de Pinterest) -->
             <div class="gif-container">
                 <img id="gifMantenimiento" 
-                     src="https://c.tenor.com/4PZ7pE2_LqMAAAAC/jesus-christ-dancing.gif"
+                     src="https://i.pinimg.com/originals/2e/1a/dc/2e1adc8e32ee1fd8d9f0b305416d83c2.gif"
                      alt="Jesús bailando - Modo mantenimiento"
                      onerror="this.style.display='none'; document.getElementById('gifError').style.display='block';"
                      loading="lazy">
@@ -1183,27 +1186,23 @@
     
     <script>
         // ============================================
-        // FUNCIONES DE NAVEGACIÓN - CORREGIDAS
+        // FUNCIONES DE NAVEGACIÓN
         // ============================================
         
         function switchTab(tab) {
-            // Ocultar todos los contenidos
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.remove('active');
             });
             
-            // Desactivar todas las pestañas
             document.querySelectorAll('.tab').forEach(el => {
                 el.classList.remove('active');
             });
             
-            // Activar el contenido seleccionado
             const content = document.getElementById('tab-' + tab);
             if (content) {
                 content.classList.add('active');
             }
             
-            // Activar la pestaña seleccionada
             const tabEl = document.querySelector('.tab[data-tab="' + tab + '"]');
             if (tabEl) {
                 tabEl.classList.add('active');
@@ -1219,6 +1218,7 @@
             document.body.style.overflow = 'hidden';
             addLog('🔧 Modo mantenimiento activado', 'orange');
             
+            // Recargar el GIF si es necesario
             const img = document.getElementById('gifMantenimiento');
             if (img) {
                 const src = img.src;
@@ -1233,12 +1233,14 @@
             addLog('✅ Modo mantenimiento cerrado', 'success');
         }
         
+        // Cerrar con ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 cerrarMantenimiento();
             }
         });
         
+        // Cerrar click fuera del modal
         document.getElementById('modalMantenimiento').addEventListener('click', function(e) {
             if (e.target === this) {
                 cerrarMantenimiento();
@@ -1615,7 +1617,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE DISCORD REALES (RESUMEN)
+        // FUNCIONES DE DISCORD REALES
         // ============================================
         
         async function fetchGuildInfo() {
@@ -1821,7 +1823,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE TELÉFONO (SIMPLIFICADAS)
+        // FUNCIONES DE TELÉFONO
         // ============================================
         
         function cleanPhoneNumber(phone) {
@@ -2009,7 +2011,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE WEB SCRAPING (SIMPLIFICADAS)
+        // FUNCIONES DE WEB SCRAPING
         // ============================================
         
         async function scrapePage() {
@@ -2174,7 +2176,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE REDES SOCIALES (SIMPLIFICADAS)
+        // FUNCIONES DE REDES SOCIALES
         // ============================================
         
         function searchSocial() {
@@ -2307,7 +2309,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE EMAIL (SIMPLIFICADAS)
+        // FUNCIONES DE EMAIL
         // ============================================
         
         function searchEmail() {
@@ -2398,7 +2400,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE DOMINIO (SIMPLIFICADAS)
+        // FUNCIONES DE DOMINIO
         // ============================================
         
         function lookupDomain() {
