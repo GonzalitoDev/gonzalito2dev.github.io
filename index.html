@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔍 INFO HUNTER PRO - ZONAHACK ELISEO</title>
     <style>
-        /* ============================================
-           ESTILOS COMPLETOS (SIN CAMBIOS)
-           ============================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         @keyframes glitch {
@@ -77,7 +74,6 @@
             z-index: 0;
         }
         
-        /* ===== HEADER ===== */
         .header {
             text-align: center;
             margin-bottom: 20px;
@@ -112,7 +108,6 @@
         .subtitle .warning { color: #ffa500; font-weight: bold; }
         .subtitle .discord { color: #5865F2; font-weight: bold; }
         
-        /* ===== TABS ===== */
         .tabs {
             display: flex;
             gap: 3px;
@@ -151,7 +146,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* ===== STATS ===== */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -199,7 +193,6 @@
             letter-spacing: 1px;
         }
         
-        /* ===== PANELES ===== */
         .panel {
             background: rgba(0,150,255,0.02);
             border: 1px solid rgba(0,150,255,0.08);
@@ -223,7 +216,6 @@
         
         .panel-title.discord-title { color: #5865F2; }
         
-        /* ===== BOTONES ===== */
         .btn {
             padding: 10px 20px;
             border: 2px solid #00d4ff;
@@ -274,7 +266,6 @@
         .btn-discord { border-color: #5865F2; color: #5865F2; }
         .btn-discord:hover:not(:disabled) { background: #5865F2; color: #0a0a12; }
 
-        /* ===== BOTÓN DE MANTENIMIENTO ===== */
         .btn-mantenimiento {
             border-color: #ff6b35;
             color: #ff6b35;
@@ -301,7 +292,6 @@
             box-shadow: 0 0 40px rgba(255,107,53,0.3);
         }
 
-        /* ===== MODAL DE MANTENIMIENTO ===== */
         .modal-mantenimiento {
             display: none;
             position: fixed;
@@ -356,14 +346,6 @@
             height: 100%;
             object-fit: cover;
             display: block;
-        }
-        
-        .modal-mantenimiento .modal-content .gif-container .gif-error {
-            display: none;
-            color: #ff6b35;
-            font-size: 14px;
-            padding: 20px;
-            text-align: center;
         }
         
         .modal-mantenimiento .modal-content h2 {
@@ -427,7 +409,6 @@
             animation: progressAnim 3s ease-in-out infinite;
         }
 
-        /* ===== OTROS ELEMENTOS ===== */
         .flex { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .mb-10 { margin-bottom: 10px; }
         .mt-10 { margin-top: 10px; }
@@ -779,7 +760,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- ===== HEADER ===== -->
         <div class="header">
             <div class="logo">
                 <span class="info">🔍 INFO</span>
@@ -797,7 +777,6 @@
             </div>
         </div>
         
-        <!-- ===== TABS ===== -->
         <div class="tabs">
             <div class="tab active" data-tab="home" onclick="switchTab('home')">🏠 Inicio</div>
             <div class="tab discord-tab" data-tab="discord" onclick="switchTab('discord')">🤖 Discord</div>
@@ -809,7 +788,6 @@
             <div class="tab" data-tab="logs" onclick="switchTab('logs')">📄 Logs</div>
         </div>
         
-        <!-- ===== STATS ===== -->
         <div class="stats-row">
             <div class="stat-item">
                 <div class="number" id="statSearches">0</div>
@@ -845,7 +823,6 @@
             </div>
         </div>
         
-        <!-- ===== TAB: HOME ===== -->
         <div id="tab-home" class="tab-content active">
             <div class="panel">
                 <div class="panel-title">🔍 INFO HUNTER PRO - HERRAMIENTAS DE INVESTIGACIÓN</div>
@@ -855,7 +832,6 @@
                     <h2 style="color:#ffd700;font-size:24px;">INFO HUNTER PRO</h2>
                     <p style="opacity:0.3;font-size:13px;margin:10px 0;">Herramientas legales para extracción de información pública</p>
                     
-                    <!-- ===== BOTÓN DE MANTENIMIENTO CON EL GIF ===== -->
                     <div style="margin:15px 0;">
                         <button class="btn-mantenimiento" onclick="abrirMantenimiento()">
                             🔧 MODO MANTENIMIENTO
@@ -909,7 +885,6 @@
             </div>
         </div>
         
-        <!-- ===== TAB: DISCORD ===== -->
         <div id="tab-discord" class="tab-content">
             <div class="panel">
                 <div class="panel-title discord-title">🤖 DISCORD BOT - CONEXIÓN REAL</div>
@@ -985,7 +960,6 @@
             </div>
         </div>
         
-        <!-- ===== TAB: PHONE ===== -->
         <div id="tab-phone" class="tab-content">
             <div class="panel">
                 <div class="panel-title">📱 INFORMACIÓN DE TELÉFONO</div>
@@ -1011,7 +985,6 @@
             </div>
         </div>
         
-        <!-- ===== TAB: WEB ===== -->
         <div id="tab-web" class="tab-content">
             <div class="panel">
                 <div class="panel-title">🌐 WEB SCRAPING</div>
@@ -1032,7 +1005,6 @@
             </div>
         </div>
         
-        <!-- ===== TAB: SOCIAL ===== -->
         <div id="tab-social" class="tab-content">
             <div class="panel">
                 <div class="panel-title">📱 REDES SOCIALES</div>
@@ -1061,7 +1033,6 @@
             </div>
         </div>
         
-        <!-- ===== TAB: EMAIL ===== -->
         <div id="tab-email" class="tab-content">
             <div class="panel">
                 <div class="panel-title">✉️ INFORMACIÓN DE EMAIL</div>
@@ -1081,7 +1052,6 @@
             </div>
         </div>
         
-        <!-- ===== TAB: DOMAIN ===== -->
         <div id="tab-domain" class="tab-content">
             <div class="panel">
                 <div class="panel-title">🌍 INFORMACIÓN DE DOMINIO</div>
@@ -1101,7 +1071,6 @@
             </div>
         </div>
         
-        <!-- ===== TAB: LOGS ===== -->
         <div id="tab-logs" class="tab-content">
             <div class="panel">
                 <div class="panel-title">📄 LOGS DEL SISTEMA</div>
@@ -1121,7 +1090,6 @@
             </div>
         </div>
         
-        <!-- ===== WEBHOOK STATUS ===== -->
         <div class="webhook-status">
             <span class="status-dot blue" id="webhookDot"></span>
             <span id="webhookText">🔍 Sistema listo</span>
@@ -1131,7 +1099,6 @@
         </div>
     </div>
     
-    <!-- ===== MODAL: Webhook ===== -->
     <div class="modal" id="webhookModal">
         <div class="modal-content">
             <h2>🔗 Webhook Discord</h2>
@@ -1147,17 +1114,16 @@
         </div>
     </div>
     
-    <!-- ===== MODAL: MANTENIMIENTO CON EL GIF DE JESÚS BAILANDO ===== -->
+    <!-- ===== MODAL DE MANTENIMIENTO CON GIF DE JESÚS BAILANDO ===== -->
     <div class="modal-mantenimiento" id="modalMantenimiento">
         <div class="modal-content">
-            <!-- GIF de Jesús bailando (descargado desde el pin de Pinterest) -->
             <div class="gif-container">
                 <img id="gifMantenimiento" 
                      src="https://i.pinimg.com/originals/2e/1a/dc/2e1adc8e32ee1fd8d9f0b305416d83c2.gif"
                      alt="Jesús bailando - Modo mantenimiento"
                      onerror="this.style.display='none'; document.getElementById('gifError').style.display='block';"
                      loading="lazy">
-                <div id="gifError" class="gif-error" style="display:none;">
+                <div id="gifError" class="gif-error" style="display:none;color:#ff6b35;font-size:14px;padding:20px;text-align:center;">
                     <div style="font-size:48px;">🙏</div>
                     <p>Jesús está en oración...</p>
                     <p style="font-size:12px;opacity:0.5;">(El GIF no pudo cargarse, pero la fe sigue intacta)</p>
@@ -1218,7 +1184,7 @@
             document.body.style.overflow = 'hidden';
             addLog('🔧 Modo mantenimiento activado', 'orange');
             
-            // Recargar el GIF si es necesario
+            // Recargar el GIF
             const img = document.getElementById('gifMantenimiento');
             if (img) {
                 const src = img.src;
@@ -1233,14 +1199,12 @@
             addLog('✅ Modo mantenimiento cerrado', 'success');
         }
         
-        // Cerrar con ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 cerrarMantenimiento();
             }
         });
         
-        // Cerrar click fuera del modal
         document.getElementById('modalMantenimiento').addEventListener('click', function(e) {
             if (e.target === this) {
                 cerrarMantenimiento();
@@ -2508,7 +2472,6 @@
                 setTimeout(connectDiscord, 500);
             }
             
-            // Placeholders
             document.getElementById('phoneInput').placeholder = '+34 600 000 000';
             document.getElementById('urlInput').placeholder = 'https://ejemplo.com';
             document.getElementById('socialInput').placeholder = 'usuario';
