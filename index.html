@@ -33,6 +33,11 @@
             100% { width: 0%; }
         }
         
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
         body {
             background: #0a0a12;
             color: #00d4ff;
@@ -93,6 +98,7 @@
         .logo .pro { color: #ffd700; font-size: 14px; animation: pulse 0.5s infinite; }
         .logo .eliseo { color: #ffffff; opacity: 0.2; font-size: 16px; }
         .logo .bot { color: #5865F2; font-size: 14px; }
+        .logo .game { color: #00ff88; font-size: 14px; animation: pulse 0.7s infinite; }
         
         .subtitle {
             font-size: 12px;
@@ -107,6 +113,7 @@
         .subtitle .legal { color: #00ff88; font-weight: bold; }
         .subtitle .warning { color: #ffa500; font-weight: bold; }
         .subtitle .discord { color: #5865F2; font-weight: bold; }
+        .subtitle .game { color: #ffd700; font-weight: bold; }
         
         .tabs {
             display: flex;
@@ -137,6 +144,8 @@
         .tab.active { opacity: 1; border-bottom-color: #00d4ff; }
         .tab.discord-tab { color: #5865F2; }
         .tab.discord-tab.active { border-bottom-color: #5865F2; }
+        .tab.game-tab { color: #ffd700; }
+        .tab.game-tab.active { border-bottom-color: #ffd700; }
         
         .tab-content { display: none; animation: fadeIn 0.3s; }
         .tab-content.active { display: block; }
@@ -215,6 +224,7 @@
         }
         
         .panel-title.discord-title { color: #5865F2; }
+        .panel-title.game-title { color: #ffd700; }
         
         .btn {
             padding: 10px 20px;
@@ -265,6 +275,8 @@
         .btn-green:hover:not(:disabled) { background: #00ff88; color: #0a0a12; }
         .btn-discord { border-color: #5865F2; color: #5865F2; }
         .btn-discord:hover:not(:disabled) { background: #5865F2; color: #0a0a12; }
+        .btn-game { border-color: #ffd700; color: #ffd700; }
+        .btn-game:hover:not(:disabled) { background: #ffd700; color: #0a0a12; }
 
         .btn-mantenimiento {
             border-color: #ff6b35;
@@ -409,6 +421,108 @@
             animation: progressAnim 3s ease-in-out infinite;
         }
 
+        /* ===== ESTILOS DEL JUEGO ===== */
+        .game-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(255,215,0,0.1);
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 15px 0;
+        }
+        
+        .game-card {
+            aspect-ratio: 1;
+            background: rgba(255,215,0,0.1);
+            border: 2px solid rgba(255,215,0,0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+            min-height: 60px;
+        }
+        
+        .game-card:hover {
+            transform: scale(1.05);
+            border-color: #ffd700;
+        }
+        
+        .game-card.flipped {
+            background: rgba(255,215,0,0.2);
+            border-color: #ffd700;
+        }
+        
+        .game-card.matched {
+            background: rgba(0,255,136,0.1);
+            border-color: #00ff88;
+            cursor: default;
+            opacity: 0.6;
+        }
+        
+        .game-card.matched:hover {
+            transform: none;
+        }
+        
+        .game-card .card-content {
+            font-size: 32px;
+            display: none;
+        }
+        
+        .game-card.flipped .card-content,
+        .game-card.matched .card-content {
+            display: block;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .game-stats .stat {
+            opacity: 0.7;
+        }
+        
+        .game-stats .stat span {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .game-win {
+            text-align: center;
+            padding: 20px;
+            animation: pulse 0.5s infinite;
+        }
+        
+        .game-win .trophy {
+            font-size: 64px;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        .game-win h3 {
+            color: #ffd700;
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
         .flex { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .mb-10 { margin-bottom: 10px; }
         .mt-10 { margin-top: 10px; }
@@ -499,6 +613,7 @@
         .log-area .log-entry.cyan { color: #00ffff; }
         .log-area .log-entry.orange { color: #ff6b35; }
         .log-area .log-entry.discord { color: #5865F2; }
+        .log-area .log-entry.game { color: #ffd700; }
         
         .badge {
             display: inline-block;
@@ -722,6 +837,7 @@
         }
         
         .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         
         @media (max-width: 768px) {
             .container { padding: 12px; }
@@ -732,10 +848,14 @@
             .stats-row { grid-template-columns: repeat(3, 1fr); }
             .modal-mantenimiento .modal-content { padding: 20px; }
             .modal-mantenimiento .modal-content h2 { font-size: 22px; }
+            .game-board { gap: 5px; }
+            .game-card { font-size: 20px; min-height: 50px; }
         }
         
         @media (max-width: 480px) {
             .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .game-board { gap: 4px; }
+            .game-card { font-size: 18px; min-height: 45px; }
         }
         
         .scrollable-list {
@@ -767,12 +887,14 @@
                 <span class="eliseo">ELISEO</span>
                 <span class="pro">⭐PRO</span>
                 <span class="bot">🤖 BOT</span>
+                <span class="game">🎮 GAME</span>
             </div>
             <div class="subtitle">
                 🎯 Extracción de información pública y legal
                 <span class="legal">| ⚖️ Scraping Ético</span>
                 <span class="highlight">| ⚡ MODO REAL</span>
                 <span class="discord">| 🤖 Discord Bot</span>
+                <span class="game">| 🎮 Juego Incluido</span>
                 <span class="warning">| 🌐 Proxy CORS</span>
             </div>
         </div>
@@ -785,6 +907,7 @@
             <div class="tab" data-tab="social" onclick="switchTab('social')">📱 Social</div>
             <div class="tab" data-tab="email" onclick="switchTab('email')">✉️ Email</div>
             <div class="tab" data-tab="domain" onclick="switchTab('domain')">🌍 Dominio</div>
+            <div class="tab game-tab" data-tab="game" onclick="switchTab('game')">🎮 Juego</div>
             <div class="tab" data-tab="logs" onclick="switchTab('logs')">📄 Logs</div>
         </div>
         
@@ -823,6 +946,7 @@
             </div>
         </div>
         
+        <!-- ===== TAB: HOME ===== -->
         <div id="tab-home" class="tab-content active">
             <div class="panel">
                 <div class="panel-title">🔍 INFO HUNTER PRO - HERRAMIENTAS DE INVESTIGACIÓN</div>
@@ -832,9 +956,12 @@
                     <h2 style="color:#ffd700;font-size:24px;">INFO HUNTER PRO</h2>
                     <p style="opacity:0.3;font-size:13px;margin:10px 0;">Herramientas legales para extracción de información pública</p>
                     
-                    <div style="margin:15px 0;">
+                    <div style="margin:15px 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
                         <button class="btn-mantenimiento" onclick="abrirMantenimiento()">
                             🔧 MODO MANTENIMIENTO
+                        </button>
+                        <button class="btn-game" onclick="switchTab('game')" style="border-color:#ffd700;color:#ffd700;padding:10px 25px;font-size:12px;border-radius:8px;cursor:pointer;background:rgba(255,215,0,0.05);border:2px solid #ffd700;font-family:'Segoe UI','Courier New',monospace;font-weight:bold;text-transform:uppercase;letter-spacing:1px;display:inline-flex;align-items:center;gap:10px;">
+                            🎮 JUGAR AHORA
                         </button>
                     </div>
                     
@@ -854,10 +981,10 @@
                             <div style="font-size:11px;font-weight:bold;color:#00ff88;margin-top:5px;">Web Scraping</div>
                             <div style="font-size:9px;opacity:0.2;">Extracción de datos</div>
                         </div>
-                        <div style="background:rgba(155,89,182,0.02);border:1px solid rgba(155,89,182,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('domain')">
-                            <div style="font-size:28px;">🌍</div>
-                            <div style="font-size:11px;font-weight:bold;color:#9b59b6;margin-top:5px;">Dominios</div>
-                            <div style="font-size:9px;opacity:0.2;">WHOIS y DNS</div>
+                        <div style="background:rgba(255,215,0,0.02);border:1px solid rgba(255,215,0,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('game')">
+                            <div style="font-size:28px;">🎮</div>
+                            <div style="font-size:11px;font-weight:bold;color:#ffd700;margin-top:5px;">Juego</div>
+                            <div style="font-size:9px;opacity:0.2;">Memorama incluido</div>
                         </div>
                     </div>
                     
@@ -868,14 +995,15 @@
                         <button class="btn btn-orange" onclick="switchTab('social')">📱 Social</button>
                         <button class="btn btn-gold" onclick="switchTab('email')">✉️ Email</button>
                         <button class="btn btn-purple" onclick="switchTab('domain')">🌍 Dominio</button>
+                        <button class="btn btn-game" onclick="switchTab('game')">🎮 Juego</button>
                     </div>
                     
                     <div style="margin-top:15px;padding:10px;background:rgba(255,215,0,0.03);border:1px solid rgba(255,215,0,0.05);border-radius:8px;">
-                        <span class="badge badge-gold">⭐ MODO REAL</span>
+                        <span class="badge badge-gold">⭐ MODO PRO</span>
                         <span style="font-size:10px;opacity:0.3;margin-left:8px;">+25 Fuentes de información</span>
                         <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🤖 Discord API REAL</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🎮 Juego Incluido</span>
                         <span style="font-size:10px;opacity:0.3;margin-left:8px;">| ⚖️ Uso Legal</span>
-                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🌐 Proxy CORS</span>
                     </div>
                     
                     <div style="margin-top:10px;padding:8px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.05);border-radius:8px;">
@@ -885,6 +1013,7 @@
             </div>
         </div>
         
+        <!-- ===== TAB: DISCORD ===== -->
         <div id="tab-discord" class="tab-content">
             <div class="panel">
                 <div class="panel-title discord-title">🤖 DISCORD BOT - CONEXIÓN REAL</div>
@@ -960,6 +1089,7 @@
             </div>
         </div>
         
+        <!-- ===== TAB: PHONE ===== -->
         <div id="tab-phone" class="tab-content">
             <div class="panel">
                 <div class="panel-title">📱 INFORMACIÓN DE TELÉFONO</div>
@@ -985,6 +1115,7 @@
             </div>
         </div>
         
+        <!-- ===== TAB: WEB ===== -->
         <div id="tab-web" class="tab-content">
             <div class="panel">
                 <div class="panel-title">🌐 WEB SCRAPING</div>
@@ -1005,6 +1136,7 @@
             </div>
         </div>
         
+        <!-- ===== TAB: SOCIAL ===== -->
         <div id="tab-social" class="tab-content">
             <div class="panel">
                 <div class="panel-title">📱 REDES SOCIALES</div>
@@ -1033,6 +1165,7 @@
             </div>
         </div>
         
+        <!-- ===== TAB: EMAIL ===== -->
         <div id="tab-email" class="tab-content">
             <div class="panel">
                 <div class="panel-title">✉️ INFORMACIÓN DE EMAIL</div>
@@ -1052,6 +1185,7 @@
             </div>
         </div>
         
+        <!-- ===== TAB: DOMAIN ===== -->
         <div id="tab-domain" class="tab-content">
             <div class="panel">
                 <div class="panel-title">🌍 INFORMACIÓN DE DOMINIO</div>
@@ -1071,6 +1205,38 @@
             </div>
         </div>
         
+        <!-- ===== TAB: JUEGO (NUEVO) ===== -->
+        <div id="tab-game" class="tab-content">
+            <div class="panel">
+                <div class="panel-title game-title">🎮 MEMORAMA - ENCUENTRA LAS PAREJAS</div>
+                
+                <div class="game-container">
+                    <div class="game-stats">
+                        <div class="stat">🎯 Intentos: <span id="gameMoves">0</span></div>
+                        <div class="stat">✅ Parejas: <span id="gamePairs">0</span>/8</div>
+                        <div class="stat">⏱️ Tiempo: <span id="gameTime">0s</span></div>
+                        <button class="btn btn-game" onclick="resetGame()" style="padding:4px 12px;font-size:9px;">🔄 Reiniciar</button>
+                    </div>
+                    
+                    <div class="game-board" id="gameBoard">
+                        <!-- Las cartas se generan con JavaScript -->
+                    </div>
+                    
+                    <div id="gameWin" style="display:none;" class="game-win">
+                        <div class="trophy">🏆</div>
+                        <h3>¡HAS GANADO!</h3>
+                        <p style="opacity:0.5;">Completaste el memorama en <span id="winMoves">0</span> intentos</p>
+                        <button class="btn btn-game" onclick="resetGame()" style="margin-top:10px;">🔄 Jugar de nuevo</button>
+                    </div>
+                </div>
+                
+                <div style="margin-top:10px;text-align:center;opacity:0.2;font-size:9px;">
+                    💡 Encuentra todas las parejas de emojis
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== TAB: LOGS ===== -->
         <div id="tab-logs" class="tab-content">
             <div class="panel">
                 <div class="panel-title">📄 LOGS DEL SISTEMA</div>
@@ -1114,7 +1280,6 @@
         </div>
     </div>
     
-    <!-- ===== MODAL DE MANTENIMIENTO CON GIF DE JESÚS BAILANDO ===== -->
     <div class="modal-mantenimiento" id="modalMantenimiento">
         <div class="modal-content">
             <div class="gif-container">
@@ -1123,10 +1288,9 @@
                      alt="Jesús bailando - Modo mantenimiento"
                      onerror="this.style.display='none'; document.getElementById('gifError').style.display='block';"
                      loading="lazy">
-                <div id="gifError" class="gif-error" style="display:none;color:#ff6b35;font-size:14px;padding:20px;text-align:center;">
+                <div id="gifError" style="display:none;color:#ff6b35;font-size:14px;padding:20px;text-align:center;">
                     <div style="font-size:48px;">🙏</div>
                     <p>Jesús está en oración...</p>
-                    <p style="font-size:12px;opacity:0.5;">(El GIF no pudo cargarse, pero la fe sigue intacta)</p>
                 </div>
             </div>
             
@@ -1184,7 +1348,6 @@
             document.body.style.overflow = 'hidden';
             addLog('🔧 Modo mantenimiento activado', 'orange');
             
-            // Recargar el GIF
             const img = document.getElementById('gifMantenimiento');
             if (img) {
                 const src = img.src;
@@ -1211,6 +1374,150 @@
             }
         });
 
+        // ============================================
+        // JUEGO DE MEMORAMA
+        // ============================================
+        
+        const EMOJIS = ['🚀', '🎮', '🕵️', '🔍', '💻', '🤖', '🔥', '⭐'];
+        let gameCards = [];
+        let gameState = {
+            moves: 0,
+            pairs: 0,
+            time: 0,
+            timer: null,
+            firstCard: null,
+            secondCard: null,
+            locked: false
+        };
+        
+        function initGame() {
+            const board = document.getElementById('gameBoard');
+            board.innerHTML = '';
+            
+            // Crear pares de cartas
+            let deck = [...EMOJIS, ...EMOJIS];
+            // Mezclar
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            
+            gameCards = deck;
+            
+            // Crear elementos HTML
+            deck.forEach((emoji, index) => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.dataset.index = index;
+                card.dataset.emoji = emoji;
+                card.innerHTML = `<span class="card-content">${emoji}</span>`;
+                card.addEventListener('click', () => flipCard(card));
+                board.appendChild(card);
+            });
+            
+            // Resetear estado del juego
+            gameState.moves = 0;
+            gameState.pairs = 0;
+            gameState.time = 0;
+            gameState.firstCard = null;
+            gameState.secondCard = null;
+            gameState.locked = false;
+            
+            if (gameState.timer) {
+                clearInterval(gameState.timer);
+                gameState.timer = null;
+            }
+            
+            document.getElementById('gameMoves').textContent = '0';
+            document.getElementById('gamePairs').textContent = '0';
+            document.getElementById('gameTime').textContent = '0s';
+            document.getElementById('gameWin').style.display = 'none';
+            
+            // Iniciar timer al hacer clic en una carta
+            let timerStarted = false;
+            const startTimer = () => {
+                if (!timerStarted) {
+                    timerStarted = true;
+                    gameState.timer = setInterval(() => {
+                        gameState.time++;
+                        document.getElementById('gameTime').textContent = gameState.time + 's';
+                    }, 1000);
+                }
+            };
+            
+            // Sobrescribir el evento click para iniciar el timer
+            document.querySelectorAll('.game-card').forEach(card => {
+                const originalClick = card.click;
+                card.addEventListener('click', startTimer, { once: true });
+            });
+        }
+        
+        function flipCard(card) {
+            // Si está bloqueado, ya está volteada o ya fue emparejada
+            if (gameState.locked) return;
+            if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+            
+            // Voltear carta
+            card.classList.add('flipped');
+            
+            // Guardar referencia
+            if (!gameState.firstCard) {
+                gameState.firstCard = card;
+                return;
+            }
+            
+            gameState.secondCard = card;
+            gameState.moves++;
+            document.getElementById('gameMoves').textContent = gameState.moves;
+            
+            // Verificar pareja
+            const emoji1 = gameState.firstCard.dataset.emoji;
+            const emoji2 = gameState.secondCard.dataset.emoji;
+            
+            if (emoji1 === emoji2) {
+                // ¡Pareja encontrada!
+                gameState.firstCard.classList.add('matched');
+                gameState.secondCard.classList.add('matched');
+                gameState.pairs++;
+                document.getElementById('gamePairs').textContent = gameState.pairs;
+                
+                gameState.firstCard = null;
+                gameState.secondCard = null;
+                
+                // Verificar si ganó
+                if (gameState.pairs === EMOJIS.length) {
+                    setTimeout(() => {
+                        if (gameState.timer) {
+                            clearInterval(gameState.timer);
+                            gameState.timer = null;
+                        }
+                        document.getElementById('winMoves').textContent = gameState.moves;
+                        document.getElementById('gameWin').style.display = 'block';
+                        addLog(`🏆 ¡Ganaste el memorama en ${gameState.moves} intentos y ${gameState.time}s!`, 'game');
+                    }, 300);
+                }
+            } else {
+                // No coincide - voltear de nuevo después de un momento
+                gameState.locked = true;
+                setTimeout(() => {
+                    gameState.firstCard.classList.remove('flipped');
+                    gameState.secondCard.classList.remove('flipped');
+                    gameState.firstCard = null;
+                    gameState.secondCard = null;
+                    gameState.locked = false;
+                }, 600);
+            }
+        }
+        
+        function resetGame() {
+            if (gameState.timer) {
+                clearInterval(gameState.timer);
+                gameState.timer = null;
+            }
+            initGame();
+            addLog('🔄 Juego reiniciado', 'game');
+        }
+        
         // ============================================
         // CONFIGURACIÓN
         // ============================================
@@ -1349,7 +1656,8 @@
                 purple: 0x9b59b6,
                 pink: 0xff69b4,
                 green: 0x00ff88,
-                discord: 0x5865F2
+                discord: 0x5865F2,
+                game: 0xffd700
             };
             
             const embed = {
@@ -1581,7 +1889,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE DISCORD REALES
+        // FUNCIONES DE DISCORD REALES (RESUMEN)
         // ============================================
         
         async function fetchGuildInfo() {
@@ -2453,9 +2761,13 @@
             addLog('💡 Herramientas de investigación legal', 'info');
             addLog('⭐ MODO REAL ACTIVADO - 25+ funciones', 'gold');
             addLog('🤖 Discord Bot - Conexión REAL con API', 'discord');
+            addLog('🎮 Juego de memorama incluido', 'game');
             addLog('⚖️ Uso ético y responsable', 'green');
             addLog('💡 Activa el proxy CORS si hay errores de conexión', 'info');
             addLog('🙏 Botón de mantenimiento con Jesús bailando', 'gold');
+            
+            // Iniciar el juego
+            initGame();
             
             const savedWebhook = localStorage.getItem('info_hunter_webhook');
             if (savedWebhook) {
@@ -2484,9 +2796,11 @@
         console.log('📡 Herramientas de investigación legal - MODO REAL');
         console.log('⭐ MODO REAL: 25+ funciones con datos REALES');
         console.log('🤖 Discord Bot - Conexión REAL con API oficial');
+        console.log('🎮 Juego de memorama incluido - Diviértete');
         console.log('⚖️ Uso ético y responsable');
         console.log('💡 Activa el proxy CORS si hay errores de conexión');
         console.log('🙏 Botón de mantenimiento con Jesús bailando');
     </script>
 </body>
 </html>
+    
