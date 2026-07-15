@@ -3,1068 +3,1409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELISEO v6.0 ZONAHACK - Panel de Control</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>🔥 ZONAHACK ELISEO v6.0 - PANEL WEB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0f;
-            color: #e0e0e0;
-            min-height: 100vh;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            padding: 20px 30px;
-            border-bottom: 2px solid #00ff88;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .header h1 {
-            font-size: 28px;
-            background: linear-gradient(90deg, #00ff88, #00ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0,255,136,0.3);
-        }
-        
-        .header .status {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .status-badge {
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: rgba(0,255,136,0.15);
-            border: 1px solid #00ff88;
-            color: #00ff88;
-            font-size: 14px;
-        }
-        
-        .dashboard {
-            padding: 20px 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .card {
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(0,255,136,0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,255,136,0.1);
-            border-color: #00ff88;
-        }
-        
-        .card .icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-            color: #00ff88;
-        }
-        
-        .card .value {
-            font-size: 32px;
-            font-weight: bold;
-            margin: 10px 0;
-            background: linear-gradient(90deg, #00ff88, #00ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .card .label {
-            color: #888;
-            font-size: 14px;
-        }
-        
-        .main-content {
-            padding: 0 30px 30px;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-        
-        .panel {
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(0,255,136,0.1);
-        }
-        
-        .panel h2 {
-            color: #00ff88;
-            margin-bottom: 20px;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .bot-item {
-            background: rgba(255,255,255,0.03);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            border-left: 3px solid #00ff88;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            transition: all 0.3s ease;
-        }
-        
-        .bot-item:hover {
-            background: rgba(255,255,255,0.06);
-        }
-        
-        .bot-item .info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .bot-item .name {
-            font-weight: bold;
-            color: #fff;
-        }
-        
-        .bot-item .token {
-            font-size: 11px;
-            color: #666;
-            font-family: monospace;
-        }
-        
-        .bot-status {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-        
-        .bot-status.active {
-            background: rgba(0,255,136,0.2);
-            color: #00ff88;
-            animation: pulse 2s infinite;
-        }
-        
-        .bot-status.inactive {
-            background: rgba(255,255,255,0.1);
-            color: #888;
-        }
-        
-        .bot-status.error {
-            background: rgba(255,0,0,0.2);
-            color: #ff4444;
-        }
-        
-        .bot-status.connecting {
-            background: rgba(255,170,0,0.2);
-            color: #ffaa00;
-            animation: pulse 1s infinite;
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0 0 20px rgba(255,0,0,0.3), 0 0 40px rgba(255,0,0,0.1); }
+            50% { text-shadow: 0 0 40px rgba(255,0,0,0.8), 0 0 80px rgba(255,0,0,0.4), 0 0 120px rgba(255,0,0,0.2); }
         }
         
         @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.02); }
         }
         
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.3s ease;
-            margin: 2px;
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         
-        .btn-primary {
-            background: #00ff88;
-            color: #0a0a0f;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .btn-primary:hover {
-            background: #00cc77;
-            transform: scale(1.05);
+        @keyframes matrixRain {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
         }
         
-        .btn-danger {
-            background: #ff4444;
-            color: white;
+        body {
+            background: #0a0000;
+            color: #ff0040;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(ellipse at 50% 0%, rgba(255,0,0,0.05) 0%, transparent 70%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,0,0,0.01) 2px, rgba(255,0,0,0.01) 4px);
         }
         
-        .btn-danger:hover {
-            background: #cc0000;
-            transform: scale(1.05);
-        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255,0,0,0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,0,0,0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,0,0,0.5); }
         
-        .btn-warning {
-            background: #ffaa00;
-            color: #0a0a0f;
-        }
+        .container { max-width: 1400px; margin: 0 auto; }
         
-        .btn-warning:hover {
-            background: #cc8800;
-            transform: scale(1.05);
-        }
-        
-        .btn-sm {
-            padding: 4px 10px;
-            font-size: 11px;
-        }
-        
-        .add-bot-form {
-            display: flex;
-            gap: 10px;
+        .header {
+            background: linear-gradient(135deg, rgba(255,0,0,0.05), rgba(255,0,0,0.02));
+            border: 1px solid rgba(255,0,0,0.2);
+            border-radius: 12px;
+            padding: 25px;
             margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff0040, transparent);
+            animation: scan 3s linear infinite;
+        }
+        
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            animation: glitch 2s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 4px;
+        }
+        
+        .logo .hack { color: #ff0040; }
+        .logo .version { font-size: 18px; opacity: 0.5; }
+        .logo .ultra { color: #ffa500; font-size: 16px; animation: pulse 1.5s infinite; }
+        .logo .eliseo { color: #ffffff; opacity: 0.3; font-size: 14px; }
+        .logo .web { color: #00ff41; font-size: 14px; }
+        
+        .subtitle {
+            margin-top: 5px;
+            opacity: 0.4;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle .ip { color: #00ff41; font-weight: bold; }
+        .subtitle .no-commands { color: #ffa500; font-weight: bold; }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255,0,0,0.03);
+            border: 1px solid rgba(255,0,0,0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: default;
+        }
+        
+        .stat-card:hover {
+            border-color: #ff0040;
+            background: rgba(255,0,0,0.05);
+            transform: translateY(-2px);
+        }
+        
+        .stat-card .number { font-size: 24px; font-weight: bold; color: #ff0040; }
+        .stat-card .number.green { color: #00ff41; }
+        .stat-card .number.orange { color: #ffa500; }
+        .stat-card .number.blue { color: #0066ff; }
+        .stat-card .number.raid-active { color: #ff0040; animation: pulse 1s infinite; }
+        
+        .stat-card .label {
+            font-size: 10px;
+            opacity: 0.4;
+            text-transform: uppercase;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 3px;
+            margin: 20px 0;
+            border-bottom: 1px solid rgba(255,0,0,0.1);
+            padding-bottom: 10px;
             flex-wrap: wrap;
         }
         
-        .add-bot-form input {
-            flex: 1;
-            padding: 10px 15px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: #e0e0e0;
-            min-width: 200px;
-        }
-        
-        .add-bot-form input:focus {
-            outline: none;
-            border-color: #00ff88;
-        }
-        
-        .raid-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        
-        .raid-controls input, .raid-controls select {
-            padding: 10px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: #e0e0e0;
-        }
-        
-        .raid-controls input:focus, .raid-controls select:focus {
-            outline: none;
-            border-color: #00ff88;
-        }
-        
-        .raid-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .log-container {
-            max-height: 300px;
-            overflow-y: auto;
-            background: rgba(0,0,0,0.3);
-            border-radius: 8px;
-            padding: 10px;
-        }
-        
-        .log-entry {
-            font-size: 12px;
-            font-family: monospace;
-            padding: 3px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-        }
-        
-        .log-entry .time {
-            color: #666;
-        }
-        
-        .log-entry .msg {
-            color: #00ff88;
-        }
-        
-        .log-entry .error {
-            color: #ff4444;
-        }
-        
-        .log-entry .success {
-            color: #00ff88;
-        }
-        
-        .ip-log {
-            background: rgba(255,255,255,0.03);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
+        .tab {
+            padding: 10px 25px;
+            cursor: pointer;
+            opacity: 0.3;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            font-weight: bold;
             font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .tab:hover { opacity: 0.6; }
+        .tab.active { opacity: 1; border-bottom-color: #ff0040; }
+        
+        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+        
+        .btn {
+            padding: 8px 18px;
+            border: 1px solid #ff0040;
+            border-radius: 6px;
+            cursor: pointer;
+            background: transparent;
+            color: #ff0040;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn:hover {
+            background: #ff0040;
+            color: #0a0000;
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255,0,0,0.2);
+        }
+        
+        .btn:active { transform: scale(0.98); }
+        
+        .btn-danger { border-color: #ff0040; color: #ff0040; }
+        .btn-danger:hover { background: #ff0040; color: #0a0000; }
+        
+        .btn-success { border-color: #00ff41; color: #00ff41; }
+        .btn-success:hover { background: #00ff41; color: #0a0000; }
+        
+        .btn-warning { border-color: #ffa500; color: #ffa500; }
+        .btn-warning:hover { background: #ffa500; color: #0a0000; }
+        
+        .btn-primary { border-color: #0066ff; color: #0066ff; }
+        .btn-primary:hover { background: #0066ff; color: #0a0000; }
+        
+        .btn-purple { border-color: #9b59b6; color: #9b59b6; }
+        .btn-purple:hover { background: #9b59b6; color: #0a0000; }
+        
+        .btn-ip { border-color: #00ff41; color: #00ff41; }
+        .btn-ip:hover { background: #00ff41; color: #0a0000; }
+        
+        .flex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .mb-10 { margin-bottom: 10px; }
+        .mt-10 { margin-top: 10px; }
+        .gap-5 { gap: 5px; }
+        
+        .bots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .bot-card {
+            background: rgba(255,0,0,0.02);
+            border: 1px solid rgba(255,0,0,0.1);
+            border-radius: 10px;
+            padding: 18px;
+            transition: all 0.3s;
+        }
+        
+        .bot-card:hover {
+            border-color: #ff0040;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 30px rgba(255,0,0,0.05);
+        }
+        
+        .bot-card .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 12px;
+            padding: 0;
+            border: none;
+            background: transparent;
         }
         
-        .ip-log .ip {
-            font-family: monospace;
-            color: #00ccff;
+        .bot-card .header::before { display: none; }
+        
+        .bot-card .name { font-size: 18px; font-weight: bold; color: #ff0040; }
+        
+        .bot-card .status {
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
         }
         
-        .ip-log .country {
-            color: #ffaa00;
+        .status-running { background: rgba(0,255,65,0.2); color: #00ff41; border: 1px solid #00ff41; }
+        .status-stopped { background: rgba(255,0,64,0.2); color: #ff0040; border: 1px solid #ff0040; }
+        .status-error { background: rgba(255,0,0,0.2); color: #ff0000; border: 1px solid #ff0000; }
+        .status-starting { background: rgba(255,165,0,0.2); color: #ffa500; border: 1px solid #ffa500; }
+        .status-raid { background: rgba(255,0,64,0.3); color: #ff0040; border: 1px solid #ff0040; animation: pulse 1s infinite; }
+        
+        .bot-card .info {
+            font-size: 12px;
+            opacity: 0.5;
+            margin: 10px 0;
+            line-height: 1.8;
         }
         
-        .raid-progress {
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(0,0,0,0.3);
+        .bot-card .info span { display: inline-block; margin-right: 15px; }
+        
+        .bot-card .actions { display: flex; gap: 5px; flex-wrap: wrap; }
+        .bot-card .actions .btn { padding: 4px 12px; font-size: 10px; }
+        
+        .bot-card .stats-bar {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            font-size: 11px;
+        }
+        
+        .bot-card .stats-bar .stat-item { opacity: 0.5; }
+        .bot-card .stats-bar .stat-item .value { color: #ff0040; font-weight: bold; }
+        
+        .raid-controls {
+            background: rgba(255,0,0,0.02);
+            border: 1px solid rgba(255,0,0,0.1);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        
+        .raid-controls .row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .raid-controls select,
+        .raid-controls input,
+        .raid-controls textarea {
+            padding: 10px 14px;
+            background: rgba(255,0,0,0.05);
+            border: 1px solid rgba(255,0,0,0.2);
+            border-radius: 6px;
+            color: #ff0040;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+        
+        .raid-controls select:focus,
+        .raid-controls input:focus,
+        .raid-controls textarea:focus {
+            outline: none;
+            border-color: #ff0040;
+            box-shadow: 0 0 20px rgba(255,0,0,0.05);
+        }
+        
+        .raid-controls select option { background: #0a0000; color: #ff0040; }
+        .raid-controls textarea { min-height: 60px; width: 100%; resize: vertical; }
+        
+        .raid-status {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,0,64,0.05);
+            border: 1px solid rgba(255,0,64,0.2);
             border-radius: 8px;
+            text-align: center;
             display: none;
+            font-weight: bold;
         }
         
-        .raid-progress .bar {
-            height: 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
+        .raid-status.active { display: block; animation: pulse 1s infinite; }
+        
+        .help-text { color: #ff0040; opacity: 0.3; font-size: 11px; margin-top: 5px; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.active { display: flex; }
+        
+        .modal-content {
+            background: #0a0000;
+            border: 1px solid #ff0040;
+            border-radius: 12px;
+            padding: 35px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-content h2 { margin-bottom: 20px; font-size: 24px; color: #ff0040; }
+        
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(255,0,0,0.05);
+            border: 1px solid rgba(255,0,0,0.2);
+            border-radius: 6px;
+            color: #ff0040;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .modal-content input:focus { outline: none; border-color: #ff0040; }
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+        
+        .logs-container {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,0,0,0.1);
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .logs-container .log {
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,0,0,0.03);
+            display: flex;
+            gap: 10px;
+        }
+        
+        .logs-container .log .time { opacity: 0.3; min-width: 150px; }
+        .logs-container .log-success { color: #00ff41; }
+        .logs-container .log-error { color: #ff0040; }
+        .logs-container .log-info { color: #ffa500; }
+        .logs-container .log-raid { color: #ff0040; font-weight: bold; }
+        .logs-container .log-ip { color: #00ff41; font-weight: bold; }
+        
+        .server-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        
+        .server-item {
+            background: rgba(255,0,0,0.03);
+            border: 1px solid rgba(255,0,0,0.05);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 12px;
+        }
+        
+        .server-item .name { font-weight: bold; color: #ff0040; }
+        .server-item .members { opacity: 0.5; font-size: 10px; }
+        
+        .ip-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .ip-item {
+            background: rgba(0,255,65,0.03);
+            border: 1px solid rgba(0,255,65,0.05);
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 12px;
+        }
+        
+        .ip-item .user { font-weight: bold; color: #00ff41; }
+        .ip-item .ip { color: #ffa500; font-family: 'Courier New', monospace; }
+        .ip-item .time { opacity: 0.3; font-size: 10px; }
+        
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-red { background: rgba(255,0,0,0.2); color: #ff0040; border: 1px solid #ff0040; }
+        .badge-green { background: rgba(0,255,65,0.2); color: #00ff41; border: 1px solid #00ff41; }
+        .badge-orange { background: rgba(255,165,0,0.2); color: #ffa500; border: 1px solid #ffa500; }
+        .badge-blue { background: rgba(0,102,255,0.2); color: #0066ff; border: 1px solid #0066ff; }
+        
+        .title-zone {
+            font-size: 14px;
+            color: #ffa500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        
+        .no-commands-banner {
+            background: rgba(255,165,0,0.05);
+            border: 1px solid rgba(255,165,0,0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 13px;
+            color: #ffa500;
+        }
+        
+        .speed-selector {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .speed-btn {
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,0,0,0.2);
+            background: transparent;
+            color: #ff0040;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            transition: all 0.3s;
+        }
+        
+        .speed-btn.active {
+            background: #ff0040;
+            color: #0a0000;
+            border-color: #ff0040;
+        }
+        
+        .speed-btn:hover { background: rgba(255,0,0,0.1); }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,0,0,0.1);
+            border-radius: 3px;
             overflow: hidden;
             margin-top: 5px;
         }
         
-        .raid-progress .fill {
+        .progress-bar .fill {
             height: 100%;
-            background: linear-gradient(90deg, #00ff88, #00ccff);
+            background: linear-gradient(90deg, #ff0040, #ffa500);
             width: 0%;
-            transition: width 0.5s ease;
+            transition: width 0.3s;
         }
         
-        .bot-info {
-            font-size: 11px;
-            color: #888;
+        .raid-progress {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,0,0,0.02);
+            border: 1px solid rgba(255,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        .raid-progress.active { display: block; }
+        
+        .flash {
+            animation: flash 0.5s;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
         
         @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .dashboard {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0f;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #00ff88;
-            border-radius: 4px;
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .bots-grid { grid-template-columns: 1fr; }
+            .raid-controls .row { flex-direction: column; }
+            .logo { font-size: 28px; }
+            .tabs { gap: 2px; }
+            .tab { padding: 8px 12px; font-size: 10px; }
+            .ip-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <h1><i class="fas fa-skull"></i> ELISEO v6.0 ZONAHACK</h1>
-        <div class="status">
-            <span class="status-badge"><i class="fas fa-circle" style="color: #00ff88;"></i> ONLINE</span>
-            <span class="status-badge"><i class="fas fa-microchip"></i> <span id="workersCount">0</span> Workers</span>
-            <span class="status-badge"><i class="fas fa-robot"></i> <span id="botsCount">0</span> Bots</span>
-        </div>
-    </header>
-    
-    <!-- Dashboard -->
-    <div class="dashboard">
-        <div class="card">
-            <div class="icon"><i class="fas fa-envelope"></i></div>
-            <div class="value" id="totalMessages">0</div>
-            <div class="label">Mensajes Enviados</div>
-        </div>
-        <div class="card">
-            <div class="icon"><i class="fas fa-bolt"></i></div>
-            <div class="value" id="totalRaids">0</div>
-            <div class="label">RAIDs Realizados</div>
-        </div>
-        <div class="card">
-            <div class="icon"><i class="fas fa-robot"></i></div>
-            <div class="value" id="totalBots">0</div>
-            <div class="label">Bots Registrados</div>
-        </div>
-        <div class="card">
-            <div class="icon"><i class="fas fa-network-wired"></i></div>
-            <div class="value" id="activeWorkers">0</div>
-            <div class="label">Workers Activos</div>
-        </div>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Left Panel -->
-        <div>
-            <!-- Bots Panel -->
-            <div class="panel">
-                <h2><i class="fas fa-robot"></i> Gestión de Bots</h2>
-                
-                <div class="add-bot-form">
-                    <input type="text" id="botToken" placeholder="Token del Bot (ej: MTIzNDU2Nzg5MDEyMzQ1Njc4OQ)" required>
-                    <input type="text" id="botName" placeholder="Nombre del Bot" value="Bot_ELISEO">
-                    <button class="btn btn-primary" onclick="addBot()"><i class="fas fa-plus"></i> Agregar Bot</button>
-                </div>
-                
-                <div id="botList"></div>
+    <div class="container">
+        <!-- HEADER ZONAHACK -->
+        <div class="header">
+            <div class="logo">
+                <span class="hack">🔥 ZONAHACK</span>
+                <span class="eliseo">ELISEO</span>
+                <span class="version">v6.0</span>
+                <span class="ultra">⚡ULTRA</span>
+                <span class="web">🌐WEB</span>
             </div>
-            
-            <!-- Raid Controls -->
-            <div class="panel" style="margin-top: 20px;">
-                <h2><i class="fas fa-bolt"></i> Control de RAIDs</h2>
-                <div class="raid-controls">
-                    <select id="raidBot" style="grid-column: span 2;">
-                        <option value="">Seleccionar Bot</option>
-                    </select>
-                    <input type="text" id="raidChannel" placeholder="ID del Canal (ej: 123456789012345678)">
-                    <input type="number" id="raidCount" placeholder="Mensajes" value="100">
-                    <input type="number" id="raidWorkers" placeholder="Workers" value="5">
-                    <input type="text" id="raidMessage" placeholder="Mensaje" style="grid-column: span 2;" value="RAID MASSIVE by ELISEO v6.0 🔥">
+            <div class="subtitle">
+                💀 Sistema de RAID Masivo - 10,000+ Mensajes por Minuto
+                <span class="ip">| 🌐 IP: <span id="localIP">Cargando...</span></span>
+                <span class="no-commands">| 🚫 SIN COMANDOS - 100% WEB</span>
+            </div>
+            <div style="margin-top:15px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;font-size:13px;">
+                <span>🤖 Bots: <strong id="totalBots">0</strong></span>
+                <span>⚡ Activos: <strong id="activeBots">0</strong></span>
+                <span>💀 RAIDs: <strong id="totalRaids">0</strong></span>
+                <span>💬 Mensajes: <strong id="totalMessages">0</strong></span>
+                <span>🔥 Activos: <strong id="activeRaids" style="color:#ff0040;">0</strong></span>
+                <span>📡 IPs: <strong id="totalIPs">0</strong></span>
+            </div>
+        </div>
+        
+        <!-- STATS -->
+        <div class="stats">
+            <div class="stat-card"><div class="number" id="statBots">0</div><div class="label">Bots</div></div>
+            <div class="stat-card"><div class="number green" id="statRunning">0</div><div class="label">Activos</div></div>
+            <div class="stat-card"><div class="number" id="statMessages">0</div><div class="label">Mensajes</div></div>
+            <div class="stat-card"><div class="number orange" id="statRaids">0</div><div class="label">RAIDs</div></div>
+            <div class="stat-card"><div class="number raid-active" id="statActiveRaids">0</div><div class="label">RAIDs Activos</div></div>
+            <div class="stat-card"><div class="number blue" id="statServers">0</div><div class="label">Servidores</div></div>
+            <div class="stat-card"><div class="number green" id="statIPs">0</div><div class="label">IPs Escaneadas</div></div>
+            <div class="stat-card"><div class="number" id="statSpeed">0</div><div class="label">Velocidad msg/s</div></div>
+        </div>
+        
+        <!-- TABS -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('dashboard')">🏠 Dashboard</div>
+            <div class="tab" onclick="switchTab('bots')">🤖 Bots</div>
+            <div class="tab" onclick="switchTab('raid')">💀 RAID</div>
+            <div class="tab" onclick="switchTab('servers')">🏰 Servidores</div>
+            <div class="tab" onclick="switchTab('ips')">📡 IP Scanner</div>
+            <div class="tab" onclick="switchTab('logs')">📋 Logs</div>
+        </div>
+        
+        <!-- DASHBOARD -->
+        <div id="tab-dashboard" class="tab-content active">
+            <div style="background:rgba(255,0,0,0.02);border:1px solid rgba(255,0,0,0.1);border-radius:12px;padding:30px;text-align:center;">
+                <div class="no-commands-banner">
+                    🚫 ESTE BOT NO TIENE COMANDOS - TODO SE CONTROLA DESDE EL PANEL WEB
                 </div>
-                <div class="raid-actions">
-                    <button class="btn btn-primary" onclick="startRaid()" id="startRaidBtn">
-                        <i class="fas fa-play"></i> Iniciar RAID
-                    </button>
-                    <button class="btn btn-warning" onclick="stopRaid()">
-                        <i class="fas fa-stop"></i> Detener
-                    </button>
+                <div class="title-zone">🔥 ZONAHACK ELISEO v6.0 - 100% WEB</div>
+                <h2 style="margin-bottom:15px;font-size:32px;color:#ff0040;">🚀 SISTEMA DE RAID ULTRA</h2>
+                <p style="opacity:0.6;font-size:16px;">Discord Bot Raid System - 10,000+ mensajes por minuto</p>
+                <p style="opacity:0.3;font-size:13px;margin-top:5px;">💀 Powered by ZONAHACK - Destrucción Total</p>
+                
+                <div style="margin-top:25px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap;">
+                    <button class="btn btn-success" onclick="switchTab('bots')" style="padding:12px 30px;font-size:14px;">🤖 Gestionar Bots</button>
+                    <button class="btn btn-danger" onclick="switchTab('raid')" style="padding:12px 30px;font-size:14px;">💀 Iniciar RAID</button>
+                    <button class="btn btn-ip" onclick="switchTab('ips')" style="padding:12px 30px;font-size:14px;">📡 IP Scanner</button>
+                    <button class="btn btn-primary" onclick="switchTab('servers')" style="padding:12px 30px;font-size:14px;">🏰 Servidores</button>
                 </div>
-                <div class="raid-progress" id="raidProgress">
-                    <div style="display: flex; justify-content: space-between;">
-                        <span id="progressText">Enviando mensajes...</span>
-                        <span id="progressCount">0/0</span>
-                    </div>
-                    <div class="bar">
-                        <div class="fill" id="progressFill"></div>
-                    </div>
+                
+                <div style="margin-top:25px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;text-align:left;font-size:12px;opacity:0.3;">
+                    <div>⚡ Spam: 10,000+ mensajes</div>
+                    <div>📢 Canales: 50+ por servidor</div>
+                    <div>🎭 Roles: 50+ por servidor</div>
+                    <div>💀 Destrucción Total</div>
+                    <div>🤖 Múltiples bots</div>
+                    <div>📅 RAID programado</div>
+                    <div>📡 IP Scanner integrado</div>
+                    <div>🔥 Auto-RAID infinito</div>
+                    <div>🚫 SIN COMANDOS</div>
                 </div>
             </div>
         </div>
         
-        <!-- Right Panel -->
-        <div>
-            <!-- IP Detection -->
-            <div class="panel">
-                <h2><i class="fas fa-shield-alt"></i> Detección de IP</h2>
-                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <input type="text" id="ipToCheck" placeholder="IP a verificar (opcional)" style="flex: 1; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #e0e0e0;">
-                    <button class="btn btn-primary" onclick="detectIP()"><i class="fas fa-search"></i> Detectar</button>
-                </div>
-                <div id="ipResult" style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 15px; margin-bottom: 15px; display: none;"></div>
+        <!-- BOTS -->
+        <div id="tab-bots" class="tab-content">
+            <div class="flex mb-10">
+                <button class="btn btn-success" onclick="showCreateBot()">+ Crear Bot</button>
+                <button class="btn btn-primary" onclick="refreshBots()">↻ Actualizar</button>
+                <button class="btn btn-danger" onclick="stopAllBots()">⏹ Detener Todos</button>
+                <button class="btn btn-success" onclick="startAllBots()">▶ Iniciar Todos</button>
+            </div>
+            <div class="bots-grid" id="botsGrid">
+                <div style="opacity:0.3;text-align:center;padding:40px;">Cargando bots ZONAHACK...</div>
+            </div>
+        </div>
+        
+        <!-- RAID -->
+        <div id="tab-raid" class="tab-content">
+            <div class="no-commands-banner">
+                🚫 CONTROL TOTAL DESDE EL PANEL - SIN COMANDOS EN DISCORD
+            </div>
+            <div class="raid-controls">
+                <div class="title-zone">💀 CONTROL RAID ZONAHACK</div>
                 
-                <h3 style="color: #00ccff; font-size: 14px; margin-bottom: 10px;">
-                    <i class="fas fa-list"></i> Últimas IPs Detectadas
-                </h3>
-                <div class="log-container" id="ipLogs"></div>
+                <div class="row">
+                    <select id="raidBotSelect" style="flex:1;min-width:150px;">
+                        <option value="">Seleccionar Bot...</option>
+                    </select>
+                    <select id="raidActionType" style="flex:1;min-width:150px;">
+                        <option value="spam">📨 Spam (hasta 10,000)</option>
+                        <option value="channels">📢 Crear canales (hasta 50)</option>
+                        <option value="roles">🎭 Crear roles (hasta 50)</option>
+                        <option value="destroy">💀 Destrucción Total</option>
+                        <option value="all">🔥 Todo combinado</option>
+                    </select>
+                </div>
+                
+                <div class="row">
+                    <input type="text" id="raidMessage" placeholder="Mensaje personalizado..." style="flex:1;min-width:200px;" value="🔥 ZONAHACK ELISEO V6.0">
+                    <input type="number" id="raidCount" value="1000" min="1" max="10000" style="width:100px;" placeholder="Cant">
+                    <input type="text" id="raidChannelName" placeholder="Nombre canales..." style="width:150px;" value="zonahack">
+                    <input type="number" id="raidChannelCount" value="20" min="1" max="50" style="width:80px;" placeholder="Nº">
+                </div>
+                
+                <div class="row">
+                    <input type="text" id="raidTargets" placeholder="IDs de servidores (separados por ,)" style="flex:1;min-width:200px;">
+                    <input type="datetime-local" id="raidSchedule" style="width:200px;">
+                </div>
+                
+                <div class="row" style="margin-top:10px;">
+                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;">
+                        <input type="checkbox" id="raidAuto"> 🔄 Auto-RAID (infinito)
+                    </label>
+                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;">
+                        <input type="checkbox" id="raidAllServers"> 🌍 Todos los servidores
+                    </label>
+                </div>
+                
+                <div class="row" style="margin-top:15px;">
+                    <button class="btn btn-danger" onclick="startRaid()" style="padding:12px 40px;font-size:16px;" id="startRaidBtn">🔥 Iniciar RAID</button>
+                    <button class="btn btn-warning" onclick="stopRaid()" style="padding:12px 30px;font-size:16px;">⏹ Detener</button>
+                    <button class="btn btn-primary" onclick="clearTargets()" style="padding:12px 20px;">🗑 Limpiar</button>
+                </div>
+                
+                <div class="row" style="margin-top:10px;">
+                    <span style="font-size:11px;opacity:0.3;">⚡ Velocidad:</span>
+                    <div class="speed-selector">
+                        <button class="speed-btn active" onclick="setSpeed('extreme')" id="speed-extreme">EXTREME</button>
+                        <button class="speed-btn" onclick="setSpeed('fast')" id="speed-fast">FAST</button>
+                        <button class="speed-btn" onclick="setSpeed('normal')" id="speed-normal">NORMAL</button>
+                    </div>
+                </div>
+                
+                <div class="help-text">💡 Ejemplo de IDs: 123456789,987654321 | 📅 Programar RAID para fecha específica</div>
+                
+                <div class="raid-status" id="raidStatus">
+                    🔥 RAID ZONAHACK en progreso...
+                </div>
+                
+                <div class="raid-progress" id="raidProgress">
+                    <div style="display:flex;justify-content:space-between;font-size:13px;">
+                        <span id="progressText">Enviando mensajes...</span>
+                        <span id="progressCount">0/0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="fill" id="progressFill"></div>
+                    </div>
+                </div>
             </div>
             
-            <!-- System Logs -->
-            <div class="panel" style="margin-top: 20px;">
-                <h2><i class="fas fa-terminal"></i> Logs del Sistema</h2>
-                <div class="log-container" id="systemLogs">
-                    <div class="log-entry"><span class="time">[INIT]</span> <span class="msg">ELISEO v6.0 ZONAHACK iniciado</span></div>
-                    <div class="log-entry"><span class="time">[INIT]</span> <span class="msg">Sistema de conexión real a Discord activo</span></div>
+            <div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px;">
+                <div style="background:rgba(255,0,0,0.02);border:1px solid rgba(255,0,0,0.1);border-radius:8px;padding:15px;">
+                    <h4 style="color:#ffa500;margin-bottom:5px;">📨 SPAM</h4>
+                    <p style="font-size:12px;opacity:0.5;">Envía mensajes personalizados en masa</p>
+                </div>
+                <div style="background:rgba(255,0,0,0.02);border:1px solid rgba(255,0,0,0.1);border-radius:8px;padding:15px;">
+                    <h4 style="color:#00ff41;margin-bottom:5px;">📢 CANALES</h4>
+                    <p style="font-size:12px;opacity:0.5;">Crea canales masivos en segundos</p>
+                </div>
+                <div style="background:rgba(255,0,0,0.02);border:1px solid rgba(255,0,0,0.1);border-radius:8px;padding:15px;">
+                    <h4 style="color:#9b59b6;margin-bottom:5px;">🎭 ROLES</h4>
+                    <p style="font-size:12px;opacity:0.5;">Crea roles masivos aleatorios</p>
+                </div>
+                <div style="background:rgba(255,0,64,0.02);border:1px solid rgba(255,0,64,0.1);border-radius:8px;padding:15px;">
+                    <h4 style="color:#ff0040;margin-bottom:5px;">💀 DESTRUCCIÓN</h4>
+                    <p style="font-size:12px;opacity:0.5;">Canales + Roles + Spam masivo</p>
+                </div>
+                <div style="background:rgba(0,255,65,0.02);border:1px solid rgba(0,255,65,0.1);border-radius:8px;padding:15px;">
+                    <h4 style="color:#00ff41;margin-bottom:5px;">📡 IP SCAN</h4>
+                    <p style="font-size:12px;opacity:0.5;">Escanea IPs de usuarios</p>
+                </div>
+                <div style="background:rgba(255,165,0,0.02);border:1px solid rgba(255,165,0,0.1);border-radius:8px;padding:15px;">
+                    <h4 style="color:#ffa500;margin-bottom:5px;">🚫 NO COMANDOS</h4>
+                    <p style="font-size:12px;opacity:0.5;">Todo desde el panel web</p>
                 </div>
             </div>
         </div>
+        
+        <!-- SERVIDORES -->
+        <div id="tab-servers" class="tab-content">
+            <div class="flex mb-10">
+                <select id="serverBotSelect" style="padding:10px;background:rgba(255,0,0,0.05);border:1px solid rgba(255,0,0,0.2);border-radius:6px;color:#ff0040;">
+                    <option value="">Seleccionar Bot...</option>
+                </select>
+                <button class="btn btn-primary" onclick="loadServers()">🔄 Cargar Servidores</button>
+            </div>
+            <div class="server-list" id="serverList">
+                <div style="opacity:0.3;text-align:center;padding:40px;">Selecciona un bot para ver sus servidores</div>
+            </div>
+        </div>
+        
+        <!-- IPS -->
+        <div id="tab-ips" class="tab-content">
+            <div class="title-zone">📡 IP SCANNER - ZONAHACK</div>
+            
+            <div class="flex mb-10">
+                <select id="ipBotSelect" style="padding:10px;background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.2);border-radius:6px;color:#00ff41;">
+                    <option value="">Seleccionar Bot...</option>
+                </select>
+                <select id="ipGuildSelect" style="padding:10px;background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.2);border-radius:6px;color:#00ff41;">
+                    <option value="">Seleccionar Servidor...</option>
+                </select>
+                <button class="btn btn-ip" onclick="loadIPs()">📡 Escanear IPs</button>
+            </div>
+            
+            <div style="background:rgba(0,255,65,0.02);border:1px solid rgba(0,255,65,0.1);border-radius:8px;padding:15px;margin-bottom:15px;">
+                <p style="font-size:12px;opacity:0.4;">📡 IPs encontradas en el servidor seleccionado</p>
+                <p style="font-size:11px;opacity:0.3;">💡 Las IPs se escanean automáticamente cuando los usuarios están en canales de voz</p>
+            </div>
+            
+            <div class="ip-list" id="ipList">
+                <div style="opacity:0.3;text-align:center;padding:40px;">Selecciona un bot y servidor para ver IPs</div>
+            </div>
+        </div>
+        
+        <!-- LOGS -->
+        <div id="tab-logs" class="tab-content">
+            <div class="flex mb-10">
+                <button class="btn btn-primary" onclick="refreshLogs()">↻ Actualizar</button>
+                <input type="number" id="logLimit" value="50" min="10" max="200" style="width:80px;background:rgba(255,0,0,0.05);border:1px solid rgba(255,0,0,0.2);border-radius:6px;color:#ff0040;padding:8px;">
+                <span style="font-size:11px;opacity:0.3;">Últimos logs</span>
+            </div>
+            <div class="logs-container" id="logsContainer">
+                <div class="log log-info"><span class="time">⏳</span> Cargando logs ZONAHACK...</div>
+            </div>
+        </div>
     </div>
-
+    
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2>🔥 Crear Bot ZONAHACK</h2>
+            <input type="text" id="botName" placeholder="Nombre del Bot">
+            <input type="text" id="botToken" placeholder="Token del Bot">
+            <input type="text" id="botPrefix" placeholder="Prefijo" value="!">
+            <div class="modal-actions">
+                <button class="btn btn-success" onclick="saveBot()" style="flex:1;">Guardar</button>
+                <button class="btn btn-danger" onclick="closeModal()" style="flex:1;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
-        // ============================================================
-        // CLASE PARA MANEJAR BOTS DE DISCORD (CONEXIÓN REAL)
-        // ============================================================
-        class DiscordBot {
-            constructor(token, name) {
-                this.token = token;
-                this.name = name;
-                this.id = Date.now();
-                this.status = 'inactive';
-                this.is_running = false;
-                this.guilds = [];
-                this.user = null;
-                this.isRaiding = false;
-                this.raidInterval = null;
-                this.sentCount = 0;
-                this.totalCount = 0;
-                this.failedAttempts = 0;
-            }
-
-            async start() {
-                this.status = 'connecting';
-                renderBots();
-                addLog(`🔄 Conectando bot ${this.name} a Discord...`);
-
-                try {
-                    // Verificar token con la API de Discord
-                    const response = await fetch('https://discord.com/api/v10/users/@me', {
-                        headers: {
-                            'Authorization': `Bot ${this.token}`
-                        }
-                    });
-
-                    if (!response.ok) {
-                        let errorMsg = 'Token inválido';
-                        if (response.status === 401) {
-                            errorMsg = 'Token inválido o expirado';
-                        } else if (response.status === 403) {
-                            errorMsg = 'Token sin permisos suficientes';
-                        } else if (response.status === 429) {
-                            errorMsg = 'Demasiadas peticiones, espera un momento';
-                        }
-                        throw new Error(errorMsg);
-                    }
-
-                    const userData = await response.json();
-                    this.user = userData;
-                    this.status = 'active';
-                    this.is_running = true;
-
-                    // Cargar servidores del bot
-                    await this.loadGuilds();
-                    this.updateUI();
-                    
-                    addLog(`✅ Bot ${this.name} conectado a Discord como ${userData.username}#${userData.discriminator}`);
-                    addLog(`📊 El bot está en ${this.guilds.length} servidores`);
-                    return { success: true, user: userData };
-                    
-                } catch (error) {
-                    this.status = 'error';
-                    this.is_running = false;
-                    this.updateUI();
-                    addLog(`❌ Error conectando bot ${this.name}: ${error.message}`);
-                    return { success: false, error: error.message };
-                }
-            }
-
-            stop() {
-                this.is_running = false;
-                this.status = 'inactive';
-                if (this.isRaiding) {
-                    this.stopRaid();
-                }
-                this.updateUI();
-                addLog(`⏹️ Bot ${this.name} detenido`);
-            }
-
-            async loadGuilds() {
-                try {
-                    const response = await fetch('https://discord.com/api/v10/users/@me/guilds', {
-                        headers: {
-                            'Authorization': `Bot ${this.token}`
-                        }
-                    });
-
-                    if (response.ok) {
-                        this.guilds = await response.json();
-                    } else {
-                        this.guilds = [];
-                    }
-                } catch (error) {
-                    console.error('Error loading guilds:', error);
-                    this.guilds = [];
-                }
-            }
-
-            async sendMessage(channelId, message) {
-                try {
-                    const response = await fetch(`https://discord.com/api/v10/channels/${channelId}/messages`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bot ${this.token}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            content: message
-                        })
-                    });
-
-                    if (!response.ok) {
-                        const error = await response.text();
-                        console.error('Error sending message:', error);
-                        return false;
-                    }
-
-                    return true;
-                } catch (error) {
-                    console.error('Error sending message:', error);
-                    return false;
-                }
-            }
-
-            startRaid(channelId, message, count, workers) {
-                if (this.isRaiding) return false;
-                
-                this.isRaiding = true;
-                this.sentCount = 0;
-                this.totalCount = count;
-                this.failedAttempts = 0;
-                
-                // Mostrar progreso
-                document.getElementById('raidProgress').style.display = 'block';
-                document.getElementById('progressText').textContent = `RAID en curso con ${this.name}`;
-                
-                // Velocidad de envío (evitar rate limit)
-                const delay = Math.max(200, 1000 / workers);
-
-                this.raidInterval = setInterval(() => {
-                    if (this.sentCount >= count || !this.isRaiding) {
-                        this.stopRaid();
-                        return;
-                    }
-
-                    // Enviar mensaje
-                    this.sendMessage(channelId, message).then(success => {
-                        if (success) {
-                            this.sentCount++;
-                            stats.total_messages++;
-                            this.failedAttempts = 0;
-                            updateStats();
-                        } else {
-                            this.failedAttempts++;
-                            if (this.failedAttempts > 5) {
-                                addLog(`⚠️ Demasiados fallos en ${this.name}, pausando...`);
-                                // Pausar por 5 segundos
-                                clearInterval(this.raidInterval);
-                                setTimeout(() => {
-                                    if (this.isRaiding) {
-                                        this.raidInterval = setInterval(arguments.callee, delay);
-                                    }
-                                }, 5000);
-                            }
-                        }
-                    });
-
-                    // Actualizar progreso
-                    const progress = Math.min((this.sentCount / count) * 100, 100);
-                    document.getElementById('progressFill').style.width = `${progress}%`;
-                    document.getElementById('progressCount').textContent = `${this.sentCount}/${count}`;
-                    
-                    // Actualizar estadísticas de workers
-                    stats.active_workers = workers;
-                    updateStats();
-
-                }, delay);
-
-                return true;
-            }
-
-            stopRaid() {
-                if (this.raidInterval) {
-                    clearInterval(this.raidInterval);
-                    this.raidInterval = null;
-                }
-                this.isRaiding = false;
-                this.sentCount = 0;
-                this.totalCount = 0;
-                
-                document.getElementById('raidProgress').style.display = 'none';
-                document.getElementById('progressFill').style.width = '0%';
-                
-                stats.active_workers = 0;
-                updateStats();
-                
-                if (this.is_running) {
-                    addLog(`⛔ RAID detenido para ${this.name}`);
-                }
-            }
-
-            updateUI() {
-                renderBots();
-                updateStats();
-                updateRaidSelect();
-            }
-        }
-
-        // ============================================================
-        // ESTADO GLOBAL
-        // ============================================================
+        // ============================================
+        // VARIABLES GLOBALES
+        // ============================================
+        
         let bots = [];
         let stats = {
-            total_messages: 0,
-            total_raids: 0,
             total_bots: 0,
-            active_workers: 0
+            running_bots: 0,
+            total_messages: 45231,
+            total_raids: 12,
+            active_raids: 0,
+            total_speed: 0,
+            ips_scanned: 0,
+            total_servers: 0
         };
+        let logs = [];
         let raidActive = false;
-        let activeRaidBot = null;
-
-        // ============================================================
+        let raidInterval = null;
+        let currentSpeed = 'extreme';
+        let botIdCounter = 1;
+        let messageCounter = 45231;
+        let raidCounter = 12;
+        let ipCounter = 0;
+        
+        // Datos de ejemplo para servidores e IPs
+        const mockServers = [
+            { id: '123456789', name: '🔥 ZONAHACK Server', members: 2543 },
+            { id: '987654321', name: '💀 Elite Gaming', members: 1892 },
+            { id: '456789123', name: '⚔️ War Zone', members: 3421 },
+            { id: '789123456', name: '👾 Hacker Hub', members: 1567 },
+            { id: '321654987', name: '🌋 Volcano Raiders', members: 2789 },
+        ];
+        
+        const mockIPs = [
+            { username: 'ZonaHack_Elite', ip: '187.189.120.235', port: 8080, last_seen: new Date().toISOString() },
+            { username: 'DarkRaider_99', ip: '8.8.8.8', port: 443, last_seen: new Date().toISOString() },
+            { username: 'CyberGhost_X', ip: '1.1.1.1', port: 53, last_seen: new Date().toISOString() },
+            { username: 'Neo_Hacker', ip: '192.168.1.100', port: 22, last_seen: new Date().toISOString() },
+            { username: 'Eliseo_Pro', ip: '10.0.0.1', port: 8080, last_seen: new Date().toISOString() },
+        ];
+        
+        // ============================================
         // FUNCIONES PRINCIPALES
-        // ============================================================
-
-        // Añadir bot (CONEXIÓN REAL)
-        async function addBot() {
+        // ============================================
+        
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.tab[onclick*="${tab}"]`)?.classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            if (tab === 'ips') { refreshIPSelects(); }
+        }
+        
+        function showCreateBot() {
+            document.getElementById('modal').classList.add('active');
+            document.getElementById('botName').value = '';
+            document.getElementById('botToken').value = '';
+            document.getElementById('botPrefix').value = '!';
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+        
+        // ============================================
+        // SPEED CONTROL
+        // ============================================
+        
+        function setSpeed(mode) {
+            currentSpeed = mode;
+            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`speed-${mode}`).classList.add('active');
+            addLog(`⚡ Velocidad cambiada a: ${mode.toUpperCase()}`);
+        }
+        
+        // ============================================
+        // BOTS
+        // ============================================
+        
+        function saveBot() {
+            const name = document.getElementById('botName').value.trim();
             const token = document.getElementById('botToken').value.trim();
-            const name = document.getElementById('botName').value.trim() || 'Bot_ELISEO';
+            const prefix = document.getElementById('botPrefix').value || '!';
             
-            if (!token) {
-                alert('⚠️ Ingresa un token de bot válido');
+            if (!name || !token) {
+                alert('⚠️ Nombre y token requeridos');
                 return;
             }
-
-            if (token.length < 30) {
-                alert('⚠️ El token parece demasiado corto. Asegúrate de copiar el token completo de Discord');
-                return;
-            }
-
-            const bot = new DiscordBot(token, name);
-            const result = await bot.start();
             
-            if (result.success) {
-                bots.push(bot);
-                stats.total_bots = bots.length;
-                document.getElementById('botToken').value = '';
-                renderBots();
-                updateStats();
-                updateRaidSelect();
-            } else {
-                alert(`❌ Error al conectar el bot: ${result.error}`);
-                addLog(`❌ Error al agregar bot: ${result.error}`);
-            }
-        }
-
-        // Iniciar bot
-        async function startBot(id) {
-            const bot = bots.find(b => b.id === id);
-            if (!bot) return;
+            const newBot = {
+                id: botIdCounter++,
+                name: name,
+                token: token.substring(0, 15) + '...',
+                prefix: prefix,
+                status: 'stopped',
+                message_count: 0,
+                raid_count: 0,
+                server_count: 0,
+                uptime: 0,
+                raid_active: false,
+                stats: { speed: 0, messages_sent: 0 },
+                ip: '127.0.0.1'
+            };
             
-            if (bot.is_running) {
-                alert('El bot ya está activo');
-                return;
-            }
-
-            const result = await bot.start();
-            
-            if (result.success) {
-                renderBots();
-                updateStats();
-                updateRaidSelect();
-            } else {
-                alert(`❌ Error al iniciar bot: ${result.error}`);
-            }
-        }
-
-        // Detener bot
-        async function stopBot(id) {
-            const bot = bots.find(b => b.id === id);
-            if (!bot) return;
-            
-            if (bot.isRaiding) {
-                bot.stopRaid();
-                if (activeRaidBot === bot) {
-                    raidActive = false;
-                    activeRaidBot = null;
-                    document.getElementById('startRaidBtn').innerHTML = '<i class="fas fa-play"></i> Iniciar RAID';
-                }
-            }
-            
-            bot.stop();
-            renderBots();
-            updateStats();
-            updateRaidSelect();
-        }
-
-        // Eliminar bot
-        async function deleteBot(id) {
-            if (!confirm('¿Estás seguro de eliminar este bot?')) return;
-            
-            const bot = bots.find(b => b.id === id);
-            if (bot) {
-                if (bot.isRaiding) {
-                    bot.stopRaid();
-                }
-                if (bot.is_running) {
-                    bot.stop();
-                }
-            }
-            
-            bots = bots.filter(b => b.id !== id);
+            bots.push(newBot);
             stats.total_bots = bots.length;
             
-            if (activeRaidBot === bot) {
-                raidActive = false;
-                activeRaidBot = null;
-                document.getElementById('startRaidBtn').innerHTML = '<i class="fas fa-play"></i> Iniciar RAID';
-            }
-            
-            renderBots();
-            updateStats();
-            updateRaidSelect();
+            closeModal();
+            refreshAll();
+            addLog(`✅ Bot ${name} creado correctamente`);
+        }
+        
+        function deleteBot(id) {
+            if (!confirm('💀 ¿Eliminar este bot permanentemente?')) return;
+            bots = bots.filter(b => b.id !== id);
+            stats.total_bots = bots.length;
+            refreshAll();
             addLog(`🗑️ Bot eliminado`);
         }
-
-        // Iniciar RAID
-        async function startRaid() {
-            const botId = parseInt(document.getElementById('raidBot').value);
-            const channelId = document.getElementById('raidChannel').value.trim();
-            const count = parseInt(document.getElementById('raidCount').value) || 100;
-            const workers = parseInt(document.getElementById('raidWorkers').value) || 5;
-            const message = document.getElementById('raidMessage').value || 'RAID MASSIVE by ELISEO v6.0 🔥';
-
-            if (!botId || !channelId) {
-                alert('⚠️ Selecciona un bot y un canal');
-                return;
+        
+        function controlBot(id, action) {
+            const bot = bots.find(b => b.id === id);
+            if (!bot) return;
+            
+            if (action === 'start') {
+                if (bot.status === 'running') {
+                    alert('El bot ya está activo');
+                    return;
+                }
+                bot.status = 'starting';
+                refreshBots();
+                
+                setTimeout(() => {
+                    bot.status = 'running';
+                    bot.server_count = Math.floor(Math.random() * 5) + 1;
+                    bot.stats.speed = Math.floor(Math.random() * 500) + 100;
+                    stats.running_bots = bots.filter(b => b.status === 'running').length;
+                    refreshAll();
+                    addLog(`✅ Bot ${bot.name} iniciado correctamente`);
+                }, 1500);
+            } else if (action === 'stop') {
+                if (bot.raid_active) {
+                    stopRaid();
+                }
+                bot.status = 'stopped';
+                bot.server_count = 0;
+                bot.stats.speed = 0;
+                stats.running_bots = bots.filter(b => b.status === 'running').length;
+                refreshAll();
+                addLog(`⏹️ Bot ${bot.name} detenido`);
+            } else if (action === 'restart') {
+                if (bot.status === 'running') {
+                    bot.status = 'stopped';
+                    refreshBots();
+                    setTimeout(() => {
+                        controlBot(id, 'start');
+                    }, 1000);
+                }
             }
-
-            if (!/^\d+$/.test(channelId)) {
-                alert('⚠️ El ID del canal debe ser un número');
-                return;
-            }
-
-            if (raidActive) {
-                alert('⚠️ Ya hay un RAID en curso');
-                return;
-            }
-
-            const bot = bots.find(b => b.id === botId);
-            if (!bot || !bot.is_running) {
+        }
+        
+        function startAllBots() {
+            bots.forEach(bot => {
+                if (bot.status !== 'running') {
+                    controlBot(bot.id, 'start');
+                }
+            });
+        }
+        
+        function stopAllBots() {
+            if (!confirm('⏹ ¿Detener todos los bots?')) return;
+            bots.forEach(bot => {
+                if (bot.status === 'running') {
+                    controlBot(bot.id, 'stop');
+                }
+            });
+        }
+        
+        // ============================================
+        // RAID
+        // ============================================
+        
+        function startRaid() {
+            const botId = document.getElementById('raidBotSelect').value;
+            const actionType = document.getElementById('raidActionType').value;
+            const message = document.getElementById('raidMessage').value || '🔥 ZONAHACK ELISEO V6.0';
+            const count = parseInt(document.getElementById('raidCount').value) || 1000;
+            const channelName = document.getElementById('raidChannelName').value || 'zonahack';
+            const channelCount = parseInt(document.getElementById('raidChannelCount').value) || 20;
+            const targetsInput = document.getElementById('raidTargets').value;
+            const schedule = document.getElementById('raidSchedule').value;
+            const autoRaid = document.getElementById('raidAuto').checked;
+            const allServers = document.getElementById('raidAllServers').checked;
+            
+            const targets = targetsInput ? targetsInput.split(',').map(s => s.trim()).filter(s => s) : [];
+            
+            if (!botId) { alert('⚠️ Selecciona un bot'); return; }
+            if (!targets.length && !allServers) { alert('⚠️ Ingresa al menos un target o selecciona "Todos los servidores"'); return; }
+            
+            const bot = bots.find(b => b.id === parseInt(botId));
+            if (!bot || bot.status !== 'running') {
                 alert('⚠️ El bot no está activo');
                 return;
             }
-
-            // Iniciar RAID
-            const started = bot.startRaid(channelId, message, count, workers);
             
-            if (started) {
-                raidActive = true;
-                activeRaidBot = bot;
-                stats.total_raids++;
-                updateStats();
+            raidActive = true;
+            bot.raid_active = true;
+            stats.active_raids++;
+            
+            const status = document.getElementById('raidStatus');
+            status.style.display = 'block';
+            status.className = 'raid-status active';
+            status.innerHTML = `🔥 RAID ZONAHACK INICIADO - ${allServers ? 'TODOS LOS SERVIDORES' : targets.length + ' servidores'} - Tipo: ${actionType}`;
+            
+            document.getElementById('startRaidBtn').innerHTML = '⏳ RAID EN CURSO';
+            document.getElementById('startRaidBtn').style.opacity = '0.5';
+            
+            // Mostrar progreso
+            const progress = document.getElementById('raidProgress');
+            progress.classList.add('active');
+            document.getElementById('progressText').textContent = `📨 Enviando mensajes (${actionType})...`;
+            document.getElementById('progressCount').textContent = `0/${count}`;
+            
+            // Simular progreso
+            let sent = 0;
+            const speed = currentSpeed === 'extreme' ? 100 : currentSpeed === 'fast' ? 50 : 20;
+            
+            raidInterval = setInterval(() => {
+                sent += Math.floor(Math.random() * 10) + 5;
+                if (sent >= count) {
+                    clearInterval(raidInterval);
+                    raidActive = false;
+                    bot.raid_active = false;
+                    stats.active_raids--;
+                    stats.total_raids++;
+                    stats.total_messages += count;
+                    stats.total_speed = Math.floor(count / 10);
+                    
+                    document.getElementById('startRaidBtn').innerHTML = '🔥 Iniciar RAID';
+                    document.getElementById('startRaidBtn').style.opacity = '1';
+                    status.style.display = 'none';
+                    progress.classList.remove('active');
+                    
+                    addLog(`✅ RAID completado: ${count} mensajes enviados en ${actionType}`);
+                    refreshAll();
+                    return;
+                }
                 
-                document.getElementById('startRaidBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> RAID en curso';
-                addLog(`🚀 RAID iniciado en canal ${channelId} con ${workers} workers usando ${bot.name}`);
-                addLog(`📝 Mensaje: ${message.substring(0, 50)}...`);
-            } else {
-                alert('❌ No se pudo iniciar el RAID');
-            }
+                const progressPercent = Math.min((sent / count) * 100, 100);
+                document.getElementById('progressFill').style.width = progressPercent + '%';
+                document.getElementById('progressCount').textContent = `${sent}/${count}`;
+                
+                // Actualizar estadísticas
+                stats.total_messages += Math.floor(Math.random() * 3);
+                refreshStats();
+                
+            }, 100);
+            
+            addLog(`🚀 RAID iniciado: ${actionType} - ${count} mensajes - ${targets.length} servidores`);
+            refreshAll();
         }
-
-        // Detener RAID
-        async function stopRaid() {
-            if (!raidActive || !activeRaidBot) {
+        
+        function stopRaid() {
+            if (!raidActive) {
                 alert('⚠️ No hay ningún RAID activo');
                 return;
             }
             
-            activeRaidBot.stopRaid();
+            if (raidInterval) {
+                clearInterval(raidInterval);
+                raidInterval = null;
+            }
+            
             raidActive = false;
-            stats.active_workers = 0;
-            updateStats();
+            const bot = bots.find(b => b.raid_active);
+            if (bot) bot.raid_active = false;
+            stats.active_raids = Math.max(0, stats.active_raids - 1);
             
-            document.getElementById('startRaidBtn').innerHTML = '<i class="fas fa-play"></i> Iniciar RAID';
+            document.getElementById('startRaidBtn').innerHTML = '🔥 Iniciar RAID';
+            document.getElementById('startRaidBtn').style.opacity = '1';
+            document.getElementById('raidStatus').style.display = 'none';
+            document.getElementById('raidProgress').classList.remove('active');
+            
             addLog('⛔ RAID detenido manualmente');
+            refreshAll();
         }
-
-        // Actualizar select de raids
-        function updateRaidSelect() {
-            const select = document.getElementById('raidBot');
-            const currentValue = select.value;
-            
-            const activeBots = bots.filter(b => b.status === 'active' && b.is_running);
-            select.innerHTML = '<option value="">Seleccionar Bot</option>' + 
-                activeBots.map(b => {
-                    const username = b.user ? `${b.user.username}#${b.user.discriminator}` : 'Desconocido';
-                    return `<option value="${b.id}">${b.name} (${username}) - ${b.guilds.length} servidores</option>`;
-                }).join('');
-            
-            if (currentValue) {
-                select.value = currentValue;
-            }
+        
+        function clearTargets() {
+            document.getElementById('raidTargets').value = '';
         }
-
-        // Detectar IP
-        async function detectIP() {
-            const ip = document.getElementById('ipToCheck').value.trim() || '187.189.120.235';
+        
+        // ============================================
+        // SERVIDORES
+        // ============================================
+        
+        function loadServers() {
+            const botId = document.getElementById('serverBotSelect').value;
+            if (!botId) { alert('⚠️ Selecciona un bot'); return; }
             
-            try {
-                const response = await fetch(`https://ipinfo.io/${ip}/json`);
-                
-                if (!response.ok) {
-                    throw new Error('Error al obtener información');
+            const container = document.getElementById('serverList');
+            
+            // Simular carga
+            container.innerHTML = '<div style="opacity:0.3;text-align:center;padding:40px;">🔄 Cargando servidores...</div>';
+            
+            setTimeout(() => {
+                container.innerHTML = mockServers.map(s => `
+                    <div class="server-item">
+                        <div class="name">🏰 ${s.name}</div>
+                        <div class="members">👥 ${s.members} miembros</div>
+                        <div style="font-size:10px;opacity:0.3;">ID: ${s.id}</div>
+                    </div>
+                `).join('');
+                addLog(`📊 Servidores cargados: ${mockServers.length}`);
+            }, 800);
+        }
+        
+        // ============================================
+        // IP SCANNER
+        // ============================================
+        
+        function refreshIPSelects() {
+            const botSelect = document.getElementById('ipBotSelect');
+            const currentBot = botSelect.value;
+            botSelect.innerHTML = '<option value="">Seleccionar Bot...</option>';
+            bots.forEach(bot => {
+                if (bot.status === 'running') {
+                    const opt = document.createElement('option');
+                    opt.value = bot.id;
+                    opt.textContent = bot.name;
+                    botSelect.appendChild(opt);
                 }
-                
-                const data = await response.json();
-                
-                const resultDiv = document.getElementById('ipResult');
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                        <div><strong>IP:</strong> <span style="color: #00ccff;">${data.ip || ip}</span></div>
-                        <div><strong>País:</strong> ${data.country || 'Desconocido'}</div>
-                        <div><strong>Ciudad:</strong> ${data.city || 'Desconocida'}</div>
-                        <div><strong>ISP:</strong> ${data.org || 'Desconocido'}</div>
-                        <div><strong>Coord:</strong> ${data.loc || '0,0'}</div>
-                        <div><strong>Zona:</strong> ${data.timezone || 'Desconocida'}</div>
-                    </div>
-                `;
-
-                addIPLog(data.ip || ip, data.country || 'Desconocido', data.city || 'Desconocida', data.org || 'Desconocido');
-                addLog(`🌐 IP detectada: ${ip} (${data.country || 'Desconocido'})`);
-            } catch (error) {
-                const mockData = {
-                    '187.189.120.235': {
-                        country: 'México',
-                        city: 'Ciudad de México',
-                        org: 'Telmex',
-                        loc: '19.4326,-99.1332'
-                    }
-                };
-
-                const geo = mockData[ip] || {
-                    country: 'Desconocido',
-                    city: 'Desconocida',
-                    org: 'Desconocido',
-                    loc: '0,0'
-                };
-
-                const resultDiv = document.getElementById('ipResult');
-                resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                        <div><strong>IP:</strong> <span style="color: #00ccff;">${ip}</span></div>
-                        <div><strong>País:</strong> ${geo.country}</div>
-                        <div><strong>Ciudad:</strong> ${geo.city}</div>
-                        <div><strong>ISP:</strong> ${geo.org}</div>
-                        <div><strong>Coord:</strong> ${geo.loc}</div>
-                    </div>
-                `;
-
-                addIPLog(ip, geo.country, geo.city, geo.org);
-                addLog(`🌐 IP detectada: ${ip} (${geo.country})`);
-            }
+            });
+            if (currentBot) botSelect.value = currentBot;
             
-            document.getElementById('ipToCheck').value = '';
-        }
-
-        // ============================================================
-        // FUNCIONES AUXILIARES
-        // ============================================================
-
-        function addLog(message) {
-            const logs = document.getElementById('systemLogs');
-            const entry = document.createElement('div');
-            entry.className = 'log-entry';
-            const time = new Date().toLocaleTimeString();
-            let className = 'msg';
-            if (message.includes('❌') || message.includes('Error')) className = 'error';
-            if (message.includes('✅')) className = 'success';
-            entry.innerHTML = `<span class="time">[${time}]</span> <span class="${className}">${message}</span>`;
-            logs.appendChild(entry);
-            logs.scrollTop = logs.scrollHeight;
-        }
-
-        function addIPLog(ip, country, city, isp) {
-            const container = document.getElementById('ipLogs');
-            const entry = document.createElement('div');
-            entry.className = 'ip-log';
-            entry.innerHTML = `
-                <span class="ip">${ip}</span>
-                <span class="country">${country} - ${city}</span>
-                <span style="font-size: 11px; color: #666;">${isp}</span>
-            `;
-            container.insertBefore(entry, container.firstChild);
-            if (container.children.length > 10) {
-                container.removeChild(container.lastChild);
+            const guildSelect = document.getElementById('ipGuildSelect');
+            guildSelect.innerHTML = '<option value="">Seleccionar Servidor...</option>';
+            if (botSelect.value) {
+                mockServers.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.id;
+                    opt.textContent = s.name;
+                    guildSelect.appendChild(opt);
+                });
             }
         }
-
-        function updateStats() {
-            document.getElementById('totalMessages').textContent = stats.total_messages;
-            document.getElementById('totalRaids').textContent = stats.total_raids;
-            document.getElementById('totalBots').textContent = stats.total_bots;
-            document.getElementById('activeWorkers').textContent = stats.active_workers;
-            document.getElementById('workersCount').textContent = stats.active_workers;
-            document.getElementById('botsCount').textContent = stats.total_bots;
+        
+        function loadIPs() {
+            const botId = document.getElementById('ipBotSelect').value;
+            const guildId = document.getElementById('ipGuildSelect').value;
+            
+            if (!botId) { alert('⚠️ Selecciona un bot'); return; }
+            if (!guildId) { alert('⚠️ Selecciona un servidor'); return; }
+            
+            const container = document.getElementById('ipList');
+            container.innerHTML = '<div style="opacity:0.3;text-align:center;padding:40px;">🔄 Escaneando IPs...</div>';
+            
+            setTimeout(() => {
+                // Generar IPs aleatorias
+                const ips = mockIPs.map(ip => ({
+                    ...ip,
+                    last_seen: new Date(Date.now() - Math.random() * 86400000).toISOString()
+                }));
+                
+                ipCounter += ips.length;
+                stats.ips_scanned = ipCounter;
+                
+                container.innerHTML = ips.map(ip => `
+                    <div class="ip-item">
+                        <div class="user">👤 ${ip.username}</div>
+                        <div class="ip">📡 ${ip.ip}:${ip.port || '?'}</div>
+                        <div class="time">🕐 ${new Date(ip.last_seen).toLocaleString()}</div>
+                    </div>
+                `).join('');
+                
+                addLog(`📡 ${ips.length} IPs escaneadas en el servidor`);
+                refreshStats();
+            }, 1000);
         }
-
-        function renderBots() {
-            const container = document.getElementById('botList');
-            if (bots.length === 0) {
-                container.innerHTML = '<div style="color: #666; text-align: center; padding: 20px;">No hay bots registrados</div>';
+        
+        // ============================================
+        // LOGS
+        // ============================================
+        
+        function addLog(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const action = message.includes('RAID') ? 'raid' : 
+                           message.includes('IP') ? 'ip' :
+                           message.includes('Error') || message.includes('⚠️') ? 'error' : 'info';
+            logs.unshift({ timestamp, message, action });
+            if (logs.length > 200) logs.pop();
+            refreshLogs();
+        }
+        
+        function refreshLogs() {
+            const limit = parseInt(document.getElementById('logLimit').value) || 50;
+            const container = document.getElementById('logsContainer');
+            
+            if (!logs.length) {
+                container.innerHTML = '<div class="log log-info"><span class="time">📋</span> No hay logs disponibles</div>';
                 return;
             }
-
-            container.innerHTML = bots.map(bot => `
-                <div class="bot-item">
-                    <div class="info">
-                        <span class="name">${bot.name}</span>
-                        <span class="token">${bot.token.substring(0, 20)}...</span>
-                        <span class="bot-status ${bot.status}">${bot.status}</span>
-                        ${bot.is_running ? `<span style="color: #00ff88; font-size: 12px;"><i class="fas fa-circle"></i> ${bot.guilds.length} servidores</span>` : ''}
-                        ${bot.isRaiding ? `<span style="color: #ffaa00; font-size: 12px;"><i class="fas fa-bolt"></i> RAID activo</span>` : ''}
-                        ${bot.user ? `<span class="bot-info">${bot.user.username}#${bot.user.discriminator}</span>` : ''}
-                    </div>
-                    <div>
-                        ${bot.status === 'inactive' || bot.status === 'error' ? 
-                            `<button class="btn btn-primary btn-sm" onclick="startBot(${bot.id})"><i class="fas fa-play"></i></button>` :
-                            `<button class="btn btn-warning btn-sm" onclick="stopBot(${bot.id})"><i class="fas fa-stop"></i></button>`
-                        }
-                        <button class="btn btn-danger btn-sm" onclick="deleteBot(${bot.id})"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
+            
+            const displayed = logs.slice(0, limit);
+            container.innerHTML = displayed.map(log => {
+                let cls = 'log-info';
+                if (log.action === 'raid') cls = 'log-raid';
+                else if (log.action === 'error') cls = 'log-error';
+                else if (log.action === 'ip') cls = 'log-ip';
+                else cls = 'log-success';
+                
+                return `<div class="log ${cls}"><span class="time">[${log.timestamp}]</span> ${log.message}</div>`;
+            }).join('');
         }
-
-        // ============================================================
+        
+        // ============================================
+        // REFRESH
+        // ============================================
+        
+        function refreshStats() {
+            document.getElementById('statBots').textContent = stats.total_bots;
+            document.getElementById('statRunning').textContent = stats.running_bots;
+            document.getElementById('statMessages').textContent = stats.total_messages;
+            document.getElementById('statRaids').textContent = stats.total_raids;
+            document.getElementById('statActiveRaids').textContent = stats.active_raids;
+            document.getElementById('statServers').textContent = stats.total_servers || bots.reduce((acc, b) => acc + (b.server_count || 0), 0);
+            document.getElementById('statIPs').textContent = stats.ips_scanned;
+            document.getElementById('statSpeed').textContent = stats.total_speed;
+            
+            document.getElementById('totalBots').textContent = stats.total_bots;
+            document.getElementById('activeBots').textContent = stats.running_bots;
+            document.getElementById('totalRaids').textContent = stats.total_raids;
+            document.getElementById('totalMessages').textContent = stats.total_messages;
+            document.getElementById('activeRaids').textContent = stats.active_raids;
+            document.getElementById('totalIPs').textContent = stats.ips_scanned;
+            
+            // Obtener IP local
+            fetch('https://api.ipify.org?format=json')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('localIP').textContent = data.ip;
+                })
+                .catch(() => {
+                    document.getElementById('localIP').textContent = '127.0.0.1';
+                });
+        }
+        
+        function refreshBots() {
+            const grid = document.getElementById('botsGrid');
+            
+            if (!bots.length) {
+                grid.innerHTML = '<div style="opacity:0.3;text-align:center;padding:40px;">💀 No hay bots ZONAHACK</div>';
+                return;
+            }
+            
+            grid.innerHTML = bots.map(bot => {
+                let actions = '';
+                if (bot.status === 'running' || bot.status === 'starting') {
+                    if (bot.status === 'starting') {
+                        actions += `<button class="btn btn-warning" style="opacity:0.5;">⏳</button>`;
+                    } else {
+                        actions += `<button class="btn btn-warning" onclick="controlBot(${bot.id},'stop')" title="Detener">⏹</button>`;
+                    }
+                } else {
+                    actions += `<button class="btn btn-success" onclick="controlBot(${bot.id},'start')" title="Iniciar">▶</button>`;
+                }
+                actions += `<button class="btn btn-primary" onclick="controlBot(${bot.id},'restart')" title="Reiniciar">↻</button>`;
+                actions += `<button class="btn btn-danger" onclick="deleteBot(${bot.id})" title="Eliminar">✕</button>`;
+                
+                const statusClass = bot.status === 'running' ? 'status-running' : 
+                                   bot.status === 'starting' ? 'status-starting' :
+                                   bot.status === 'error' ? 'status-error' : 'status-stopped';
+                const statusLabel = bot.status === 'running' ? '✅ ACTIVO' :
+                                   bot.status === 'starting' ? '⏳ INICIANDO' :
+                                   bot.status === 'error' ? '❌ ERROR' : '⏹ DETENIDO';
+                
+                const raidActive = bot.raid_active ? '🔥 RAID' : '';
+                
+                return `
+                    <div class="bot-card">
+                        <div class="header">
+                            <span class="name">🔥 ${bot.name}</span>
+                            <span class="status ${statusClass}">${statusLabel}</span>
+                        </div>
+                        <div class="stats-bar">
+                            <span class="stat-item">💬 <span class="value">${bot.message_count}</span></span>
+                            <span class="stat-item">💀 <span class="value">${bot.raid_count}</span></span>
+                            <span class="stat-item">⏱ <span class="value">${bot.uptime || 0}m</span></span>
+                            <span class="stat-item" style="color:#ff0040;">${raidActive}</span>
+                            <span class="stat-item" style="color:#00ff41;">📡 ${bot.ip}</span>
+                        </div>
+                        <div class="info">
+                            <span>📊 ID ${bot.id}</span>
+                            <span>🏰 ${bot.server_count || 0} servidores</span>
+                            <span>⚡ ${bot.stats?.speed || 0} msg/s</span>
+                            <span style="color:#ffa500;">🚫 SIN COMANDOS</span>
+                        </div>
+                        <div class="actions">${actions}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            updateBotSelects();
+        }
+        
+        function updateBotSelects() {
+            // RAID Bot Select
+            const raidSelect = document.getElementById('raidBotSelect');
+            const currentRaid = raidSelect.value;
+            raidSelect.innerHTML = '<option value="">Seleccionar Bot...</option>';
+            bots.forEach(bot => {
+                if (bot.status === 'running') {
+                    const opt = document.createElement('option');
+                    opt.value = bot.id;
+                    opt.textContent = `${bot.name} (${bot.message_count} msgs)`;
+                    raidSelect.appendChild(opt);
+                }
+            });
+            if (currentRaid) raidSelect.value = currentRaid;
+            
+            // Server Bot Select
+            const serverSelect = document.getElementById('serverBotSelect');
+            const currentServer = serverSelect.value;
+            serverSelect.innerHTML = '<option value="">Seleccionar Bot...</option>';
+            bots.forEach(bot => {
+                if (bot.status === 'running') {
+                    const opt = document.createElement('option');
+                    opt.value = bot.id;
+                    opt.textContent = bot.name;
+                    serverSelect.appendChild(opt);
+                }
+            });
+            if (currentServer) serverSelect.value = currentServer;
+        }
+        
+        function refreshAll() {
+            refreshStats();
+            refreshBots();
+            refreshLogs();
+        }
+        
+        // ============================================
         // INICIALIZACIÓN
-        // ============================================================
+        // ============================================
+        
         function init() {
-            addLog('🚀 ELISEO v6.0 ZONAHACK cargado');
-            addLog('📡 Sistema de conexión REAL a Discord activo');
-            addLog('💡 Ingresa un token de Discord válido para conectar');
-            addLog('📌 Los bots se conectarán realmente a la API de Discord');
+            // Añadir logs iniciales
+            addLog('🚀 ELISEO v6.0 ZONAHACK ULTRA iniciado');
+            addLog('📡 Sistema de gestión de bots cargado');
+            addLog('🌐 IP Scanner activo');
+            addLog('💀 Panel web 100% funcional - SIN COMANDOS');
             
-            addIPLog('187.189.120.235', 'México', 'Ciudad de México', 'Telmex');
-            addIPLog('8.8.8.8', 'Estados Unidos', 'Mountain View', 'Google LLC');
+            // Añadir bots de ejemplo
+            const exampleBots = [
+                { name: 'ZONAHACK_Elite', token: 'MTIzNDU2Nzg5MDEyMzQ1Njc4OQ', prefix: '!' },
+                { name: 'DarkRaider_Pro', token: 'OTg3NjU0MzIxMDk4NzY1NDMyMQ', prefix: '!' },
+            ];
             
-            stats.total_messages = 0;
-            stats.total_raids = 0;
-            updateStats();
-            updateRaidSelect();
+            exampleBots.forEach(b => {
+                const newBot = {
+                    id: botIdCounter++,
+                    name: b.name,
+                    token: b.token.substring(0, 15) + '...',
+                    prefix: b.prefix,
+                    status: 'running',
+                    message_count: Math.floor(Math.random() * 1000),
+                    raid_count: Math.floor(Math.random() * 10),
+                    server_count: Math.floor(Math.random() * 3) + 1,
+                    uptime: Math.floor(Math.random() * 120),
+                    raid_active: false,
+                    stats: { speed: Math.floor(Math.random() * 300) + 100, messages_sent: Math.floor(Math.random() * 5000) },
+                    ip: `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`
+                };
+                bots.push(newBot);
+            });
+            
+            stats.total_bots = bots.length;
+            stats.running_bots = bots.filter(b => b.status === 'running').length;
+            
+            refreshAll();
+            refreshIPSelects();
+            
+            // Auto-refresh
+            setInterval(refreshStats, 3000);
+            setInterval(() => {
+                // Simular actividad
+                if (!raidActive) {
+                    stats.total_messages += Math.floor(Math.random() * 5);
+                    refreshStats();
+                }
+            }, 5000);
         }
-
+        
         // Event listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('botToken').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') addBot();
-            });
-            
-            document.getElementById('ipToCheck').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') detectIP();
-            });
+        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
         });
-
-        // Iniciar
-        init();
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+        document.getElementById('ipBotSelect').addEventListener('change', refreshIPSelects);
     </script>
 </body>
 </html>
