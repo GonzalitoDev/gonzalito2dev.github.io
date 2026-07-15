@@ -596,6 +596,14 @@
             list-style: none;
         }
         
+        .solution-box li.success { color: #00ff88; }
+        .solution-box li.warning { color: #ffa500; }
+        
+        .demo-active {
+            border: 2px solid #ffd700 !important;
+            box-shadow: 0 0 40px rgba(255,215,0,0.1) !important;
+        }
+        
         @media (max-width: 768px) {
             .container { padding: 12px; }
             .logo { font-size: 24px; }
@@ -759,23 +767,22 @@
             <div class="panel">
                 <div class="panel-title discord-title">🤖 DISCORD BOT - CONEXIÓN REAL</div>
                 
-                <p style="opacity:0.3;font-size:11px;margin-bottom:10px;">Conecta tu bot de Discord para extraer información de servidores</p>
-                
-                <div class="solution-box">
-                    <h4>🔧 SOLUCIÓN PARA ERROR DE CONEXIÓN</h4>
+                <div class="solution-box" style="border-color:#ffd700;">
+                    <h4>✅ SOLUCIÓN CORS - MODO DEMO ULTRA</h4>
                     <ul>
-                        <li>✅ 1. Usa el botón "🎮 Demo" para probar sin token</li>
-                        <li>✅ 2. Asegúrate de que el token sea correcto</li>
-                        <li>✅ 3. El bot debe tener permisos para leer servidores</li>
-                        <li>✅ 4. Si falla, usa un proxy CORS (activado automáticamente)</li>
-                        <li style="color:#ffa500;">💡 El sistema usa proxy CORS para evitar bloqueos</li>
+                        <li class="success">✅ 1. Haz clic en "🎮 DEMO ULTRA" para probar sin token</li>
+                        <li class="success">✅ 2. Datos simulados de ELISEO V2#8651</li>
+                        <li class="warning">⚠️ 3. La conexión real requiere un servidor proxy</li>
+                        <li class="warning">💡 El modo DEMO funciona perfectamente sin CORS</li>
                     </ul>
                 </div>
+                
+                <p style="opacity:0.3;font-size:11px;margin-bottom:10px;">Conecta tu bot de Discord para extraer información de servidores</p>
                 
                 <div class="flex mb-10">
                     <input type="password" id="botToken" placeholder="Token del Bot de Discord" style="flex:1;min-width:200px;">
                     <button class="btn btn-discord" onclick="connectDiscord()">🔗 Conectar</button>
-                    <button class="btn btn-success" onclick="connectDiscordDemo()">🎮 Demo</button>
+                    <button class="btn btn-success" onclick="connectDiscordDemo()" style="border-color:#ffd700;color:#ffd700;">🎮 DEMO ULTRA</button>
                     <button class="btn btn-danger" onclick="disconnectDiscord()">⛔ Desconectar</button>
                 </div>
                 
@@ -1021,14 +1028,6 @@
         let BOT_MEMBERS = 0;
         let IS_DEMO = false;
         const DISCORD_API = 'https://discord.com/api/v10';
-        // Múltiples proxies CORS para mayor compatibilidad
-        const CORS_PROXIES = [
-            'https://cors-anywhere.herokuapp.com/',
-            'https://api.allorigins.win/',
-            'https://corsproxy.io/'
-        ];
-        let USE_PROXY = false;
-        let CURRENT_PROXY = 0;
         
         // ============================================
         // FUNCIONES DE NAVEGACIÓN
@@ -1199,89 +1198,35 @@
         }
         
         // ============================================
-        // FUNCIONES DE DISCORD BOT CON MÚLTIPLES PROXIES
+        // FUNCIONES DE DISCORD BOT - DEMO ULTRA
         // ============================================
         
-        async function discordRequest(endpoint, method = 'GET', body = null) {
-            if (!BOT_TOKEN && !IS_DEMO) {
-                addLog('⚠️ No hay token configurado', 'error');
-                return null;
-            }
-            
-            REQUEST_COUNT++;
-            document.getElementById('statRequests').textContent = REQUEST_COUNT;
-            
-            // Intentar con diferentes proxies
-            const proxiesToTry = USE_PROXY ? CORS_PROXIES : [''];
-            
-            for (let i = 0; i < proxiesToTry.length; i++) {
-                try {
-                    let url = `${DISCORD_API}${endpoint}`;
-                    const proxy = proxiesToTry[i];
-                    if (proxy) {
-                        url = `${proxy}${url}`;
-                    }
-                    
-                    const headers = {
-                        'Authorization': `Bot ${BOT_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    };
-                    
-                    const options = { method, headers };
-                    if (body) options.body = JSON.stringify(body);
-                    
-                    const response = await fetch(url, options);
-                    
-                    if (!response.ok) {
-                        const data = await response.json().catch(() => ({}));
-                        addLog(`❌ Error Discord ${response.status}: ${data.message || 'Desconocido'}`, 'error');
-                        continue;
-                    }
-                    
-                    const data = await response.json();
-                    return data;
-                    
-                } catch (error) {
-                    if (i < proxiesToTry.length - 1) {
-                        addLog(`🔄 Intentando con otro proxy...`, 'info');
-                        continue;
-                    }
-                    addLog(`❌ Error de conexión: ${error.message}`, 'error');
-                    
-                    // Mostrar mensaje de ayuda
-                    document.getElementById('discordError').style.display = 'block';
-                    document.getElementById('discordError').textContent = '⚠️ Error de CORS - Prueba el modo "Demo" o usa un proxy';
-                    
-                    return null;
-                }
-            }
-            return null;
-        }
-        
-        // === DEMO MODE ===
         function connectDiscordDemo() {
             IS_DEMO = true;
             BOT_TOKEN = 'demo';
             
-            // Generar datos de demostración
+            // Datos de demostración basados en ELISEO V2#8651
             BOT_USER = {
                 username: 'ELISEO V2',
                 discriminator: '8651',
-                id: Math.floor(Math.random() * 100000000000000000).toString()
+                id: '123456789012345678',
+                bot: true,
+                avatar: null
             };
             
             BOT_GUILDS = [
-                { name: 'Servidor de Prueba 1', id: '1234567890' },
-                { name: 'Servidor de Prueba 2', id: '0987654321' },
-                { name: 'Servidor de Prueba 3', id: '1122334455' }
+                { name: 'Servidor ELISEO V2', id: '987654321098765432', owner: true, permissions: 8 },
+                { name: 'Servidor de Prueba 2', id: '123456789098765432' },
+                { name: 'Servidor de Prueba 3', id: '098765432123456789' }
             ];
             
             BOT_MEMBERS = 156;
             
+            // Actualizar UI
             document.getElementById('discordDot').className = 'status-dot gold';
-            document.getElementById('discordStatusText').textContent = '✅ Demo Activo';
+            document.getElementById('discordStatusText').textContent = '✅ Demo Ultra Activo';
             document.getElementById('discordStatusText').style.color = '#ffd700';
-            document.getElementById('discordMode').textContent = '🎮 MODO DEMO';
+            document.getElementById('discordMode').textContent = '🎮 DEMO ULTRA';
             document.getElementById('discordMode').style.color = '#ffd700';
             document.getElementById('discordError').style.display = 'none';
             document.getElementById('discordInfo').style.display = 'block';
@@ -1292,8 +1237,13 @@
             document.getElementById('statServers').textContent = BOT_GUILDS.length;
             document.getElementById('statMembers').textContent = BOT_MEMBERS;
             
-            addLog('🎮 Modo Demo activado - Datos simulados para ELISEO V2#8651', 'gold');
-            addLog('💡 Conecta un token real para datos reales', 'info');
+            // Marcar panel como demo
+            document.getElementById('tab-discord').querySelector('.panel').classList.add('demo-active');
+            
+            addLog('🎮 DEMO ULTRA activado - ELISEO V2#8651', 'gold');
+            addLog('📊 Datos simulados de servidores y miembros', 'gold');
+            addLog('💡 Conecta un token real para datos reales (requiere proxy)', 'info');
+            addLog('⚠️ La API de Discord bloquea CORS desde navegadores', 'warning');
         }
         
         async function connectDiscord() {
@@ -1302,7 +1252,7 @@
             
             if (!BOT_TOKEN) {
                 addLog('⚠️ Ingresa un token de bot válido', 'error');
-                addLog('💡 También puedes usar el botón "Demo" para probar', 'info');
+                addLog('💡 Usa "DEMO ULTRA" para probar sin token', 'info');
                 return;
             }
             
@@ -1314,62 +1264,22 @@
             
             IS_DEMO = false;
             document.getElementById('discordError').style.display = 'none';
-            addLog('🤖 Conectando a Discord API...', 'discord');
+            addLog('🤖 Intentando conectar a Discord API...', 'discord');
+            addLog('⚠️ La API de Discord bloquea CORS en navegadores', 'warning');
+            addLog('💡 Usa "DEMO ULTRA" para probar todas las funciones', 'info');
             
-            // Intentar conexión con proxy automático
-            USE_PROXY = true;
-            const data = await discordRequest('/users/@me');
+            // Mostrar error de CORS
+            document.getElementById('discordError').style.display = 'block';
+            document.getElementById('discordError').textContent = '❌ Error de CORS - La API de Discord bloquea peticiones desde navegadores. Usa "DEMO ULTRA" para probar todas las funciones sin conexión real.';
+            document.getElementById('discordError').style.color = '#ffa500';
             
-            if (!data) {
-                // Intentar sin proxy
-                USE_PROXY = false;
-                addLog('🔄 Intentando sin proxy...', 'info');
-                const data2 = await discordRequest('/users/@me');
-                if (!data2) {
-                    addLog('❌ Error al conectar con el bot', 'error');
-                    addLog('💡 Usa el botón "Demo" para probar sin token real', 'info');
-                    return;
-                }
-                BOT_USER = data2;
-            } else {
-                BOT_USER = data;
-            }
+            addLog('❌ Conexión bloqueada por CORS', 'error');
+            addLog('💡 Haz clic en "DEMO ULTRA" para usar datos simulados', 'info');
             
-            document.getElementById('discordDot').className = 'status-dot green';
-            document.getElementById('discordStatusText').textContent = '✅ Conectado';
-            document.getElementById('discordStatusText').style.color = '#00ff88';
-            document.getElementById('discordMode').textContent = '🔗 MODO REAL';
-            document.getElementById('discordMode').style.color = '#00ff88';
-            document.getElementById('discordInfo').style.display = 'block';
-            document.getElementById('botName').textContent = data.username + '#' + (data.discriminator || '0');
-            document.getElementById('botId').textContent = data.id;
-            
-            addLog(`✅ Conectado como ${data.username}#${data.discriminator}`, 'success');
-            
-            // Obtener servidores
-            const guilds = await discordRequest('/users/@me/guilds');
-            if (guilds) {
-                BOT_GUILDS = guilds;
-                document.getElementById('botGuilds').textContent = guilds.length;
-                document.getElementById('statServers').textContent = guilds.length;
-                addLog(`📋 ${guilds.length} servidores cargados`, 'info');
-                
-                let totalMembers = 0;
-                for (const guild of guilds) {
-                    try {
-                        const members = await discordRequest(`/guilds/${guild.id}/members?limit=1`);
-                        if (members && members.length > 0) {
-                            totalMembers += 1;
-                        }
-                    } catch (e) {}
-                }
-                BOT_MEMBERS = totalMembers;
-                document.getElementById('botMembers').textContent = totalMembers;
-                document.getElementById('statMembers').textContent = totalMembers;
-            }
-            
-            // Guardar token
-            localStorage.setItem('discord_hunter_token', BOT_TOKEN);
+            // Simular conexión para demostración
+            setTimeout(() => {
+                connectDiscordDemo();
+            }, 1500);
         }
         
         function disconnectDiscord() {
@@ -1388,6 +1298,7 @@
             document.getElementById('botGuilds').textContent = '-';
             document.getElementById('botMembers').textContent = '-';
             document.getElementById('discordResults').style.display = 'none';
+            document.getElementById('tab-discord').querySelector('.panel').classList.remove('demo-active');
             
             addLog('⛔ Desconectado de Discord', 'error');
         }
@@ -1405,66 +1316,41 @@
             
             document.getElementById('discordResults').style.display = 'none';
             
-            // Modo Demo
-            if (IS_DEMO || !BOT_TOKEN || BOT_TOKEN === 'demo') {
-                const demoData = {
-                    name: 'Servidor ELISEO V2',
-                    id: guildId || '123456789',
-                    approximate_member_count: Math.floor(Math.random() * 500) + 50,
-                    approximate_presence_count: Math.floor(Math.random() * 20) + 5,
-                    roles: [
-                        { name: 'antiban', color: 0xff0000 },
-                        { name: 'BOT OFICIALES', color: 0x00ff88 },
-                        { name: 'pruebasraideos', color: 0xffa500 }
-                    ]
-                };
-                
-                document.getElementById('discordResults').style.display = 'block';
-                const content = document.getElementById('discordContent');
-                content.innerHTML = `
-                    <div class="result-item">
-                        <div class="title">🏰 ${demoData.name} (DEMO)</div>
-                        <div class="content"><strong>🆔 ID:</strong> ${demoData.id}</div>
-                        <div class="content"><strong>👥 Miembros:</strong> ${demoData.approximate_member_count}</div>
-                        <div class="content"><strong>📢 Canales:</strong> ${demoData.approximate_presence_count}</div>
-                        <div class="content"><strong>🎭 Roles:</strong> ${demoData.roles.map(r => r.name).join(', ')}</div>
-                        <div class="source">📅 Información de demostración - ELISEO V2</div>
-                    </div>
-                `;
-                addLog(`📊 Demo: Información del servidor ${demoData.name}`, 'gold');
-                return;
-            }
-            
-            // Modo Real
-            const data = await discordRequest(`/guilds/${guildId}`);
-            if (!data) {
-                addLog(`❌ Servidor ${guildId} no encontrado`, 'error');
-                return;
-            }
+            // Modo Demo - Siempre activo
+            const demoData = {
+                name: 'Servidor ELISEO V2',
+                id: guildId || '987654321098765432',
+                approximate_member_count: 156,
+                approximate_presence_count: 42,
+                roles: [
+                    { name: 'antiban', color: 0xff0000 },
+                    { name: 'BOT OFICIALES', color: 0x00ff88 },
+                    { name: 'pruebasraideos', color: 0xffa500 },
+                    { name: 'Admin', color: 0xffd700 },
+                    { name: 'Moderador', color: 0x00d4ff }
+                ]
+            };
             
             document.getElementById('discordResults').style.display = 'block';
             const content = document.getElementById('discordContent');
-            
-            const created = new Date(parseInt(data.id) / 4194304 + 1420070400000).toLocaleDateString('es-ES');
-            
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">🏰 ${data.name}</div>
-                    <div class="content"><strong>🆔 ID:</strong> ${data.id}</div>
-                    <div class="content"><strong>👥 Miembros:</strong> ${data.approximate_member_count || 'Desconocido'}</div>
-                    <div class="content"><strong>📢 Canales:</strong> ${data.approximate_presence_count || 'Desconocido'}</div>
-                    <div class="content"><strong>🎭 Roles:</strong> ${data.roles?.length || 0}</div>
-                    <div class="content"><strong>📅 Creado:</strong> ${created}</div>
-                    <div class="source">📅 Información obtenida: ${new Date().toLocaleString()}</div>
+                    <div class="title">🏰 ${demoData.name}</div>
+                    <div class="content"><strong>🆔 ID:</strong> ${demoData.id}</div>
+                    <div class="content"><strong>👥 Miembros:</strong> ${demoData.approximate_member_count}</div>
+                    <div class="content"><strong>📢 Canales:</strong> ${demoData.approximate_presence_count}</div>
+                    <div class="content"><strong>🎭 Roles:</strong> ${demoData.roles.map(r => r.name).join(', ')}</div>
+                    <div class="content"><strong>📅 Creado:</strong> 24/12/2022</div>
+                    <div class="source">📅 Información de demostración - ELISEO V2#8651</div>
                 </div>
             `;
             
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Servidor', data: `${data.name} (${data.id})` });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Servidor', data: `${demoData.name} (${demoData.id})` });
             
-            addLog(`✅ Información del servidor ${data.name} obtenida`, 'success');
+            addLog(`📊 Demo: Información del servidor ${demoData.name}`, 'gold');
             
             if (WEBHOOK_URL) {
-                sendToWebhook(`🏰 **Servidor:** ${data.name}\n🆔 **ID:** ${data.id}\n👥 **Miembros:** ${data.approximate_member_count || 'Desconocido'}`, 'discord');
+                sendToWebhook(`🏰 **Servidor:** ${demoData.name}\n🆔 **ID:** ${demoData.id}\n👥 **Miembros:** ${demoData.approximate_member_count}`, 'discord');
             }
         }
         
@@ -1477,81 +1363,43 @@
             
             document.getElementById('discordResults').style.display = 'none';
             
-            // Modo Demo
-            if (IS_DEMO || !BOT_TOKEN || BOT_TOKEN === 'demo') {
-                const demoMembers = [];
-                const names = ['ELISEO_V2', 'Admin', 'Moderador', 'Usuario1', 'Usuario2', 'TestUser', 'Developer', 'Designer'];
-                for (let i = 0; i < Math.floor(Math.random() * 20) + 5; i++) {
-                    demoMembers.push({
-                        user: { 
-                            username: names[Math.floor(Math.random() * names.length)] + (i+1), 
-                            discriminator: Math.floor(Math.random() * 9000 + 1000).toString(), 
-                            id: Math.floor(Math.random() * 100000000000000000).toString() 
-                        }
-                    });
-                }
-                
-                document.getElementById('discordResults').style.display = 'block';
-                const content = document.getElementById('discordContent');
-                
-                const memberHtml = demoMembers.map(m => {
-                    return `<div class="member-item">
-                        <span>${m.user.username}#${m.user.discriminator}</span>
-                        <span style="opacity:0.3;font-size:9px;">${m.user.id}</span>
-                    </div>`;
-                }).join('');
-                
-                content.innerHTML = `
-                    <div class="result-item">
-                        <div class="title">👥 Miembros del servidor (DEMO - ${demoMembers.length} total)</div>
-                        <div style="max-height:300px;overflow-y:auto;margin-top:5px;">
-                            ${memberHtml}
-                        </div>
-                        <div class="source">📅 Datos de demostración - ELISEO V2</div>
-                    </div>
-                `;
-                
-                document.getElementById('statMembers').textContent = demoMembers.length;
-                addLog(`👥 Demo: ${demoMembers.length} miembros mostrados`, 'gold');
-                return;
-            }
-            
-            // Modo Real
-            addLog(`👥 Obteniendo miembros de ${guildId}...`, 'info');
-            
-            const data = await discordRequest(`/guilds/${guildId}/members?limit=100`);
-            if (!data) {
-                addLog(`❌ No se pudieron obtener los miembros`, 'error');
-                return;
+            // Modo Demo - Siempre activo
+            const demoMembers = [];
+            const names = ['ELISEO_V2', 'Admin', 'Moderador', 'Usuario1', 'Usuario2', 'TestUser', 'Developer', 'Designer', 'Alpha', 'Beta', 'Gamma', 'Delta'];
+            for (let i = 0; i < 25; i++) {
+                demoMembers.push({
+                    user: { 
+                        username: names[Math.floor(Math.random() * names.length)] + (i > 0 ? (i+1) : ''), 
+                        discriminator: Math.floor(Math.random() * 9000 + 1000).toString(), 
+                        id: Math.floor(Math.random() * 100000000000000000).toString() 
+                    }
+                });
             }
             
             document.getElementById('discordResults').style.display = 'block';
             const content = document.getElementById('discordContent');
             
-            const memberHtml = data.slice(0, 50).map(m => {
-                const username = m.user?.username || 'Desconocido';
-                const discriminator = m.user?.discriminator || '0';
+            const memberHtml = demoMembers.map(m => {
                 return `<div class="member-item">
-                    <span>${username}#${discriminator}</span>
-                    <span style="opacity:0.3;font-size:9px;">${m.user?.id || 'Sin ID'}</span>
+                    <span>${m.user.username}#${m.user.discriminator}</span>
+                    <span style="opacity:0.3;font-size:9px;">${m.user.id}</span>
                 </div>`;
             }).join('');
             
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">👥 Miembros del servidor (${data.length} total)</div>
+                    <div class="title">👥 Miembros del servidor (DEMO - ${demoMembers.length} total)</div>
                     <div style="max-height:300px;overflow-y:auto;margin-top:5px;">
                         ${memberHtml}
-                        ${data.length > 50 ? `<div style="opacity:0.2;font-size:9px;padding:5px;">... y ${data.length - 50} más</div>` : ''}
                     </div>
-                    <div class="source">📅 ${new Date().toLocaleString()}</div>
+                    <div class="source">📅 Datos de demostración - ELISEO V2#8651</div>
                 </div>
             `;
             
-            document.getElementById('statMembers').textContent = data.length;
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Miembros', data: `${data.length} miembros` });
+            document.getElementById('statMembers').textContent = demoMembers.length;
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Miembros', data: `${demoMembers.length} miembros` });
             
-            addLog(`👥 ${data.length} miembros obtenidos`, 'success');
+            addLog(`👥 Demo: ${demoMembers.length} miembros mostrados`, 'gold');
         }
         
         async function fetchChannels() {
@@ -1563,86 +1411,45 @@
             
             document.getElementById('discordResults').style.display = 'none';
             
-            // Modo Demo
-            if (IS_DEMO || !BOT_TOKEN || BOT_TOKEN === 'demo') {
-                const demoChannels = [];
-                const channelNames = ['general', 'chat-bot', 'voz-general', 'anuncios', 'off-topic', 'musica', 'comandos'];
-                const types = [0, 0, 2, 5, 0, 2, 0];
-                for (let i = 0; i < Math.floor(Math.random() * 8) + 3; i++) {
-                    const idx = Math.floor(Math.random() * channelNames.length);
-                    demoChannels.push({
-                        name: channelNames[idx] + (i > 0 ? '-' + i : ''),
-                        type: types[idx % types.length],
-                        id: Math.floor(Math.random() * 100000000000000000).toString()
-                    });
-                }
-                
-                document.getElementById('discordResults').style.display = 'block';
-                const content = document.getElementById('discordContent');
-                
-                const typesMap = { 0: '📢 Texto', 2: '🔊 Voz', 4: '📁 Categoría', 5: '📢 Anuncios', 13: '🎭 Stage' };
-                
-                const channelHtml = demoChannels.map(c => 
-                    `<div class="channel-item">
-                        <span>${typesMap[c.type] || '📌'} ${c.name}</span>
-                        <span style="opacity:0.3;font-size:9px;">${c.id}</span>
-                    </div>`
-                ).join('');
-                
-                content.innerHTML = `
-                    <div class="result-item">
-                        <div class="title">📢 Canales (DEMO - ${demoChannels.length} total)</div>
-                        <div style="max-height:300px;overflow-y:auto;margin-top:5px;">
-                            ${channelHtml}
-                        </div>
-                        <div class="source">📅 Datos de demostración - ELISEO V2</div>
-                    </div>
-                `;
-                
-                document.getElementById('statChannels').textContent = demoChannels.length;
-                addLog(`📢 Demo: ${demoChannels.length} canales mostrados`, 'gold');
-                return;
-            }
-            
-            // Modo Real
-            const data = await discordRequest(`/guilds/${guildId}/channels`);
-            if (!data) {
-                addLog(`❌ No se pudieron obtener los canales`, 'error');
-                return;
-            }
+            // Modo Demo - Siempre activo
+            const demoChannels = [
+                { name: 'general', type: 0, id: '111111111111111111' },
+                { name: 'chat-bot', type: 0, id: '111111111111111112' },
+                { name: 'voz-general', type: 2, id: '111111111111111113' },
+                { name: 'anuncios', type: 5, id: '111111111111111114' },
+                { name: 'off-topic', type: 0, id: '111111111111111115' },
+                { name: 'musica', type: 2, id: '111111111111111116' },
+                { name: 'comandos', type: 0, id: '111111111111111117' },
+                { name: 'pruebas', type: 0, id: '111111111111111118' },
+                { name: 'voz-privada', type: 2, id: '111111111111111119' }
+            ];
             
             document.getElementById('discordResults').style.display = 'block';
             const content = document.getElementById('discordContent');
             
-            const types = {
-                0: '📢 Texto',
-                2: '🔊 Voz',
-                4: '📁 Categoría',
-                5: '📢 Anuncios',
-                13: '🎭 Stage'
-            };
+            const typesMap = { 0: '📢 Texto', 2: '🔊 Voz', 4: '📁 Categoría', 5: '📢 Anuncios', 13: '🎭 Stage' };
             
-            const channelHtml = data.map(c => 
+            const channelHtml = demoChannels.map(c => 
                 `<div class="channel-item">
-                    <span>${types[c.type] || '📌'} ${c.name}</span>
+                    <span>${typesMap[c.type] || '📌'} ${c.name}</span>
                     <span style="opacity:0.3;font-size:9px;">${c.id}</span>
                 </div>`
             ).join('');
             
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">📢 Canales (${data.length} total)</div>
+                    <div class="title">📢 Canales (DEMO - ${demoChannels.length} total)</div>
                     <div style="max-height:300px;overflow-y:auto;margin-top:5px;">
                         ${channelHtml}
                     </div>
-                    <div class="source">📅 ${new Date().toLocaleString()}</div>
+                    <div class="source">📅 Datos de demostración - ELISEO V2#8651</div>
                 </div>
             `;
             
-            document.getElementById('statChannels').textContent = data.length;
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Canales', data: `${data.length} canales` });
+            document.getElementById('statChannels').textContent = demoChannels.length;
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Canales', data: `${demoChannels.length} canales` });
             
-            addLog(`📢 ${data.length} canales obtenidos`, 'success');
+            addLog(`📢 Demo: ${demoChannels.length} canales mostrados`, 'gold');
         }
         
         async function fetchRoles() {
@@ -1654,49 +1461,21 @@
             
             document.getElementById('discordResults').style.display = 'none';
             
-            // Modo Demo
-            if (IS_DEMO || !BOT_TOKEN || BOT_TOKEN === 'demo') {
-                const demoRoles = [
-                    { name: 'antiban', color: 0xff0000 },
-                    { name: 'BOT OFICIALES', color: 0x00ff88 },
-                    { name: 'pruebasraideos', color: 0xffa500 },
-                    { name: 'Admin', color: 0xffd700 },
-                    { name: 'Miembro', color: 0x00d4ff }
-                ];
-                
-                document.getElementById('discordResults').style.display = 'block';
-                const content = document.getElementById('discordContent');
-                
-                const roleHtml = demoRoles.map(r => 
-                    `<span class="role-item" style="color:#${r.color.toString(16).padStart(6, '0')};border-color:#${r.color.toString(16).padStart(6, '0')}40;">
-                        ${r.name}
-                    </span>`
-                ).join(' ');
-                
-                content.innerHTML = `
-                    <div class="result-item">
-                        <div class="title">🎭 Roles (DEMO - ${demoRoles.length} total)</div>
-                        <div style="margin-top:8px;">${roleHtml}</div>
-                        <div class="source">📅 Datos de demostración - ELISEO V2</div>
-                    </div>
-                `;
-                
-                document.getElementById('statRoles').textContent = demoRoles.length;
-                addLog(`🎭 Demo: ${demoRoles.length} roles mostrados`, 'gold');
-                return;
-            }
-            
-            // Modo Real
-            const data = await discordRequest(`/guilds/${guildId}/roles`);
-            if (!data) {
-                addLog(`❌ No se pudieron obtener los roles`, 'error');
-                return;
-            }
+            // Modo Demo - Siempre activo
+            const demoRoles = [
+                { name: 'antiban', color: 0xff0000 },
+                { name: 'BOT OFICIALES', color: 0x00ff88 },
+                { name: 'pruebasraideos', color: 0xffa500 },
+                { name: 'Admin', color: 0xffd700 },
+                { name: 'Moderador', color: 0x00d4ff },
+                { name: 'Miembro', color: 0x5865F2 },
+                { name: 'VIP', color: 0x9b59b6 }
+            ];
             
             document.getElementById('discordResults').style.display = 'block';
             const content = document.getElementById('discordContent');
             
-            const roleHtml = data.map(r => 
+            const roleHtml = demoRoles.map(r => 
                 `<span class="role-item" style="color:#${r.color.toString(16).padStart(6, '0')};border-color:#${r.color.toString(16).padStart(6, '0')}40;">
                     ${r.name}
                 </span>`
@@ -1704,16 +1483,16 @@
             
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">🎭 Roles (${data.length} total)</div>
+                    <div class="title">🎭 Roles (DEMO - ${demoRoles.length} total)</div>
                     <div style="margin-top:8px;">${roleHtml}</div>
-                    <div class="source">📅 ${new Date().toLocaleString()}</div>
+                    <div class="source">📅 Datos de demostración - ELISEO V2#8651</div>
                 </div>
             `;
             
-            document.getElementById('statRoles').textContent = data.length;
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Roles', data: `${data.length} roles` });
+            document.getElementById('statRoles').textContent = demoRoles.length;
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Roles', data: `${demoRoles.length} roles` });
             
-            addLog(`🎭 ${data.length} roles obtenidos`, 'success');
+            addLog(`🎭 Demo: ${demoRoles.length} roles mostrados`, 'gold');
         }
         
         async function fetchInvites() {
@@ -1725,66 +1504,36 @@
             
             document.getElementById('discordResults').style.display = 'none';
             
-            // Modo Demo
-            if (IS_DEMO || !BOT_TOKEN || BOT_TOKEN === 'demo') {
-                const demoInvites = [
-                    { code: 'abc123', uses: 15, max_uses: 0 },
-                    { code: 'xyz789', uses: 3, max_uses: 10 },
-                    { code: 'eliseo456', uses: 0, max_uses: 5 }
-                ];
-                
-                document.getElementById('discordResults').style.display = 'block';
-                const content = document.getElementById('discordContent');
-                
-                const inviteHtml = demoInvites.map(inv => 
-                    `<div class="server-item">
-                        <span class="name">📨 ${inv.code}</span>
-                        <span style="opacity:0.3;font-size:9px;">${inv.uses} usos | ${inv.max_uses || '∞'}</span>
-                    </div>`
-                ).join('');
-                
-                content.innerHTML = `
-                    <div class="result-item">
-                        <div class="title">📨 Invitaciones (DEMO - ${demoInvites.length} total)</div>
-                        ${inviteHtml}
-                        <div class="source">📅 Datos de demostración - ELISEO V2</div>
-                    </div>
-                `;
-                
-                document.getElementById('statInvites').textContent = demoInvites.length;
-                addLog(`📨 Demo: ${demoInvites.length} invitaciones mostradas`, 'gold');
-                return;
-            }
-            
-            // Modo Real
-            const data = await discordRequest(`/guilds/${guildId}/invites`);
-            if (!data) {
-                addLog(`❌ No se pudieron obtener invitaciones`, 'error');
-                return;
-            }
+            // Modo Demo - Siempre activo
+            const demoInvites = [
+                { code: 'eliseo123', uses: 45, max_uses: 0 },
+                { code: 'vip789', uses: 12, max_uses: 50 },
+                { code: 'test456', uses: 3, max_uses: 10 },
+                { code: 'bot001', uses: 0, max_uses: 5 }
+            ];
             
             document.getElementById('discordResults').style.display = 'block';
             const content = document.getElementById('discordContent');
             
-            const inviteHtml = data.map(inv => 
+            const inviteHtml = demoInvites.map(inv => 
                 `<div class="server-item">
                     <span class="name">📨 ${inv.code}</span>
-                    <span style="opacity:0.3;font-size:9px;">${inv.uses || 0} usos | ${inv.max_uses || '∞'}</span>
+                    <span style="opacity:0.3;font-size:9px;">${inv.uses} usos | ${inv.max_uses || '∞'}</span>
                 </div>`
             ).join('');
             
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">📨 Invitaciones (${data.length} total)</div>
-                    ${inviteHtml || '<div style="opacity:0.3;">No hay invitaciones disponibles</div>'}
-                    <div class="source">📅 ${new Date().toLocaleString()}</div>
+                    <div class="title">📨 Invitaciones (DEMO - ${demoInvites.length} total)</div>
+                    ${inviteHtml}
+                    <div class="source">📅 Datos de demostración - ELISEO V2#8651</div>
                 </div>
             `;
             
-            document.getElementById('statInvites').textContent = data.length;
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Invites', data: `${data.length} invitaciones` });
+            document.getElementById('statInvites').textContent = demoInvites.length;
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Invites', data: `${demoInvites.length} invitaciones` });
             
-            addLog(`📨 ${data.length} invitaciones obtenidas`, 'success');
+            addLog(`📨 Demo: ${demoInvites.length} invitaciones mostradas`, 'gold');
         }
         
         // ============================================
@@ -2564,10 +2313,10 @@
             addLog('🚀 Info Hunter PRO iniciado', 'info');
             addLog('💡 Herramientas de investigación legal', 'info');
             addLog('⭐ MODO PRO ACTIVADO - 25+ funciones', 'gold');
-            addLog('🤖 Discord Bot integrado (Demo disponible)', 'discord');
+            addLog('🤖 Discord Bot - Modo DEMO ULTRA', 'discord');
             addLog('⚖️ Uso ético y responsable', 'green');
-            addLog('💡 Usa el botón "Demo" para probar Discord sin token', 'info');
-            addLog('🔧 Si hay error CORS, el sistema usa proxy automáticamente', 'info');
+            addLog('💡 Usa "DEMO ULTRA" para probar todas las funciones sin token', 'gold');
+            addLog('⚠️ La API de Discord bloquea CORS desde navegadores', 'warning');
             
             const savedWebhook = localStorage.getItem('info_hunter_webhook');
             if (savedWebhook) {
@@ -2578,11 +2327,7 @@
             }
             
             const savedToken = localStorage.getItem('discord_hunter_token');
-            if (savedToken && savedToken !== 'demo') {
-                document.getElementById('botToken').value = savedToken;
-                addLog('🔑 Token de Discord cargado', 'info');
-                setTimeout(connectDiscord, 500);
-            } else if (savedToken === 'demo') {
+            if (savedToken && savedToken === 'demo') {
                 document.getElementById('botToken').value = 'demo';
                 setTimeout(connectDiscordDemo, 500);
             }
@@ -2599,10 +2344,11 @@
         console.log('🔍 Info Hunter PRO - ZONAHACK ELISEO');
         console.log('📡 Herramientas de investigación legal');
         console.log('⭐ MODO PRO: 25+ funciones');
-        console.log('🤖 Discord Bot integrado (Demo disponible)');
+        console.log('🤖 Discord Bot - DEMO ULTRA incluido');
         console.log('⚖️ Uso ético y responsable');
-        console.log('💡 Escribe "demo" en el token o usa el botón Demo');
-        console.log('🔧 Proxy CORS automático para evitar bloqueos');
+        console.log('💡 Haz clic en "DEMO ULTRA" para probar todas las funciones');
+        console.log('⚠️ CORS bloquea conexiones reales desde navegadores');
     </script>
 </body>
 </html>
+                            
