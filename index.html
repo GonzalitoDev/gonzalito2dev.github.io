@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔍 INFO HUNTER PRO - ZONAHACK ELISEO</title>
     <style>
-        /* ===== ESTILOS EXISTENTES ===== */
+        /* ===== ESTILOS EXISTENTES (completos) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         @keyframes glitch {
@@ -266,13 +266,13 @@
         .btn-discord { border-color: #5865F2; color: #5865F2; }
         .btn-discord:hover:not(:disabled) { background: #5865F2; color: #0a0a12; }
 
-        /* ===== NUEVO BOTÓN DE MANTENIMIENTO ===== */
+        /* ===== BOTÓN DE MANTENIMIENTO ===== */
         .btn-mantenimiento {
             border-color: #ff6b35;
             color: #ff6b35;
             background: rgba(255,107,53,0.05);
-            padding: 8px 16px;
-            font-size: 10px;
+            padding: 10px 25px;
+            font-size: 12px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
@@ -282,14 +282,15 @@
             letter-spacing: 1px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            border: 2px solid #ff6b35;
         }
         
         .btn-mantenimiento:hover {
             background: #ff6b35;
             color: #0a0a12;
             transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255,107,53,0.2);
+            box-shadow: 0 0 40px rgba(255,107,53,0.3);
         }
 
         /* ===== MODAL DE MANTENIMIENTO ===== */
@@ -305,7 +306,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
         
         .modal-mantenimiento.active {
@@ -318,7 +319,7 @@
             border: 2px solid #ff6b35;
             border-radius: 20px;
             padding: 40px;
-            max-width: 600px;
+            max-width: 550px;
             width: 100%;
             text-align: center;
             max-height: 90vh;
@@ -329,15 +330,35 @@
         
         .modal-mantenimiento .modal-content .gif-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             margin: 0 auto 20px auto;
             border-radius: 12px;
             overflow: hidden;
             border: 2px solid rgba(255,107,53,0.2);
+            background: #1a1a2e;
+            position: relative;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .modal-mantenimiento .modal-content .gif-container img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .modal-mantenimiento .modal-content .gif-container .gif-error {
+            display: none;
+            color: #ff6b35;
+            font-size: 14px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .modal-mantenimiento .modal-content .gif-container img.error + .gif-error {
             display: block;
         }
         
@@ -376,6 +397,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 10px;
+            border: 2px solid #ff6b35;
         }
         
         .modal-mantenimiento .modal-content .btn-cerrar:hover {
@@ -720,6 +742,8 @@
             border: 1px solid rgba(0,150,255,0.05);
         }
         
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+        
         @media (max-width: 768px) {
             .container { padding: 12px; }
             .logo { font-size: 24px; }
@@ -833,10 +857,10 @@
                     <h2 style="color:#ffd700;font-size:24px;">INFO HUNTER PRO</h2>
                     <p style="opacity:0.3;font-size:13px;margin:10px 0;">Herramientas legales para extracción de información pública</p>
                     
-                    <div class="flex" style="justify-content:center;margin:15px 0;">
-                        <!-- ===== NUEVO BOTÓN DE MANTENIMIENTO ===== -->
+                    <!-- ===== BOTÓN DE MANTENIMIENTO ===== -->
+                    <div style="margin:15px 0;">
                         <button class="btn-mantenimiento" onclick="abrirMantenimiento()">
-                            🔧 MANTENIMIENTO
+                            🔧 MODO MANTENIMIENTO
                         </button>
                     </div>
                     
@@ -1128,11 +1152,18 @@
     <!-- ===== MODAL: MANTENIMIENTO CON GIF ===== -->
     <div class="modal-mantenimiento" id="modalMantenimiento">
         <div class="modal-content">
-            <!-- GIF de Jesús bailando desde Pinterest -->
+            <!-- GIF de Jesús bailando - Múltiples fuentes alternativas -->
             <div class="gif-container">
-                <img src="https://i.pinimg.com/originals/2e/1a/dc/2e1adc8e32ee1fd8d9f0b305416d83c2.gif" 
+                <img id="gifMantenimiento" 
+                     src="https://c.tenor.com/4PZ7pE2_LqMAAAAC/jesus-christ-dancing.gif"
                      alt="Jesús bailando - Modo mantenimiento"
+                     onerror="this.src='https://media.tenor.com/4PZ7pE2_LqMAAAAC/jesus-christ-dancing.gif'; this.onerror=function(){this.style.display='none'; document.getElementById('gifError').style.display='block';}"
                      loading="lazy">
+                <div id="gifError" class="gif-error" style="display:none;">
+                    <div style="font-size:48px;">🙏</div>
+                    <p>Jesús está en oración...</p>
+                    <p style="font-size:12px;opacity:0.5;">(El GIF no pudo cargarse, pero la fe sigue intacta)</p>
+                </div>
             </div>
             
             <h2>🔧 MODO MANTENIMIENTO</h2>
@@ -1144,7 +1175,7 @@
             
             <p class="mensaje">
                 ⏳ Estamos realizando mejoras en el sistema.<br>
-                <span style="opacity:0.5;font-size:12px;">No te preocupes, Jesús está bailando mientras tanto 🙏</span>
+                <span style="opacity:0.5;font-size:12px;">🙏 Jesús está bailando mientras tanto</span>
             </p>
             
             <div style="margin-top:10px;padding:8px;background:rgba(255,107,53,0.05);border-radius:6px;border:1px solid rgba(255,107,53,0.05);">
@@ -1164,6 +1195,14 @@
             document.getElementById('modalMantenimiento').classList.add('active');
             document.body.style.overflow = 'hidden';
             addLog('🔧 Modo mantenimiento activado', 'orange');
+            
+            // Intentar recargar el GIF si falló
+            const img = document.getElementById('gifMantenimiento');
+            if (img) {
+                const src = img.src;
+                img.src = '';
+                setTimeout(() => { img.src = src; }, 100);
+            }
         }
         
         function cerrarMantenimiento() {
@@ -2581,6 +2620,7 @@
             addLog('🤖 Discord Bot - Conexión REAL con API', 'discord');
             addLog('⚖️ Uso ético y responsable', 'green');
             addLog('💡 Activa el proxy CORS si hay errores de conexión', 'info');
+            addLog('🙏 Botón de mantenimiento con Jesús bailando', 'gold');
             
             const savedWebhook = localStorage.getItem('info_hunter_webhook');
             if (savedWebhook) {
@@ -2612,6 +2652,7 @@
         console.log('🤖 Discord Bot - Conexión REAL con API oficial');
         console.log('⚖️ Uso ético y responsable');
         console.log('💡 Activa el proxy CORS si hay errores de conexión');
+        console.log('🙏 Botón de mantenimiento con Jesús bailando');
     </script>
 </body>
 </html>
