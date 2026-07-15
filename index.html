@@ -129,6 +129,7 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             color: #00d4ff;
+            user-select: none;
         }
         
         .tab:hover { opacity: 0.6; }
@@ -229,6 +230,7 @@
             letter-spacing: 1px;
             position: relative;
             z-index: 2;
+            user-select: none;
         }
         
         .btn:hover:not(:disabled) {
@@ -408,24 +410,6 @@
             font-size: 8px;
             opacity: 0.2;
             margin-top: 2px;
-        }
-        
-        .result-item .copy-btn {
-            float: right;
-            background: rgba(0,150,255,0.1);
-            border: 1px solid rgba(0,150,255,0.2);
-            border-radius: 4px;
-            color: #00d4ff;
-            padding: 2px 10px;
-            font-size: 9px;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s;
-        }
-        
-        .result-item .copy-btn:hover {
-            background: #00d4ff;
-            color: #0a0a12;
         }
         
         .modal {
@@ -646,14 +630,14 @@
         
         <!-- TABS -->
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('home')">🏠 Inicio</div>
-            <div class="tab discord-tab" onclick="switchTab('discord')">🤖 Discord</div>
-            <div class="tab" onclick="switchTab('phone')">📱 Teléfono</div>
-            <div class="tab" onclick="switchTab('web')">🌐 Web</div>
-            <div class="tab" onclick="switchTab('social')">📱 Social</div>
-            <div class="tab" onclick="switchTab('email')">✉️ Email</div>
-            <div class="tab" onclick="switchTab('domain')">🌍 Dominio</div>
-            <div class="tab" onclick="switchTab('logs')">📄 Logs</div>
+            <div class="tab active" data-tab="home">🏠 Inicio</div>
+            <div class="tab discord-tab" data-tab="discord">🤖 Discord</div>
+            <div class="tab" data-tab="phone">📱 Teléfono</div>
+            <div class="tab" data-tab="web">🌐 Web</div>
+            <div class="tab" data-tab="social">📱 Social</div>
+            <div class="tab" data-tab="email">✉️ Email</div>
+            <div class="tab" data-tab="domain">🌍 Dominio</div>
+            <div class="tab" data-tab="logs">📄 Logs</div>
         </div>
         
         <!-- STATS -->
@@ -793,7 +777,7 @@
                     <div style="margin-top:10px;">
                         <div class="flex mb-10">
                             <input type="text" id="guildIdInput" placeholder="ID del servidor..." style="flex:1;min-width:150px;">
-                            <button class="btn btn-cyan" onclick="fetchGuildInfo()">🏰 Info Servidor</button>
+                            <button class="btn btn-cyan" onclick="fetchGuildInfo()">🏰 Info</button>
                             <button class="btn btn-purple" onclick="fetchMembers()">👥 Miembros</button>
                             <button class="btn btn-pink" onclick="fetchChannels()">📢 Canales</button>
                             <button class="btn btn-gold" onclick="fetchRoles()">🎭 Roles</button>
@@ -821,7 +805,7 @@
                 <div class="flex mb-10">
                     <input type="text" id="phoneInput" placeholder="+34 600 000 000" style="flex:1;min-width:200px;">
                     <button class="btn btn-cyan" onclick="searchPhone()">🔍 Buscar</button>
-                    <button class="btn btn-success" onclick="searchPhoneFull()">📊 Búsqueda Completa</button>
+                    <button class="btn btn-success" onclick="searchPhoneFull()">📊 Completa</button>
                     <button class="btn btn-gold" onclick="validatePhone()">✅ Validar</button>
                 </div>
                 
@@ -849,7 +833,7 @@
                 <div class="flex mb-10">
                     <input type="text" id="urlInput" placeholder="https://ejemplo.com" style="flex:1;min-width:200px;">
                     <button class="btn btn-green" onclick="scrapePage()">🌐 Scrapear</button>
-                    <button class="btn btn-gold" onclick="scrapeMeta()">📋 Meta Datos</button>
+                    <button class="btn btn-gold" onclick="scrapeMeta()">📋 Meta</button>
                     <button class="btn btn-cyan" onclick="checkSSL()">🔒 SSL</button>
                 </div>
                 
@@ -961,9 +945,9 @@
         <div class="webhook-status">
             <span class="status-dot blue" id="webhookDot"></span>
             <span id="webhookText">🔍 Sistema listo</span>
-            <button class="btn btn-success" onclick="openWebhookModal()" style="padding:4px 12px;font-size:9px;">🔗 Configurar Webhook</button>
+            <button class="btn btn-success" onclick="openWebhookModal()" style="padding:4px 12px;font-size:9px;">🔗 Webhook</button>
             <button class="btn btn-gold" onclick="exportResults()" style="padding:4px 12px;font-size:9px;">📊 Exportar</button>
-            <button class="btn btn-discord" onclick="sendToDiscord()" style="padding:4px 12px;font-size:9px;">📤 Enviar a Discord</button>
+            <button class="btn btn-discord" onclick="sendToDiscord()" style="padding:4px 12px;font-size:9px;">📤 Enviar</button>
         </div>
     </div>
     
@@ -1003,6 +987,21 @@
         const DISCORD_API = 'https://discord.com/api/v10';
         const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
         let USE_PROXY = false;
+        
+        // ============================================
+        // FUNCIONES DE NAVEGACIÓN
+        // ============================================
+        
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            
+            const content = document.getElementById('tab-' + tab);
+            if (content) content.classList.add('active');
+            
+            const tabEl = document.querySelector('.tab[data-tab="' + tab + '"]');
+            if (tabEl) tabEl.classList.add('active');
+        }
         
         // ============================================
         // FUNCIONES DE LOGS
@@ -1073,7 +1072,9 @@
             const a = document.createElement('a');
             a.href = url;
             a.download = filename;
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
         
@@ -1244,7 +1245,6 @@
                 document.getElementById('statServers').textContent = guilds.length;
                 addLog(`📋 ${guilds.length} servidores cargados`, 'info');
                 
-                // Contar miembros totales
                 let totalMembers = 0;
                 for (const guild of guilds) {
                     try {
