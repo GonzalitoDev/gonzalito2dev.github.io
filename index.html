@@ -99,6 +99,7 @@
         
         .subtitle .highlight { color: #ff0040; font-weight: bold; animation: pulse 1.5s infinite; }
         .subtitle .discord { color: #5865F2; font-weight: bold; }
+        .subtitle .warning { color: #ffa500; font-weight: bold; }
         
         .tabs {
             display: flex;
@@ -361,6 +362,7 @@
         .badge-gold { border-color: #ffd700; color: #ffd700; }
         .badge-purple { border-color: #9b59b6; color: #9b59b6; }
         .badge-pink { border-color: #ff69b4; color: #ff69b4; }
+        .badge-orange { border-color: #ffa500; color: #ffa500; }
         
         .copy-btn {
             background: rgba(88,101,242,0.1);
@@ -528,6 +530,25 @@
             margin-top: 2px;
         }
         
+        .solution-box {
+            background: rgba(255,165,0,0.05);
+            border: 1px solid rgba(255,165,0,0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .solution-box h4 {
+            color: #ffa500;
+            margin-bottom: 8px;
+        }
+        
+        .solution-box li {
+            opacity: 0.7;
+            margin: 4px 0;
+            font-size: 11px;
+        }
+        
         @media (max-width: 768px) {
             .container { padding: 12px; }
             .logo { font-size: 24px; }
@@ -540,7 +561,6 @@
             .stats-row { grid-template-columns: repeat(2, 1fr); }
         }
         
-        /* Scroll personalizado para listas */
         .scrollable-list {
             max-height: 250px;
             overflow-y: auto;
@@ -575,8 +595,8 @@
             <div class="subtitle">
                 🎯 Extrae información REAL de Discord usando la API oficial
                 <span class="discord">| 💀 Webhook Ready</span>
-                <span class="highlight">| ⚡ MODO PRO ACTIVADO</span>
-                <span class="highlight">| 🛡️ +10 FUNCIONES</span>
+                <span class="highlight">| ⚡ MODO PRO</span>
+                <span class="warning">| 🌐 Proxy CORS Activado</span>
             </div>
         </div>
         
@@ -591,7 +611,6 @@
             <div class="tab" onclick="switchTab('messages')">💬 Mensajes</div>
             <div class="tab" onclick="switchTab('roles')">🎭 Roles</div>
             <div class="tab" onclick="switchTab('invites')">📨 Invitaciones</div>
-            <div class="tab" onclick="switchTab('audit')">📋 Auditoría</div>
             <div class="tab" onclick="switchTab('logs')">📄 Logs</div>
         </div>
         
@@ -640,7 +659,17 @@
                     <div style="font-size:48px;margin-bottom:10px;">🕵️</div>
                     <h2 style="color:#ffd700;font-size:24px;">DISCORD HUNTER PRO</h2>
                     <p style="opacity:0.3;font-size:13px;margin:10px 0;">Extrae información REAL de Discord usando la API oficial</p>
-                    <p style="opacity:0.2;font-size:11px;margin:10px 0;">⚠️ MODO PRO: 10+ FUNCIONES AVANZADAS</p>
+                    
+                    <div class="solution-box">
+                        <h4>🔧 SOLUCIÓN PARA "FAILED TO FETCH"</h4>
+                        <ul style="list-style:none;text-align:left;">
+                            <li>✅ 1. Usa un proxy CORS: <span style="color:#00ff41;">https://cors-anywhere.herokuapp.com/</span></li>
+                            <li>✅ 2. Instala una extensión CORS en tu navegador</li>
+                            <li>✅ 3. Ejecuta el código en un servidor local (Live Server)</li>
+                            <li>✅ 4. Usa un proxy propio o VPN</li>
+                            <li style="color:#ffa500;">💡 El sistema usa automáticamente el proxy CORS si falla</li>
+                        </ul>
+                    </div>
                     
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:15px 0;">
                         <div style="background:rgba(88,101,242,0.02);border:1px solid rgba(88,101,242,0.05);border-radius:8px;padding:12px;">
@@ -680,6 +709,7 @@
                         <span class="badge badge-gold">⭐ MODO PRO</span>
                         <span style="font-size:10px;opacity:0.3;margin-left:8px;">+10 Funciones Avanzadas</span>
                         <span style="font-size:10px;opacity:0.3;margin-left:8px;">| Discord API v10</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🌐 Proxy CORS</span>
                     </div>
                 </div>
             </div>
@@ -692,12 +722,14 @@
                 
                 <div style="margin-bottom:12px;">
                     <p style="opacity:0.3;font-size:11px;">Ingresa el token de tu bot de Discord para conectarte a la API REAL</p>
+                    <p style="opacity:0.2;font-size:10px;">💡 Si tienes error "Failed to fetch", el sistema usará proxy CORS</p>
                 </div>
                 
                 <div class="flex mb-10">
                     <input type="password" id="botToken" placeholder="Token del Bot (REAL)" style="flex:1;min-width:200px;">
                     <button class="btn btn-discord" onclick="connectBot()">🔗 Conectar</button>
                     <button class="btn btn-danger" onclick="disconnectBot()">⛔ Desconectar</button>
+                    <button class="btn btn-gold" onclick="toggleProxy()">🌐 Proxy</button>
                 </div>
                 
                 <div id="connectionStatus" class="info-card" style="background:rgba(255,0,0,0.02);border-color:rgba(255,0,0,0.1);">
@@ -731,8 +763,8 @@
                             <div class="value pink" id="botIsBot">-</div>
                         </div>
                         <div class="info-card">
-                            <div class="label">📊 Flags</div>
-                            <div class="value purple" id="botFlags">-</div>
+                            <div class="label">🌐 Proxy</div>
+                            <div class="value cyan" id="proxyStatus">Desactivado</div>
                         </div>
                     </div>
                 </div>
@@ -747,7 +779,6 @@
                 <div class="flex mb-10">
                     <input type="text" id="userIdInput" placeholder="ID de usuario Discord..." style="flex:1;min-width:200px;">
                     <button class="btn btn-gold" onclick="fetchUser()">🔍 Buscar</button>
-                    <button class="btn btn-cyan" onclick="fetchUserMutual()">🔄 Mutual</button>
                 </div>
                 
                 <div id="userInfo" style="display:none;">
@@ -776,14 +807,6 @@
                             <div class="label">💀 Estado</div>
                             <div class="value red" id="userStatus">-</div>
                         </div>
-                        <div class="info-card">
-                            <div class="label">🎮 Actividad</div>
-                            <div class="value purple" id="userActivity">-</div>
-                        </div>
-                        <div class="info-card">
-                            <div class="label">📱 Dispositivo</div>
-                            <div class="value pink" id="userDevice">-</div>
-                        </div>
                     </div>
                 </div>
                 
@@ -803,7 +826,6 @@
                     <input type="text" id="guildIdInput" placeholder="ID del servidor..." style="flex:1;min-width:200px;">
                     <button class="btn btn-cyan" onclick="fetchGuild()">🏰 Buscar</button>
                     <button class="btn btn-gold" onclick="listGuilds()">📋 Listar</button>
-                    <button class="btn btn-purple" onclick="fetchGuildPreview()">👁️ Vista previa</button>
                 </div>
                 
                 <div id="guildInfo" style="display:none;">
@@ -832,14 +854,6 @@
                             <div class="label">📅 Creado</div>
                             <div class="value gold" id="guildCreated">-</div>
                         </div>
-                        <div class="info-card">
-                            <div class="label">👑 Dueño</div>
-                            <div class="value pink" id="guildOwner">-</div>
-                        </div>
-                        <div class="info-card">
-                            <div class="label">🌐 Región</div>
-                            <div class="value cyan" id="guildRegion">-</div>
-                        </div>
                     </div>
                 </div>
                 
@@ -860,8 +874,6 @@
                 <div class="flex mb-10">
                     <input type="text" id="memberGuildId" placeholder="ID del servidor..." style="flex:1;min-width:200px;">
                     <button class="btn btn-purple" onclick="fetchMembers()">👥 Obtener</button>
-                    <button class="btn btn-gold" onclick="searchMembers()">🔍 Buscar</button>
-                    <button class="btn btn-cyan" onclick="fetchMembersWithRoles()">🎭 Con roles</button>
                 </div>
                 
                 <div id="membersList" style="display:none;">
@@ -881,7 +893,6 @@
                 <div class="flex mb-10">
                     <input type="text" id="channelGuildId" placeholder="ID del servidor..." style="flex:1;min-width:200px;">
                     <button class="btn btn-pink" onclick="fetchChannels()">📢 Obtener</button>
-                    <button class="btn btn-gold" onclick="fetchChannelInfo()">🔍 Buscar canal</button>
                 </div>
                 
                 <div id="channelsList" style="display:none;">
@@ -902,7 +913,6 @@
                     <input type="text" id="msgChannelId" placeholder="ID del canal..." style="flex:1;min-width:200px;">
                     <input type="number" id="msgLimit" placeholder="Límite (1-100)" style="width:80px;" value="10">
                     <button class="btn btn-cyan" onclick="fetchMessages()">💬 Obtener</button>
-                    <button class="btn btn-gold" onclick="fetchMessagesFromUser()">👤 Por usuario</button>
                 </div>
                 
                 <div id="messagesList" style="display:none;">
@@ -922,7 +932,6 @@
                 <div class="flex mb-10">
                     <input type="text" id="rolesGuildId" placeholder="ID del servidor..." style="flex:1;min-width:200px;">
                     <button class="btn btn-purple" onclick="fetchRoles()">🎭 Obtener roles</button>
-                    <button class="btn btn-gold" onclick="fetchRoleInfo()">🔍 Buscar rol</button>
                 </div>
                 
                 <div id="rolesList" style="display:none;">
@@ -942,32 +951,12 @@
                 <div class="flex mb-10">
                     <input type="text" id="invitesGuildId" placeholder="ID del servidor..." style="flex:1;min-width:200px;">
                     <button class="btn btn-cyan" onclick="fetchInvites()">📨 Obtener</button>
-                    <button class="btn btn-gold" onclick="fetchInviteInfo()">🔍 Info invitación</button>
                 </div>
                 
                 <div id="invitesList" style="display:none;">
                     <div class="info-card">
                         <div class="label">📨 INVITACIONES DEL SERVIDOR</div>
                         <div id="invitesContent" class="scrollable-list"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- TAB: AUDIT -->
-        <div id="tab-audit" class="tab-content">
-            <div class="panel">
-                <div class="panel-title">📋 REGISTRO DE AUDITORÍA</div>
-                
-                <div class="flex mb-10">
-                    <input type="text" id="auditGuildId" placeholder="ID del servidor..." style="flex:1;min-width:200px;">
-                    <button class="btn btn-orange" onclick="fetchAuditLog()">📋 Obtener</button>
-                </div>
-                
-                <div id="auditList" style="display:none;">
-                    <div class="info-card">
-                        <div class="label">📋 REGISTRO DE AUDITORÍA</div>
-                        <div id="auditContent" class="scrollable-list" style="max-height:300px;"></div>
                     </div>
                 </div>
             </div>
@@ -981,7 +970,6 @@
                 <div class="flex mb-10">
                     <button class="btn btn-danger" onclick="clearLogs()">🗑️ Limpiar</button>
                     <button class="btn btn-gold" onclick="exportLogs()">📤 Exportar</button>
-                    <button class="btn btn-cyan" onclick="exportLogsJSON()">📊 Exportar JSON</button>
                     <span style="font-size:10px;opacity:0.2;display:flex;align-items:center;">📊 <span id="logCount">0</span> logs</span>
                 </div>
                 
@@ -999,7 +987,6 @@
             <span class="status-dot red" id="webhookDot"></span>
             <span id="webhookText">⚠️ Webhook no configurado</span>
             <button class="btn btn-discord" onclick="openWebhookModal()" style="padding:4px 12px;font-size:9px;">🔗 Configurar</button>
-            <button class="btn btn-gold" onclick="testWebhook()" style="padding:4px 12px;font-size:9px;">📡 Test</button>
         </div>
     </div>
     
@@ -1021,21 +1008,21 @@
     
     <script>
         // ============================================
-        // CONFIGURACIÓN REAL
+        // CONFIGURACIÓN REAL CON PROXY CORS
         // ============================================
         
         const DISCORD_API = 'https://discord.com/api/v10';
+        const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+        let USE_PROXY = false;
         let BOT_TOKEN = '';
         let BOT_USER = null;
         let BOT_GUILDS = [];
         let REQUEST_COUNT = 0;
         let WEBHOOK_URL = '';
-        let WEBHOOK_SENT = 0;
         let LOGS = [];
-        let CACHE = {};
         
         // ============================================
-        // FUNCIONES DE API REAL
+        // FUNCIONES DE API CON PROXY
         // ============================================
         
         async function discordRequest(endpoint, method = 'GET', body = null) {
@@ -1047,7 +1034,11 @@
             REQUEST_COUNT++;
             document.getElementById('statRequests').textContent = REQUEST_COUNT;
             
-            const url = `${DISCORD_API}${endpoint}`;
+            let url = `${DISCORD_API}${endpoint}`;
+            if (USE_PROXY) {
+                url = `${CORS_PROXY}${url}`;
+            }
+            
             const headers = {
                 'Authorization': `Bot ${BOT_TOKEN}`,
                 'Content-Type': 'application/json'
@@ -1058,6 +1049,15 @@
                 if (body) options.body = JSON.stringify(body);
                 
                 const response = await fetch(url, options);
+                
+                // Si falla con proxy, intentar sin proxy
+                if (!response.ok && USE_PROXY) {
+                    addLog('🔄 Intentando sin proxy...', 'info');
+                    USE_PROXY = false;
+                    document.getElementById('proxyStatus').textContent = 'Desactivado';
+                    return await discordRequest(endpoint, method, body);
+                }
+                
                 const data = await response.json();
                 
                 if (!response.ok) {
@@ -1067,7 +1067,16 @@
                 
                 return data;
             } catch (error) {
+                // Si falla con proxy, intentar sin proxy
+                if (USE_PROXY) {
+                    addLog('🔄 Falló con proxy, intentando directo...', 'info');
+                    USE_PROXY = false;
+                    document.getElementById('proxyStatus').textContent = 'Desactivado';
+                    return await discordRequest(endpoint, method, body);
+                }
+                
                 addLog(`❌ Error de conexión: ${error.message}`, 'error');
+                addLog('💡 Intenta activar el proxy con el botón "Proxy"', 'info');
                 return null;
             }
         }
@@ -1094,17 +1103,6 @@
         }
         
         function updateLogAreas() {
-            const logArea = document.querySelector('.log-area:not(#fullLogArea)');
-            if (logArea) {
-                const recentLogs = LOGS.slice(-50);
-                logArea.innerHTML = recentLogs.map(log => 
-                    `<div class="log-entry ${log.type}">
-                        <span class="time">[${log.time}]</span>
-                        <span>${log.message}</span>
-                    </div>`
-                ).join('');
-            }
-            
             const fullLogArea = document.getElementById('fullLogArea');
             if (fullLogArea) {
                 fullLogArea.innerHTML = LOGS.map(log => 
@@ -1141,23 +1139,6 @@
             addLog('📤 Logs exportados correctamente', 'success');
         }
         
-        function exportLogsJSON() {
-            if (LOGS.length === 0) {
-                addLog('⚠️ No hay logs para exportar', 'error');
-                return;
-            }
-            
-            const content = JSON.stringify(LOGS, null, 2);
-            const blob = new Blob([content], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `logs_discord_hunter_${Date.now()}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-            addLog('📊 Logs exportados en JSON', 'success');
-        }
-        
         // ============================================
         // FUNCIONES DE WEBHOOK
         // ============================================
@@ -1185,41 +1166,6 @@
             }
         }
         
-        async function testWebhook() {
-            if (!WEBHOOK_URL) {
-                addLog('⚠️ Configura un webhook primero', 'error');
-                return;
-            }
-            
-            const embed = {
-                title: '📡 Test Webhook',
-                description: '✅ Conexión exitosa con Discord Hunter PRO',
-                color: 0x00ff41,
-                timestamp: new Date().toISOString(),
-                fields: [
-                    { name: '📊 Estado', value: 'Conectado', inline: true },
-                    { name: '📡 Peticiones', value: REQUEST_COUNT.toString(), inline: true }
-                ],
-                footer: { text: 'ZONAHACK ELISEO • PRO' }
-            };
-            
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ embeds: [embed] })
-                });
-                
-                if (response.ok) {
-                    addLog('📡 Webhook test enviado correctamente', 'success');
-                } else {
-                    addLog('❌ Error al enviar test webhook', 'error');
-                }
-            } catch (error) {
-                addLog('❌ Error de conexión con webhook', 'error');
-            }
-        }
-        
         async function sendToWebhook(message, type = 'info') {
             if (!WEBHOOK_URL) return;
             
@@ -1228,10 +1174,7 @@
                 error: 0xff0040,
                 info: 0xffa500,
                 discord: 0x5865F2,
-                raid: 0xff0040,
-                gold: 0xffd700,
-                purple: 0x9b59b6,
-                cyan: 0x00ffff
+                gold: 0xffd700
             };
             
             const embed = {
@@ -1239,21 +1182,15 @@
                 description: message,
                 color: colors[type] || 0x00ff41,
                 timestamp: new Date().toISOString(),
-                footer: {
-                    text: 'ZONAHACK ELISEO • Modo PRO'
-                }
+                footer: { text: 'ZONAHACK ELISEO • PRO' }
             };
             
             try {
-                const response = await fetch(WEBHOOK_URL, {
+                await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ embeds: [embed] })
                 });
-                
-                if (response.ok) {
-                    WEBHOOK_SENT++;
-                }
             } catch (error) {
                 // Silencioso
             }
@@ -1275,6 +1212,13 @@
         // FUNCIONES DE CONEXIÓN
         // ============================================
         
+        function toggleProxy() {
+            USE_PROXY = !USE_PROXY;
+            document.getElementById('proxyStatus').textContent = USE_PROXY ? '✅ Activado' : 'Desactivado';
+            document.getElementById('proxyStatus').style.color = USE_PROXY ? '#00ff41' : '#ff0040';
+            addLog(`🌐 Proxy CORS ${USE_PROXY ? 'activado' : 'desactivado'}`, 'info');
+        }
+        
         async function connectBot() {
             const tokenInput = document.getElementById('botToken');
             BOT_TOKEN = tokenInput.value.trim();
@@ -1289,6 +1233,7 @@
             const data = await discordRequest('/users/@me');
             if (!data) {
                 addLog('❌ Error al conectar con el bot', 'error');
+                addLog('💡 Activa el proxy si estás en local', 'info');
                 return;
             }
             
@@ -1302,7 +1247,6 @@
             document.getElementById('botId').textContent = data.id;
             document.getElementById('botCreated').textContent = new Date(parseInt(data.id) / 4194304 + 1420070400000).toLocaleDateString('es-ES');
             document.getElementById('botIsBot').textContent = data.bot ? '✅ Sí' : '❌ No';
-            document.getElementById('botFlags').textContent = data.flags || 'Ninguno';
             
             addLog(`✅ Conectado como ${data.username}#${data.discriminator}`, 'success');
             
@@ -1315,6 +1259,9 @@
             }
             
             document.getElementById('statUsers').textContent = 1;
+            
+            // Guardar token
+            localStorage.setItem('discord_hunter_token', BOT_TOKEN);
         }
         
         function disconnectBot() {
@@ -1359,30 +1306,9 @@
             document.getElementById('userType').textContent = data.bot ? '🤖 Bot' : '👤 Usuario';
             document.getElementById('userAvatar').textContent = data.avatar ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png` : 'Sin avatar';
             document.getElementById('userStatus').textContent = data.presence?.status || 'Desconocido';
-            document.getElementById('userActivity').textContent = data.presence?.activities?.map(a => a.name).join(', ') || 'Sin actividad';
-            document.getElementById('userDevice').textContent = data.presence?.client_status ? 
-                Object.keys(data.presence.client_status).join(', ') : 'Desconocido';
             
             document.getElementById('statUsers').textContent = parseInt(document.getElementById('statUsers').textContent) + 1;
-            addLog(`✅ Usuario ${data.username} encontrado (ID: ${data.id})`, 'success');
-        }
-        
-        async function fetchUserMutual() {
-            const userId = document.getElementById('userIdInput').value.trim();
-            if (!userId) {
-                addLog('⚠️ Ingresa un ID de usuario', 'error');
-                return;
-            }
-            
-            const data = await discordRequest(`/users/${userId}/mutual-guilds`);
-            if (!data) {
-                addLog(`❌ No se encontraron servidores mutuos con ${userId}`, 'error');
-                return;
-            }
-            
-            addLog(`🔄 ${data.length} servidores mutuos encontrados`, 'success');
-            // Mostrar en logs la información
-            data.forEach(g => addLog(`🏰 ${g.name} (${g.id})`, 'discord'));
+            addLog(`✅ Usuario ${data.username} encontrado`, 'success');
         }
         
         // ============================================
@@ -1411,31 +1337,13 @@
             document.getElementById('guildChannels').textContent = data.approximate_presence_count || 'Desconocido';
             document.getElementById('guildRoles').textContent = data.roles?.length || 0;
             document.getElementById('guildCreated').textContent = new Date(data.id / 4194304 + 1420070400000).toLocaleDateString('es-ES');
-            document.getElementById('guildOwner').textContent = data.owner_id || 'Desconocido';
-            document.getElementById('guildRegion').textContent = data.region || 'Desconocida';
             
             document.getElementById('statServers').textContent = parseInt(document.getElementById('statServers').textContent) + 1;
             if (data.approximate_member_count) {
                 document.getElementById('statMembers').textContent = data.approximate_member_count;
             }
             
-            addLog(`✅ Servidor ${data.name} encontrado (ID: ${data.id})`, 'success');
-        }
-        
-        async function fetchGuildPreview() {
-            const guildId = document.getElementById('guildIdInput').value.trim();
-            if (!guildId) {
-                addLog('⚠️ Ingresa un ID de servidor', 'error');
-                return;
-            }
-            
-            const data = await discordRequest(`/guilds/${guildId}/preview`);
-            if (!data) {
-                addLog(`❌ No se pudo obtener vista previa del servidor ${guildId}`, 'error');
-                return;
-            }
-            
-            addLog(`👁️ Vista previa: ${data.name} - ${data.approximate_member_count} miembros`, 'info');
+            addLog(`✅ Servidor ${data.name} encontrado`, 'success');
         }
         
         async function listGuilds() {
@@ -1479,9 +1387,9 @@
             
             document.getElementById('membersList').style.display = 'none';
             
-            const data = await discordRequest(`/guilds/${guildId}/members?limit=200`);
+            const data = await discordRequest(`/guilds/${guildId}/members?limit=100`);
             if (!data) {
-                addLog(`❌ No se pudieron obtener los miembros del servidor ${guildId}`, 'error');
+                addLog(`❌ No se pudieron obtener los miembros`, 'error');
                 return;
             }
             
@@ -1492,64 +1400,14 @@
             content.innerHTML = data.map(m => {
                 const username = m.user?.username || 'Desconocido';
                 const discriminator = m.user?.discriminator || '0';
-                const userId = m.user?.id || 'Sin ID';
-                const nick = m.nick ? `(${m.nick})` : '';
                 return `<div class="member-item">
-                    <span>${username}#${discriminator} ${nick}</span>
-                    <span style="opacity:0.3;font-size:9px;">${userId}</span>
+                    <span>${username}#${discriminator}</span>
+                    <span style="opacity:0.3;font-size:9px;">${m.user?.id || 'Sin ID'}</span>
                 </div>`;
             }).join('');
             
             document.getElementById('statMembers').textContent = data.length;
             addLog(`👥 ${data.length} miembros encontrados`, 'success');
-        }
-        
-        async function searchMembers() {
-            const guildId = document.getElementById('memberGuildId').value.trim();
-            if (!guildId) {
-                addLog('⚠️ Ingresa un ID de servidor', 'error');
-                return;
-            }
-            
-            // Buscar miembros con query (simulado)
-            addLog('🔍 Función de búsqueda de miembros (usa el ID del servidor)', 'info');
-            await fetchMembers();
-        }
-        
-        async function fetchMembersWithRoles() {
-            const guildId = document.getElementById('memberGuildId').value.trim();
-            if (!guildId) {
-                addLog('⚠️ Ingresa un ID de servidor', 'error');
-                return;
-            }
-            
-            const data = await discordRequest(`/guilds/${guildId}/members?limit=100`);
-            if (!data) {
-                addLog(`❌ No se pudieron obtener los miembros`, 'error');
-                return;
-            }
-            
-            // Mostrar miembros con roles
-            const rolesData = await discordRequest(`/guilds/${guildId}/roles`);
-            if (!rolesData) {
-                addLog('❌ No se pudieron obtener los roles', 'error');
-                return;
-            }
-            
-            const roleMap = {};
-            rolesData.forEach(r => roleMap[r.id] = r.name);
-            
-            document.getElementById('membersList').style.display = 'block';
-            const content = document.getElementById('membersContent');
-            content.innerHTML = data.map(m => {
-                const roles = m.roles?.map(r => roleMap[r] || r).join(', ') || 'Sin roles';
-                return `<div class="member-item" style="flex-direction:column;align-items:flex-start;">
-                    <span>${m.user?.username}#${m.user?.discriminator || '0'}</span>
-                    <span style="opacity:0.3;font-size:8px;">🎭 ${roles}</span>
-                </div>`;
-            }).join('');
-            
-            addLog(`👥 ${data.length} miembros con roles mostrados`, 'success');
         }
         
         // ============================================
@@ -1567,7 +1425,7 @@
             
             const data = await discordRequest(`/guilds/${guildId}/channels`);
             if (!data) {
-                addLog(`❌ No se pudieron obtener los canales del servidor ${guildId}`, 'error');
+                addLog(`❌ No se pudieron obtener los canales`, 'error');
                 return;
             }
             
@@ -1593,22 +1451,6 @@
             addLog(`📢 ${data.length} canales encontrados`, 'success');
         }
         
-        async function fetchChannelInfo() {
-            const channelId = document.getElementById('channelGuildId').value.trim();
-            if (!channelId) {
-                addLog('⚠️ Ingresa un ID de canal', 'error');
-                return;
-            }
-            
-            const data = await discordRequest(`/channels/${channelId}`);
-            if (!data) {
-                addLog(`❌ Canal ${channelId} no encontrado`, 'error');
-                return;
-            }
-            
-            addLog(`📢 Canal: ${data.name} (${data.type}) - ID: ${data.id}`, 'discord');
-        }
-        
         // ============================================
         // FUNCIONES DE MENSAJES
         // ============================================
@@ -1626,7 +1468,7 @@
             
             const data = await discordRequest(`/channels/${channelId}/messages?limit=${Math.min(limit, 100)}`);
             if (!data) {
-                addLog(`❌ No se pudieron obtener mensajes del canal ${channelId}`, 'error');
+                addLog(`❌ No se pudieron obtener mensajes`, 'error');
                 return;
             }
             
@@ -1645,18 +1487,6 @@
             addLog(`💬 ${data.length} mensajes obtenidos`, 'success');
         }
         
-        async function fetchMessagesFromUser() {
-            const channelId = document.getElementById('msgChannelId').value.trim();
-            if (!channelId) {
-                addLog('⚠️ Ingresa un ID de canal', 'error');
-                return;
-            }
-            
-            // Función simplificada - en la práctica se necesitaría un usuario específico
-            addLog('👤 Filtrar mensajes por usuario (usa el ID del canal)', 'info');
-            await fetchMessages();
-        }
-        
         // ============================================
         // FUNCIONES DE ROLES
         // ============================================
@@ -1672,7 +1502,7 @@
             
             const data = await discordRequest(`/guilds/${guildId}/roles`);
             if (!data) {
-                addLog(`❌ No se pudieron obtener los roles del servidor ${guildId}`, 'error');
+                addLog(`❌ No se pudieron obtener los roles`, 'error');
                 return;
             }
             
@@ -1687,17 +1517,6 @@
             ).join(' ');
             
             addLog(`🎭 ${data.length} roles encontrados`, 'success');
-        }
-        
-        async function fetchRoleInfo() {
-            const guildId = document.getElementById('rolesGuildId').value.trim();
-            if (!guildId) {
-                addLog('⚠️ Ingresa un ID de servidor', 'error');
-                return;
-            }
-            
-            addLog('🔍 Usa "Obtener roles" para ver todos los roles', 'info');
-            await fetchRoles();
         }
         
         // ============================================
@@ -1715,7 +1534,7 @@
             
             const data = await discordRequest(`/guilds/${guildId}/invites`);
             if (!data) {
-                addLog(`❌ No se pudieron obtener invitaciones del servidor ${guildId}`, 'error');
+                addLog(`❌ No se pudieron obtener invitaciones`, 'error');
                 return;
             }
             
@@ -1733,65 +1552,6 @@
             addLog(`📨 ${data.length} invitaciones encontradas`, 'success');
         }
         
-        async function fetchInviteInfo() {
-            const code = document.getElementById('invitesGuildId').value.trim();
-            if (!code) {
-                addLog('⚠️ Ingresa un código de invitación', 'error');
-                return;
-            }
-            
-            const data = await discordRequest(`/invites/${code}`);
-            if (!data) {
-                addLog(`❌ Invitación ${code} no válida`, 'error');
-                return;
-            }
-            
-            addLog(`📨 Invitación: ${data.code} - ${data.uses || 0} usos - ${data.guild?.name || 'Desconocido'}`, 'gold');
-        }
-        
-        // ============================================
-        // FUNCIONES DE AUDITORÍA
-        // ============================================
-        
-        async function fetchAuditLog() {
-            const guildId = document.getElementById('auditGuildId').value.trim();
-            if (!guildId) {
-                addLog('⚠️ Ingresa un ID de servidor', 'error');
-                return;
-            }
-            
-            document.getElementById('auditList').style.display = 'none';
-            
-            const data = await discordRequest(`/guilds/${guildId}/audit-logs?limit=50`);
-            if (!data) {
-                addLog(`❌ No se pudo obtener el registro de auditoría`, 'error');
-                return;
-            }
-            
-            document.getElementById('auditList').style.display = 'block';
-            const content = document.getElementById('auditContent');
-            
-            const actionTypes = {
-                1: '🛠️ Actualización del servidor',
-                10: '👤 Kick',
-                11: '🔨 Ban',
-                12: '✅ Unban',
-                20: '🔊 Actualización de canal',
-                30: '🎭 Actualización de rol',
-            40: '📨 Creación de invitación'
-            };
-            
-            content.innerHTML = data.audit_log_entries.map(entry => {
-                const action = actionTypes[entry.action_type] || `📋 Acción ${entry.action_type}`;
-                return `<div class="member-item">
-                    <span>${action}</span>
-                    <span style="opacity:0.3;font-size:9px;">${new Date(entry.created_at).toLocaleString()}</span>
-                </div>`;
-            }).join('');
-            
-            addLog(`📋 ${data.audit_log_entries.length} entradas de auditoría`, 'info');
-        }
-        
         // ============================================
         // INICIALIZACIÓN
         // ============================================
@@ -1800,6 +1560,7 @@
             addLog('🚀 Discord Hunter PRO iniciado', 'info');
             addLog('💡 Conecta un token de bot para comenzar', 'info');
             addLog('⭐ MODO PRO ACTIVADO - 10+ funciones', 'gold');
+            addLog('🌐 Si hay error, activa el proxy CORS', 'info');
             
             const savedWebhook = localStorage.getItem('discord_hunter_webhook');
             if (savedWebhook) {
@@ -1807,6 +1568,13 @@
                 document.getElementById('webhookText').textContent = '✅ Webhook configurado';
                 document.getElementById('webhookDot').className = 'status-dot green';
                 addLog('🔗 Webhook cargado desde almacenamiento', 'success');
+            }
+            
+            const savedToken = localStorage.getItem('discord_hunter_token');
+            if (savedToken) {
+                document.getElementById('botToken').value = savedToken;
+                addLog('🔑 Token cargado desde almacenamiento', 'info');
+                setTimeout(connectBot, 500);
             }
         });
         
@@ -1819,41 +1587,12 @@
             }
         };
         
-        // ============================================
-        // FUNCIONES DE UTILIDAD
-        // ============================================
-        
-        window.copyToClipboard = function(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                addLog('📋 Copiado al portapapeles', 'success');
-            }).catch(() => {
-                addLog('⚠️ Error al copiar', 'error');
-            });
-        };
-        
-        // Cargar token guardado
-        window.loadSavedToken = function() {
-            const saved = localStorage.getItem('discord_hunter_token');
-            if (saved) {
-                document.getElementById('botToken').value = saved;
-                addLog('🔑 Token cargado desde almacenamiento', 'info');
-            }
-        };
-        
-        // Guardar token
-        window.saveToken = function() {
-            const token = document.getElementById('botToken').value.trim();
-            if (token) {
-                localStorage.setItem('discord_hunter_token', token);
-                addLog('💾 Token guardado', 'success');
-            }
-        };
-        
         console.log('🔥 Discord Hunter PRO - ZONAHACK ELISEO');
         console.log('📡 Sistema de extracción de información de Discord');
         console.log('⭐ MODO PRO: 10+ funciones avanzadas');
+        console.log('🌐 Proxy CORS incluido para evitar "Failed to fetch"');
         console.log('⚠️ Uso educativo y legal únicamente');
     </script>
 </body>
 </html>
-    
+                
