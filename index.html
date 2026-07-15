@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 DISCORD HUNTER - ZONAHACK ELISEO ULTRA</title>
+    <title>🔥 DISCORD HUNTER REAL - ZONAHACK ELISEO</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         @keyframes glitch {
             0%, 100% { text-shadow: 0 0 20px rgba(255,0,0,0.5), 0 0 40px rgba(255,0,0,0.2); }
-            50% { text-shadow: 0 0 40px rgba(255,0,0,0.8), 0 0 80px rgba(255,0,0,0.4), 0 0 120px rgba(255,0,0,0.2); }
+            50% { text-shadow: 0 0 40px rgba(255,0,0,0.8), 0 0 80px rgba(255,0,0,0.4); }
         }
         
         @keyframes pulse {
@@ -22,26 +22,6 @@
             100% { background-position: 200% 0; }
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes matrixRain {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 0% 100%; }
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes typing {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        
         body {
             background: #0a0000;
             color: #00ff41;
@@ -51,26 +31,25 @@
             background-image: 
                 radial-gradient(ellipse at 50% 0%, rgba(0,255,65,0.03) 0%, transparent 70%),
                 repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,65,0.005) 2px, rgba(0,255,65,0.005) 4px);
-            overflow-x: hidden;
         }
         
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: rgba(0,255,65,0.02); }
         ::-webkit-scrollbar-thumb { background: rgba(0,255,65,0.2); border-radius: 2px; }
         
-        .game-wrapper {
-            max-width: 1200px;
+        .container {
+            max-width: 1100px;
             margin: 0 auto;
             background: rgba(0,0,0,0.85);
             border: 2px solid #00ff41;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 0 80px rgba(0,255,65,0.05), inset 0 0 80px rgba(0,255,65,0.02);
+            box-shadow: 0 0 80px rgba(0,255,65,0.05);
             position: relative;
             overflow: hidden;
         }
         
-        .game-wrapper::before {
+        .container::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -92,18 +71,16 @@
         }
         
         .logo {
-            font-size: 42px;
+            font-size: 38px;
             font-weight: bold;
             animation: glitch 2s ease-in-out infinite;
-            letter-spacing: 5px;
-            position: relative;
+            letter-spacing: 4px;
         }
         
         .logo .discord-h { color: #5865F2; }
         .logo .hunter { color: #ff0040; }
-        .logo .eliseo { color: #ffffff; opacity: 0.2; font-size: 18px; }
-        .logo .ultra { color: #ffd700; font-size: 16px; animation: pulse 1s infinite; }
-        .logo .real { color: #ffa500; font-size: 16px; }
+        .logo .real { color: #ffa500; font-size: 18px; animation: pulse 1s infinite; }
+        .logo .eliseo { color: #ffffff; opacity: 0.2; font-size: 16px; }
         
         .subtitle {
             font-size: 12px;
@@ -116,7 +93,6 @@
         
         .subtitle .highlight { color: #ff0040; font-weight: bold; animation: pulse 1.5s infinite; }
         .subtitle .discord { color: #5865F2; font-weight: bold; }
-        .subtitle .ip-display { color: #00ff41; font-weight: bold; }
         
         .tabs {
             display: flex;
@@ -130,13 +106,13 @@
         }
         
         .tab {
-            padding: 8px 18px;
+            padding: 8px 16px;
             cursor: pointer;
             opacity: 0.3;
             transition: all 0.3s;
             border-bottom: 2px solid transparent;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 1px;
             text-transform: uppercase;
             color: #00ff41;
@@ -153,45 +129,36 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .scoreboard {
+        .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 8px;
             margin-bottom: 15px;
             position: relative;
             z-index: 1;
         }
         
-        .score-item {
+        .stat-item {
             background: rgba(0,255,65,0.03);
             border: 1px solid rgba(0,255,65,0.08);
             border-radius: 8px;
-            padding: 10px 12px;
+            padding: 10px;
             text-align: center;
-            transition: all 0.3s;
-            cursor: default;
         }
         
-        .score-item:hover {
-            border-color: #00ff41;
-            transform: translateY(-2px);
-            background: rgba(0,255,65,0.05);
-        }
-        
-        .score-item .number {
-            font-size: 22px;
+        .stat-item .number {
+            font-size: 24px;
             font-weight: bold;
             color: #00ff41;
-            font-family: 'Courier New', monospace;
         }
         
-        .score-item .number.red { color: #ff0040; }
-        .score-item .number.orange { color: #ffa500; }
-        .score-item .number.blue { color: #5865F2; }
-        .score-item .number.gold { color: #ffd700; }
-        .score-item .number.purple { color: #9b59b6; }
+        .stat-item .number.red { color: #ff0040; }
+        .stat-item .number.blue { color: #5865F2; }
+        .stat-item .number.gold { color: #ffd700; }
+        .stat-item .number.orange { color: #ffa500; }
+        .stat-item .number.purple { color: #9b59b6; }
         
-        .score-item .label {
+        .stat-item .label {
             font-size: 8px;
             opacity: 0.3;
             text-transform: uppercase;
@@ -199,144 +166,28 @@
             letter-spacing: 1px;
         }
         
-        .game-area {
+        .panel {
             background: rgba(0,255,65,0.02);
             border: 1px solid rgba(0,255,65,0.08);
             border-radius: 14px;
             padding: 20px;
             position: relative;
             z-index: 1;
-            min-height: 250px;
+            min-height: 200px;
         }
         
-        .game-title {
-            font-size: 13px;
+        .panel-title {
+            font-size: 12px;
             color: #ffa500;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 12px;
             text-align: center;
             font-weight: bold;
         }
         
-        .ip-display {
-            background: rgba(0,0,0,0.6);
-            border: 2px solid rgba(0,255,65,0.15);
-            border-radius: 12px;
-            padding: 15px 20px;
-            text-align: center;
-            margin-bottom: 15px;
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .ip-display .hint {
-            font-size: 13px;
-            opacity: 0.3;
-            font-weight: normal;
-        }
-        
-        .ip-display .ip-found {
-            font-size: 32px;
-            color: #ff0040;
-            font-weight: bold;
-            animation: pulse 0.8s infinite;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .ip-display .status-badge {
-            font-size: 10px;
-            padding: 3px 12px;
-            border-radius: 20px;
-            background: rgba(255,0,0,0.1);
-            border: 1px solid rgba(255,0,0,0.2);
-            color: #ff0040;
-            margin-top: 6px;
-            display: inline-block;
-        }
-        
-        .ip-display .status-badge.success {
-            background: rgba(0,255,65,0.1);
-            border-color: #00ff41;
-            color: #00ff41;
-        }
-        
-        .ip-octets {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin: 15px 0;
-        }
-        
-        .octet {
-            background: rgba(0,0,0,0.5);
-            border: 2px solid rgba(0,255,65,0.15);
-            border-radius: 10px;
-            padding: 15px 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            min-height: 80px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .octet:hover:not(.revealed):not(.disabled) {
-            border-color: #00ff41;
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(0,255,65,0.1);
-        }
-        
-        .octet.revealed {
-            border-color: #ff0040;
-            background: rgba(255,0,0,0.05);
-            cursor: default;
-            animation: pulse 2s infinite;
-        }
-        
-        .octet .number {
-            font-size: 30px;
-            font-weight: bold;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .octet.revealed .number {
-            color: #ff0040;
-        }
-        
-        .octet .label {
-            font-size: 8px;
-            opacity: 0.3;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 5px;
-        }
-        
-        .octet .lock-icon {
-            position: absolute;
-            top: 5px;
-            right: 8px;
-            font-size: 14px;
-            opacity: 0.2;
-        }
-        
-        .octet.revealed .lock-icon {
-            opacity: 0.5;
-            color: #ff0040;
-        }
-        
         .btn {
-            padding: 10px 22px;
+            padding: 10px 20px;
             border: 2px solid #00ff41;
             border-radius: 8px;
             cursor: pointer;
@@ -345,7 +196,7 @@
             font-family: 'Courier New', monospace;
             font-weight: bold;
             transition: all 0.3s;
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
             position: relative;
@@ -359,7 +210,6 @@
             box-shadow: 0 0 30px rgba(0,255,65,0.15);
         }
         
-        .btn:active:not(:disabled) { transform: scale(0.97); }
         .btn:disabled {
             opacity: 0.3;
             cursor: not-allowed;
@@ -367,86 +217,69 @@
         }
         
         .btn-danger { border-color: #ff0040; color: #ff0040; }
-        .btn-danger:hover:not(:disabled) { background: #ff0040; color: #0a0000; box-shadow: 0 0 30px rgba(255,0,0,0.15); }
-        
+        .btn-danger:hover:not(:disabled) { background: #ff0040; color: #0a0000; }
         .btn-discord { border-color: #5865F2; color: #5865F2; }
-        .btn-discord:hover:not(:disabled) { background: #5865F2; color: #0a0000; box-shadow: 0 0 30px rgba(88,101,242,0.15); }
-        
+        .btn-discord:hover:not(:disabled) { background: #5865F2; color: #0a0000; }
         .btn-gold { border-color: #ffd700; color: #ffd700; }
-        .btn-gold:hover:not(:disabled) { background: #ffd700; color: #0a0000; box-shadow: 0 0 30px rgba(255,215,0,0.15); }
-        
+        .btn-gold:hover:not(:disabled) { background: #ffd700; color: #0a0000; }
         .btn-purple { border-color: #9b59b6; color: #9b59b6; }
-        .btn-purple:hover:not(:disabled) { background: #9b59b6; color: #0a0000; box-shadow: 0 0 30px rgba(155,89,182,0.15); }
-        
-        .btn-orange { border-color: #ffa500; color: #ffa500; }
-        .btn-orange:hover:not(:disabled) { background: #ffa500; color: #0a0000; box-shadow: 0 0 30px rgba(255,165,0,0.15); }
-        
+        .btn-purple:hover:not(:disabled) { background: #9b59b6; color: #0a0000; }
         .btn-cyan { border-color: #00ffff; color: #00ffff; }
-        .btn-cyan:hover:not(:disabled) { background: #00ffff; color: #0a0000; box-shadow: 0 0 30px rgba(0,255,255,0.15); }
+        .btn-cyan:hover:not(:disabled) { background: #00ffff; color: #0a0000; }
         
-        .actions {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
+        .flex { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .mb-10 { margin-bottom: 10px; }
+        .mt-10 { margin-top: 10px; }
+        .gap-5 { gap: 5px; }
+        .w-full { width: 100%; }
         
-        .webhook-status {
-            font-size: 10px;
-            padding: 8px 15px;
-            border-radius: 8px;
-            background: rgba(0,255,65,0.03);
-            border: 1px solid rgba(0,255,65,0.06);
-            margin-top: 12px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        
-        .webhook-status .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        
-        .webhook-status .dot.green { background: #00ff41; animation: pulse 1s infinite; }
-        .webhook-status .dot.red { background: #ff0040; }
-        .webhook-status .dot.orange { background: #ffa500; animation: pulse 0.5s infinite; }
-        
-        .progress-container {
-            margin-top: 12px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 3px;
+        input, textarea, select {
+            padding: 10px 14px;
             background: rgba(0,255,65,0.05);
-            border-radius: 2px;
-            overflow: hidden;
+            border: 1px solid rgba(0,255,65,0.15);
+            border-radius: 8px;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            transition: all 0.3s;
         }
         
-        .progress-bar .fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00ff41, #ff0040, #ffd700);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 2px;
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #00ff41;
+            box-shadow: 0 0 30px rgba(0,255,65,0.05);
         }
         
-        .progress-text {
-            display: flex;
-            justify-content: space-between;
-            font-size: 9px;
-            opacity: 0.2;
-            margin-top: 3px;
+        select option { background: #0a0000; color: #00ff41; }
+        textarea { min-height: 60px; resize: vertical; }
+        
+        .info-card {
+            background: rgba(0,255,65,0.02);
+            border: 1px solid rgba(0,255,65,0.05);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
         }
+        
+        .info-card .label {
+            font-size: 8px;
+            opacity: 0.3;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .info-card .value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+        
+        .info-card .value.blue { color: #5865F2; }
+        .info-card .value.red { color: #ff0040; }
+        .info-card .value.gold { color: #ffd700; }
+        .info-card .value.orange { color: #ffa500; }
         
         .log-area {
             margin-top: 15px;
@@ -454,7 +287,7 @@
             border: 1px solid rgba(0,255,65,0.05);
             border-radius: 10px;
             padding: 12px;
-            max-height: 100px;
+            max-height: 150px;
             overflow-y: auto;
             font-size: 10px;
             font-family: 'Courier New', monospace;
@@ -472,18 +305,16 @@
         
         .log-area .log-entry .time {
             opacity: 0.3;
-            min-width: 65px;
+            min-width: 60px;
             font-size: 9px;
         }
         
-        .log-area .log-entry .icon { font-size: 12px; }
         .log-area .log-entry.success { color: #00ff41; }
         .log-area .log-entry.error { color: #ff0040; }
         .log-area .log-entry.info { color: #ffa500; }
         .log-area .log-entry.discord { color: #5865F2; }
         .log-area .log-entry.raid { color: #ff0040; font-weight: bold; }
         .log-area .log-entry.gold { color: #ffd700; }
-        .log-area .log-entry.purple { color: #9b59b6; }
         
         .badge {
             display: inline-block;
@@ -492,16 +323,30 @@
             font-size: 8px;
             text-transform: uppercase;
             font-weight: bold;
-            letter-spacing: 0.5px;
             border: 1px solid;
         }
         
-        .badge-green { border-color: #00ff41; color: #00ff41; }
         .badge-red { border-color: #ff0040; color: #ff0040; animation: pulse 1s infinite; }
-        .badge-orange { border-color: #ffa500; color: #ffa500; }
+        .badge-green { border-color: #00ff41; color: #00ff41; }
         .badge-blue { border-color: #5865F2; color: #5865F2; }
         .badge-gold { border-color: #ffd700; color: #ffd700; }
-        .badge-purple { border-color: #9b59b6; color: #9b59b6; }
+        
+        .copy-btn {
+            background: rgba(88,101,242,0.1);
+            border: 1px solid rgba(88,101,242,0.2);
+            border-radius: 4px;
+            color: #5865F2;
+            padding: 2px 10px;
+            font-size: 9px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #5865F2;
+            color: #0a0000;
+        }
         
         .modal {
             display: none;
@@ -524,66 +369,24 @@
             border: 2px solid #00ff41;
             border-radius: 16px;
             padding: 30px;
-            max-width: 550px;
+            max-width: 500px;
             width: 100%;
             text-align: center;
-            position: relative;
             max-height: 90vh;
             overflow-y: auto;
         }
         
         .modal-content h2 {
-            font-size: 26px;
+            font-size: 24px;
             color: #00ff41;
             margin-bottom: 5px;
         }
         
         .modal-content .sub {
-            font-size: 12px;
+            font-size: 11px;
             opacity: 0.3;
             margin-bottom: 15px;
         }
-        
-        .modal-content .big-ip {
-            font-size: 38px;
-            color: #ff0040;
-            font-weight: bold;
-            padding: 15px;
-            background: rgba(255,0,0,0.03);
-            border: 1px solid rgba(255,0,0,0.15);
-            border-radius: 10px;
-            margin: 12px 0;
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
-        }
-        
-        .modal-content .discord-info {
-            color: #5865F2;
-            font-size: 14px;
-            margin: 8px 0;
-        }
-        
-        .modal-content input, .modal-content textarea, .modal-content select {
-            width: 100%;
-            padding: 10px 12px;
-            background: rgba(0,255,65,0.05);
-            border: 1px solid rgba(0,255,65,0.15);
-            border-radius: 8px;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            margin: 5px 0;
-            transition: all 0.3s;
-        }
-        
-        .modal-content input:focus, .modal-content textarea:focus, .modal-content select:focus {
-            outline: none;
-            border-color: #00ff41;
-            box-shadow: 0 0 30px rgba(0,255,65,0.05);
-        }
-        
-        .modal-content textarea { min-height: 60px; resize: vertical; }
-        .modal-content select option { background: #0a0000; color: #00ff41; }
         
         .modal-actions {
             display: flex;
@@ -595,46 +398,6 @@
         
         .modal-actions .btn { flex: 1; min-width: 100px; }
         
-        .celebration {
-            font-size: 50px;
-            margin: 8px 0;
-            animation: float 1s ease-in-out infinite;
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 10px 0;
-        }
-        
-        .info-card {
-            background: rgba(0,255,65,0.02);
-            border: 1px solid rgba(0,255,65,0.05);
-            border-radius: 8px;
-            padding: 12px;
-            text-align: left;
-        }
-        
-        .info-card .label {
-            font-size: 9px;
-            opacity: 0.3;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .info-card .value {
-            font-size: 16px;
-            font-weight: bold;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
-        }
-        
-        .info-card .value.red { color: #ff0040; }
-        .info-card .value.blue { color: #5865F2; }
-        .info-card .value.gold { color: #ffd700; }
-        
         .discord-id-display {
             background: rgba(88,101,242,0.05);
             border: 1px solid rgba(88,101,242,0.15);
@@ -644,335 +407,322 @@
         }
         
         .discord-id-display .id {
-            font-size: 28px;
+            font-size: 24px;
             color: #5865F2;
             font-family: 'Courier New', monospace;
             font-weight: bold;
         }
         
         .discord-id-display .label {
-            font-size: 10px;
+            font-size: 9px;
             opacity: 0.3;
         }
         
-        .copy-btn {
-            background: rgba(88,101,242,0.1);
-            border: 1px solid rgba(88,101,242,0.2);
-            border-radius: 6px;
-            color: #5865F2;
-            padding: 4px 12px;
-            font-size: 10px;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s;
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 10px 0;
         }
         
-        .copy-btn:hover {
-            background: #5865F2;
-            color: #0a0000;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-dot.green { background: #00ff41; animation: pulse 1s infinite; }
+        .status-dot.red { background: #ff0040; }
+        .status-dot.orange { background: #ffa500; animation: pulse 0.5s infinite; }
+        
+        .webhook-status {
+            font-size: 10px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            background: rgba(0,255,65,0.03);
+            border: 1px solid rgba(0,255,65,0.06);
+            margin-top: 12px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
         
         @media (max-width: 768px) {
-            .game-wrapper { padding: 12px; }
+            .container { padding: 12px; }
             .logo { font-size: 24px; }
-            .ip-octets { gap: 6px; }
-            .octet { padding: 10px 5px; min-height: 60px; }
-            .octet .number { font-size: 20px; }
-            .ip-display .ip-found { font-size: 22px; }
-            .modal-content { padding: 18px; }
-            .scoreboard { grid-template-columns: repeat(3, 1fr); }
             .info-grid { grid-template-columns: 1fr; }
-            .tabs .tab { font-size: 9px; padding: 5px 10px; }
+            .tabs .tab { font-size: 8px; padding: 5px 8px; }
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
         }
         
         @media (max-width: 480px) {
-            .ip-octets { grid-template-columns: repeat(2, 1fr); }
-            .scoreboard { grid-template-columns: repeat(2, 1fr); }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <div class="game-wrapper">
+    <div class="container">
         <!-- HEADER -->
         <div class="header">
             <div class="logo">
                 <span class="discord-h">🔥 DISCORD</span>
                 <span class="hunter">HUNTER</span>
                 <span class="eliseo">ELISEO</span>
-                <span class="ultra">⚡ULTRA</span>
                 <span class="real">🔴REAL</span>
             </div>
             <div class="subtitle">
-                🎯 Escanea IPs, extrae IDs de Discord y envíalo todo a Discord
+                🎯 Extrae información REAL de Discord usando la API oficial
                 <span class="discord">| 💀 Webhook Ready</span>
-                <span class="highlight">| ⚡ 100% Funcional</span>
-                <span class="ip-display">| 🖥️ ID Extractor</span>
+                <span class="highlight">| ⚡ 100% REAL</span>
             </div>
         </div>
         
         <!-- TABS -->
         <div class="tabs">
             <div class="tab active" onclick="switchTab('home')">🏠 Inicio</div>
-            <div class="tab" onclick="switchTab('hunter')">🎯 IP Hunter</div>
-            <div class="tab" onclick="switchTab('extractor')">🆔 ID Extractor</div>
-            <div class="tab" onclick="switchTab('scanner')">📡 Scanner</div>
-            <div class="tab" onclick="switchTab('stats')">📊 Stats</div>
+            <div class="tab" onclick="switchTab('token')">🔑 Token</div>
+            <div class="tab" onclick="switchTab('user')">👤 Usuario</div>
+            <div class="tab" onclick="switchTab('server')">🏰 Servidor</div>
+            <div class="tab" onclick="switchTab('member')">👥 Miembros</div>
             <div class="tab" onclick="switchTab('logs')">📋 Logs</div>
+        </div>
+        
+        <!-- STATS -->
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="number" id="statUsers">0</div>
+                <div class="label">👤 Usuarios</div>
+            </div>
+            <div class="stat-item">
+                <div class="number blue" id="statServers">0</div>
+                <div class="label">🏰 Servidores</div>
+            </div>
+            <div class="stat-item">
+                <div class="number gold" id="statChannels">0</div>
+                <div class="label">📢 Canales</div>
+            </div>
+            <div class="stat-item">
+                <div class="number red" id="statMessages">0</div>
+                <div class="label">💬 Mensajes</div>
+            </div>
+            <div class="stat-item">
+                <div class="number purple" id="statMembers">0</div>
+                <div class="label">👥 Miembros</div>
+            </div>
+            <div class="stat-item">
+                <div class="number orange" id="statRequests">0</div>
+                <div class="label">📡 Peticiones</div>
+            </div>
         </div>
         
         <!-- TAB: HOME -->
         <div id="tab-home" class="tab-content active">
-            <div class="game-area">
-                <div class="game-title">🔥 ZONAHACK ELISEO ULTRA - SISTEMA COMPLETO</div>
+            <div class="panel">
+                <div class="panel-title">🔥 SISTEMA REAL DE EXTRACCIÓN DISCORD</div>
                 
                 <div style="text-align:center;padding:20px;">
                     <div style="font-size:48px;margin-bottom:10px;">🕵️</div>
-                    <h2 style="color:#ff0040;font-size:28px;">DISCORD HUNTER</h2>
-                    <p style="opacity:0.3;font-size:14px;margin:10px 0;">Sistema de extracción de información REAL de Discord</p>
+                    <h2 style="color:#ff0040;font-size:24px;">DISCORD HUNTER REAL</h2>
+                    <p style="opacity:0.3;font-size:13px;margin:10px 0;">Extrae información REAL de Discord usando la API oficial</p>
                     
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:20px 0;">
-                        <div style="background:rgba(0,255,65,0.02);border:1px solid rgba(0,255,65,0.05);border-radius:8px;padding:15px;">
-                            <div style="font-size:24px;">🎯</div>
-                            <div style="font-size:12px;font-weight:bold;margin-top:5px;color:#00ff41;">IP Hunter</div>
-                            <div style="font-size:10px;opacity:0.3;">Descubre IPs reales</div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:15px 0;">
+                        <div style="background:rgba(88,101,242,0.02);border:1px solid rgba(88,101,242,0.05);border-radius:8px;padding:12px;">
+                            <div style="font-size:20px;">🔑</div>
+                            <div style="font-size:10px;font-weight:bold;color:#5865F2;">Token</div>
+                            <div style="font-size:8px;opacity:0.3;">Conecta tu bot</div>
                         </div>
-                        <div style="background:rgba(88,101,242,0.02);border:1px solid rgba(88,101,242,0.05);border-radius:8px;padding:15px;">
-                            <div style="font-size:24px;">🆔</div>
-                            <div style="font-size:12px;font-weight:bold;margin-top:5px;color:#5865F2;">ID Extractor</div>
-                            <div style="font-size:10px;opacity:0.3;">Extrae IDs de Discord</div>
+                        <div style="background:rgba(0,255,65,0.02);border:1px solid rgba(0,255,65,0.05);border-radius:8px;padding:12px;">
+                            <div style="font-size:20px;">👤</div>
+                            <div style="font-size:10px;font-weight:bold;color:#00ff41;">Usuario</div>
+                            <div style="font-size:8px;opacity:0.3;">Info de usuarios</div>
                         </div>
-                        <div style="background:rgba(255,165,0,0.02);border:1px solid rgba(255,165,0,0.05);border-radius:8px;padding:15px;">
-                            <div style="font-size:24px;">📡</div>
-                            <div style="font-size:12px;font-weight:bold;margin-top:5px;color:#ffa500;">Scanner</div>
-                            <div style="font-size:10px;opacity:0.3;">Escanea servidores</div>
+                        <div style="background:rgba(255,165,0,0.02);border:1px solid rgba(255,165,0,0.05);border-radius:8px;padding:12px;">
+                            <div style="font-size:20px;">🏰</div>
+                            <div style="font-size:10px;font-weight:bold;color:#ffa500;">Servidor</div>
+                            <div style="font-size:8px;opacity:0.3;">Info de servers</div>
                         </div>
-                        <div style="background:rgba(255,0,64,0.02);border:1px solid rgba(255,0,64,0.05);border-radius:8px;padding:15px;">
-                            <div style="font-size:24px;">📤</div>
-                            <div style="font-size:12px;font-weight:bold;margin-top:5px;color:#ff0040;">Webhook</div>
-                            <div style="font-size:10px;opacity:0.3;">Envía a Discord</div>
+                        <div style="background:rgba(155,89,182,0.02);border:1px solid rgba(155,89,182,0.05);border-radius:8px;padding:12px;">
+                            <div style="font-size:20px;">👥</div>
+                            <div style="font-size:10px;font-weight:bold;color:#9b59b6;">Miembros</div>
+                            <div style="font-size:8px;opacity:0.3;">Lista de miembros</div>
                         </div>
                     </div>
                     
-                    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-                        <button class="btn btn-gold" onclick="switchTab('hunter')">🎯 IP Hunter</button>
-                        <button class="btn btn-discord" onclick="switchTab('extractor')">🆔 ID Extractor</button>
-                        <button class="btn btn-purple" onclick="switchTab('scanner')">📡 Scanner</button>
-                        <button class="btn btn-orange" onclick="openWebhookModal()">🔗 Webhook</button>
+                    <div class="flex" style="justify-content:center;">
+                        <button class="btn btn-discord" onclick="switchTab('token')">🔑 Conectar Token</button>
+                        <button class="btn btn-gold" onclick="switchTab('server')">🏰 Ver Servidores</button>
+                        <button class="btn btn-purple" onclick="switchTab('member')">👥 Ver Miembros</button>
+                    </div>
+                    
+                    <div style="margin-top:15px;padding:10px;background:rgba(255,0,0,0.03);border:1px solid rgba(255,0,0,0.05);border-radius:8px;">
+                        <span class="badge badge-red">🔴 CONEXIÓN REAL</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">Usando Discord API v10</span>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- TAB: IP HUNTER -->
-        <div id="tab-hunter" class="tab-content">
-            <div class="game-area">
-                <div class="game-title">🎯 DESCODIFICA LA IP OCULTA</div>
+        <!-- TAB: TOKEN -->
+        <div id="tab-token" class="tab-content">
+            <div class="panel">
+                <div class="panel-title">🔑 CONEXIÓN REAL CON DISCORD</div>
                 
-                <div class="ip-display" id="ipDisplay">
-                    <span class="hint">🔍 Haz clic en los octetos para revelar la IP</span>
+                <div style="margin-bottom:12px;">
+                    <p style="opacity:0.3;font-size:11px;">Ingresa el token de tu bot de Discord para conectarte a la API REAL</p>
                 </div>
                 
-                <div class="ip-octets" id="ipOctets">
-                    <div class="octet" data-index="0" onclick="revealOctet(0)">
-                        <span class="lock-icon">🔒</span>
-                        <span class="number">??</span>
-                        <span class="label">Octeto 1</span>
-                    </div>
-                    <div class="octet" data-index="1" onclick="revealOctet(1)">
-                        <span class="lock-icon">🔒</span>
-                        <span class="number">??</span>
-                        <span class="label">Octeto 2</span>
-                    </div>
-                    <div class="octet" data-index="2" onclick="revealOctet(2)">
-                        <span class="lock-icon">🔒</span>
-                        <span class="number">??</span>
-                        <span class="label">Octeto 3</span>
-                    </div>
-                    <div class="octet" data-index="3" onclick="revealOctet(3)">
-                        <span class="lock-icon">🔒</span>
-                        <span class="number">??</span>
-                        <span class="label">Octeto 4</span>
+                <div class="flex mb-10">
+                    <input type="password" id="botToken" placeholder="Token del Bot (REAL)" style="flex:1;min-width:200px;">
+                    <button class="btn btn-discord" onclick="connectBot()">🔗 Conectar</button>
+                    <button class="btn btn-danger" onclick="disconnectBot()">⛔ Desconectar</button>
+                </div>
+                
+                <div id="connectionStatus" class="info-card" style="background:rgba(255,0,0,0.02);border-color:rgba(255,0,0,0.1);">
+                    <div class="label">📡 ESTADO DE CONEXIÓN</div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+                        <span class="status-dot red" id="statusDot"></span>
+                        <span class="value" id="statusText" style="font-size:12px;">Desconectado</span>
                     </div>
                 </div>
                 
-                <div class="actions">
-                    <button class="btn btn-gold" onclick="resetGame()">🔄 Nueva IP</button>
-                    <button class="btn btn-danger" id="sendBtn" onclick="sendToDiscord()" disabled>
-                        📤 Enviar a Discord
-                    </button>
-                    <button class="btn btn-purple" onclick="showHint()">💡 Pista</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- TAB: ID EXTRACTOR -->
-        <div id="tab-extractor" class="tab-content">
-            <div class="game-area">
-                <div class="game-title">🆔 EXTRACTOR DE IDs DE DISCORD</div>
-                
-                <div style="text-align:center;margin-bottom:15px;">
-                    <p style="opacity:0.3;font-size:12px;">Ingresa un ID de Discord o usuario para extraer información REAL</p>
-                </div>
-                
-                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;">
-                    <input type="text" id="discordIdInput" placeholder="ID de Discord o @usuario" 
-                           style="flex:1;min-width:200px;padding:10px 14px;background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.15);border-radius:8px;color:#00ff41;font-family:'Courier New',monospace;">
-                    <button class="btn btn-discord" onclick="extractDiscordInfo()">🔍 Extraer Info</button>
-                    <button class="btn btn-purple" onclick="generateFakeID()">🎲 Generar ID</button>
-                </div>
-                
-                <div id="extractedInfo" style="display:none;">
-                    <div class="discord-id-display">
-                        <div class="label">🆔 ID DE DISCORD</div>
-                        <div class="id" id="extractedId">123456789012345678</div>
-                        <button class="copy-btn" onclick="copyToClipboard('extractedId')">📋 Copiar ID</button>
-                    </div>
-                    
+                <div id="botInfo" style="display:none;">
                     <div class="info-grid">
                         <div class="info-card">
                             <div class="label">👤 Usuario</div>
-                            <div class="value blue" id="extractedUser">Usuario#0000</div>
+                            <div class="value blue" id="botUsername">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="label">🆔 ID</div>
+                            <div class="value" id="botId">-</div>
                         </div>
                         <div class="info-card">
                             <div class="label">📅 Creado</div>
-                            <div class="value gold" id="extractedCreated">01/01/2021</div>
+                            <div class="value gold" id="botCreated">-</div>
                         </div>
                         <div class="info-card">
-                            <div class="label">📊 ID Tipo</div>
-                            <div class="value" id="extractedType">Usuario</div>
+                            <div class="label">🏰 Servidores</div>
+                            <div class="value orange" id="botGuilds">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB: USER -->
+        <div id="tab-user" class="tab-content">
+            <div class="panel">
+                <div class="panel-title">👤 BUSCAR USUARIO</div>
+                
+                <div class="flex mb-10">
+                    <input type="text" id="userIdInput" placeholder="ID de usuario Discord..." style="flex:1;min-width:200px;">
+                    <button class="btn btn-gold" onclick="fetchUser()">🔍 Buscar</button>
+                </div>
+                
+                <div id="userInfo" style="display:none;">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="label">👤 Usuario</div>
+                            <div class="value blue" id="userUsername">-</div>
                         </div>
                         <div class="info-card">
-                            <div class="label">🔢 ID Número</div>
-                            <div class="value red" id="extractedNumber">123456789</div>
+                            <div class="label">🆔 ID</div>
+                            <div class="value" id="userId">-</div>
                         </div>
                         <div class="info-card">
-                            <div class="label">🌐 Servidores</div>
-                            <div class="value orange" id="extractedServers">0</div>
+                            <div class="label">📅 Creado</div>
+                            <div class="value gold" id="userCreated">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="label">📊 Tipo</div>
+                            <div class="value orange" id="userType">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="label">🎭 Avatar</div>
+                            <div class="value" id="userAvatar">-</div>
                         </div>
                         <div class="info-card">
                             <div class="label">💀 Estado</div>
-                            <div class="value" id="extractedStatus">🔴 REAL</div>
+                            <div class="value red" id="userStatus">-</div>
                         </div>
-                    </div>
-                    
-                    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px;">
-                        <button class="btn btn-discord" onclick="sendIDToDiscord()">📤 Enviar ID a Discord</button>
-                        <button class="btn btn-danger" onclick="clearExtracted()">🗑️ Limpiar</button>
                     </div>
                 </div>
                 
-                <div id="extractedPlaceholder" style="text-align:center;padding:30px;opacity:0.2;">
-                    <div style="font-size:40px;">🆔</div>
-                    <p style="margin-top:10px;">Ingresa un ID para extraer información REAL de Discord</p>
+                <div id="userNotFound" style="display:none;text-align:center;padding:20px;opacity:0.3;">
+                    <div style="font-size:32px;">👤</div>
+                    <p style="margin-top:8px;">Usuario no encontrado o ID inválido</p>
                 </div>
             </div>
         </div>
         
-        <!-- TAB: SCANNER -->
-        <div id="tab-scanner" class="tab-content">
-            <div class="game-area">
-                <div class="game-title">📡 SCANNER DE SERVIDORES DISCORD</div>
+        <!-- TAB: SERVER -->
+        <div id="tab-server" class="tab-content">
+            <div class="panel">
+                <div class="panel-title">🏰 INFORMACIÓN DE SERVIDORES</div>
                 
-                <div style="text-align:center;margin-bottom:15px;">
-                    <p style="opacity:0.3;font-size:12px;">Simula el escaneo de servidores Discord y extrae información</p>
+                <div class="flex mb-10">
+                    <input type="text" id="guildIdInput" placeholder="ID del servidor..." style="flex:1;min-width:200px;">
+                    <button class="btn btn-cyan" onclick="fetchGuild()">🏰 Buscar Servidor</button>
+                    <button class="btn btn-gold" onclick="listGuilds()">📋 Listar Todos</button>
                 </div>
                 
-                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;justify-content:center;">
-                    <input type="text" id="scanServerId" placeholder="ID del servidor..." 
-                           style="flex:1;min-width:200px;padding:10px 14px;background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.15);border-radius:8px;color:#00ff41;font-family:'Courier New',monospace;">
-                    <button class="btn btn-cyan" onclick="scanServer()">📡 Escanear</button>
-                    <button class="btn btn-gold" onclick="scanAllServers()">🌐 Escanear Todos</button>
-                </div>
-                
-                <div id="scanResults" style="display:none;">
-                    <div style="background:rgba(0,255,255,0.03);border:1px solid rgba(0,255,255,0.1);border-radius:10px;padding:15px;">
-                        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-                            <div>
-                                <div style="font-size:10px;opacity:0.3;">🏰 SERVIDOR</div>
-                                <div style="font-size:18px;color:#00ffff;font-weight:bold;" id="scanServerName">Servidor Discord</div>
-                            </div>
-                            <div>
-                                <div style="font-size:10px;opacity:0.3;">🆔 ID</div>
-                                <div style="font-size:14px;color:#5865F2;font-family:'Courier New',monospace;" id="scanServerIdResult">123456789</div>
-                            </div>
+                <div id="guildInfo" style="display:none;">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="label">🏰 Nombre</div>
+                            <div class="value blue" id="guildName">-</div>
                         </div>
-                        
-                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:15px;">
-                            <div style="background:rgba(0,255,65,0.02);border-radius:6px;padding:10px;text-align:center;">
-                                <div style="font-size:20px;color:#00ff41;" id="scanMembers">0</div>
-                                <div style="font-size:9px;opacity:0.3;">👥 Miembros</div>
-                            </div>
-                            <div style="background:rgba(255,165,0,0.02);border-radius:6px;padding:10px;text-align:center;">
-                                <div style="font-size:20px;color:#ffa500;" id="scanChannels">0</div>
-                                <div style="font-size:9px;opacity:0.3;">📢 Canales</div>
-                            </div>
-                            <div style="background:rgba(155,89,182,0.02);border-radius:6px;padding:10px;text-align:center;">
-                                <div style="font-size:20px;color:#9b59b6;" id="scanRoles">0</div>
-                                <div style="font-size:9px;opacity:0.3;">🎭 Roles</div>
-                            </div>
-                            <div style="background:rgba(255,0,64,0.02);border-radius:6px;padding:10px;text-align:center;">
-                                <div style="font-size:20px;color:#ff0040;" id="scanOnline">0</div>
-                                <div style="font-size:9px;opacity:0.3;">🟢 Online</div>
-                            </div>
+                        <div class="info-card">
+                            <div class="label">🆔 ID</div>
+                            <div class="value" id="guildId">-</div>
                         </div>
-                        
-                        <div style="margin-top:10px;">
-                            <div style="font-size:10px;opacity:0.3;">📋 INFORMACIÓN ADICIONAL</div>
-                            <div style="font-size:12px;font-family:'Courier New',monospace;color:#00ffff;" id="scanExtra">Información del servidor escaneado</div>
+                        <div class="info-card">
+                            <div class="label">👥 Miembros</div>
+                            <div class="value gold" id="guildMembers">-</div>
                         </div>
-                        
-                        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;">
-                            <button class="btn btn-discord" onclick="sendScanToDiscord()">📤 Enviar a Discord</button>
-                            <button class="btn btn-danger" onclick="clearScan()">🗑️ Limpiar</button>
+                        <div class="info-card">
+                            <div class="label">📢 Canales</div>
+                            <div class="value orange" id="guildChannels">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="label">🎭 Roles</div>
+                            <div class="value purple" id="guildRoles">-</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="label">📅 Creado</div>
+                            <div class="value gold" id="guildCreated">-</div>
                         </div>
                     </div>
                 </div>
                 
-                <div id="scanPlaceholder" style="text-align:center;padding:30px;opacity:0.2;">
-                    <div style="font-size:40px;">📡</div>
-                    <p style="margin-top:10px;">Ingresa un ID de servidor para escanear</p>
+                <div id="guildList" style="display:none;margin-top:10px;">
+                    <div class="info-card">
+                        <div class="label">📋 SERVIDORES DEL BOT</div>
+                        <div id="guildListContent" style="max-height:200px;overflow-y:auto;margin-top:5px;"></div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <!-- TAB: STATS -->
-        <div id="tab-stats" class="tab-content">
-            <div class="game-area">
-                <div class="game-title">📊 ESTADÍSTICAS COMPLETAS</div>
+        <!-- TAB: MEMBER -->
+        <div id="tab-member" class="tab-content">
+            <div class="panel">
+                <div class="panel-title">👥 LISTA DE MIEMBROS</div>
                 
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;">
-                    <div style="background:rgba(0,255,65,0.02);border:1px solid rgba(0,255,65,0.05);border-radius:8px;padding:15px;text-align:center;">
-                        <div style="font-size:32px;color:#00ff41;" id="statTotalAttempts">0</div>
-                        <div style="font-size:10px;opacity:0.3;">🔍 Intentos</div>
-                    </div>
-                    <div style="background:rgba(255,0,64,0.02);border:1px solid rgba(255,0,64,0.05);border-radius:8px;padding:15px;text-align:center;">
-                        <div style="font-size:32px;color:#ff0040;" id="statTotalHits">0</div>
-                        <div style="font-size:10px;opacity:0.3;">🎯 IPs Encontradas</div>
-                    </div>
-                    <div style="background:rgba(88,101,242,0.02);border:1px solid rgba(88,101,242,0.05);border-radius:8px;padding:15px;text-align:center;">
-                        <div style="font-size:32px;color:#5865F2;" id="statTotalWebhooks">0</div>
-                        <div style="font-size:10px;opacity:0.3;">📤 Webhooks Enviados</div>
-                    </div>
-                    <div style="background:rgba(255,215,0,0.02);border:1px solid rgba(255,215,0,0.05);border-radius:8px;padding:15px;text-align:center;">
-                        <div style="font-size:32px;color:#ffd700;" id="statMaxStreak">0</div>
-                        <div style="font-size:10px;opacity:0.3;">🔥 Racha Máxima</div>
-                    </div>
-                    <div style="background:rgba(155,89,182,0.02);border:1px solid rgba(155,89,182,0.05);border-radius:8px;padding:15px;text-align:center;">
-                        <div style="font-size:32px;color:#9b59b6;" id="statTotalIDs">0</div>
-                        <div style="font-size:10px;opacity:0.3;">🆔 IDs Extraídas</div>
-                    </div>
-                    <div style="background:rgba(0,255,255,0.02);border:1px solid rgba(0,255,255,0.05);border-radius:8px;padding:15px;text-align:center;">
-                        <div style="font-size:32px;color:#00ffff;" id="statTotalScans">0</div>
-                        <div style="font-size:10px;opacity:0.3;">📡 Escaneos</div>
-                    </div>
+                <div class="flex mb-10">
+                    <input type="text" id="memberGuildId" placeholder="ID del servidor..." style="flex:1;min-width:200px;">
+                    <button class="btn btn-purple" onclick="fetchMembers()">👥 Obtener Miembros</button>
                 </div>
                 
-                <div style="margin-top:20px;background:rgba(0,255,65,0.02);border:1px solid rgba(0,255,65,0.05);border-radius:8px;padding:15px;">
-                    <div style="font-size:11px;opacity:0.3;text-align:center;">⚡ SISTEMA REAL - CONEXIÓN DIRECTA A DISCORD</div>
-                    <div style="display:flex;justify-content:center;gap:15px;margin-top:8px;flex-wrap:wrap;font-size:11px;">
-                        <span>🔴 <span style="color:#ff0040;">Modo REAL</span></span>
-                        <span>🟢 <span style="color:#00ff41;">Webhook: <span id="statWebhookStatus">No configurado</span></span></span>
-                        <span>🟡 <span style="color:#ffa500;">Versión: ULTRA v6.0</span></span>
+                <div id="membersList" style="display:none;">
+                    <div class="info-card">
+                        <div class="label">👥 MIEMBROS DEL SERVIDOR</div>
+                        <div id="membersContent" style="max-height:250px;overflow-y:auto;margin-top:5px;"></div>
                     </div>
                 </div>
             </div>
@@ -980,20 +730,19 @@
         
         <!-- TAB: LOGS -->
         <div id="tab-logs" class="tab-content">
-            <div class="game-area">
-                <div class="game-title">📋 LOGS DEL SISTEMA</div>
+            <div class="panel">
+                <div class="panel-title">📋 LOGS DEL SISTEMA</div>
                 
-                <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-                    <button class="btn btn-primary" onclick="clearLogs()">🗑️ Limpiar Logs</button>
-                    <button class="btn btn-gold" onclick="exportLogs()">📤 Exportar Logs</button>
+                <div class="flex mb-10">
+                    <button class="btn btn-danger" onclick="clearLogs()">🗑️ Limpiar</button>
+                    <button class="btn btn-gold" onclick="exportLogs()">📤 Exportar</button>
                     <span style="font-size:10px;opacity:0.2;display:flex;align-items:center;">📊 <span id="logCount">0</span> logs</span>
                 </div>
                 
                 <div class="log-area" id="fullLogArea" style="max-height:300px;">
                     <div class="log-entry info">
                         <span class="time">[INIT]</span>
-                        <span class="icon">🚀</span>
-                        <span>Sistema Discord Hunter iniciado</span>
+                        <span>Sistema Discord Hunter REAL iniciado</span>
                     </div>
                 </div>
             </div>
@@ -1001,20 +750,9 @@
         
         <!-- WEBHOOK STATUS -->
         <div class="webhook-status">
-            <span class="dot red" id="statusDot"></span>
-            <span id="statusText">⚠️ Webhook no configurado</span>
+            <span class="status-dot red" id="webhookDot"></span>
+            <span id="webhookText">⚠️ Webhook no configurado</span>
             <button class="btn btn-discord" onclick="openWebhookModal()" style="padding:4px 12px;font-size:9px;">🔗 Configurar</button>
-        </div>
-        
-        <!-- PROGRESS -->
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="fill" id="progressFill"></div>
-            </div>
-            <div class="progress-text">
-                <span id="progressLabel">0%</span>
-                <span id="progressDetail">Sistema listo</span>
-            </div>
         </div>
     </div>
     
@@ -1022,689 +760,456 @@
     <div class="modal" id="webhookModal">
         <div class="modal-content">
             <h2>🔗 Webhook Discord</h2>
-            <div class="sub">Configura el webhook para enviar información a tu servidor</div>
+            <div class="sub">Configura el webhook para enviar información REAL</div>
             
-            <input type="url" id="webhookInput" placeholder="https://discord.com/api/webhooks/..." 
-                   style="width:100%;">
-            <div style="font-size:10px;opacity:0.2;margin-top:4px;">💡 Ve a Discord → Servidor → Integraciones → Webhooks</div>
+            <input type="url" id="webhookInput" placeholder="https://discord.com/api/webhooks/..." style="width:100%;">
+            <div style="font-size:9px;opacity:0.2;margin-top:4px;">💡 Ve a Discord → Servidor → Integraciones → Webhooks</div>
             
-            <div style="display:flex;gap:8px;margin-top:10px;">
+            <div class="modal-actions">
                 <button class="btn btn-success" onclick="saveWebhook()" style="flex:1;">💾 Guardar</button>
                 <button class="btn btn-danger" onclick="closeModal('webhookModal')" style="flex:1;">❌ Cancelar</button>
             </div>
         </div>
     </div>
     
-    <!-- MODAL: Resultado IP -->
-    <div class="modal" id="resultModal">
-        <div class="modal-content">
-            <div class="celebration">🎉</div>
-            <h2 style="color:#ff0040;">IP ENCONTRADA</h2>
-            <div class="sub">¡Has descifrado la IP real!</div>
-            
-            <div class="big-ip" id="resultIp">192.168.1.1</div>
-            
-            <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0;">
-                <span class="badge badge-red">🔴 REAL</span>
-                <span class="badge badge-green">✅ ESCANEADA</span>
-                <span class="badge badge-gold">🏆 ENCONTRADA</span>
-            </div>
-            
-            <div class="discord-info" id="resultStatus">📨 Listo para enviar a Discord</div>
-            
-            <div class="modal-actions">
-                <button class="btn btn-discord" onclick="sendToDiscord()" style="flex:1;">📤 Enviar a Discord</button>
-                <button class="btn" onclick="closeModal('resultModal')" style="flex:1;">Cerrar</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- MODAL: Pista -->
-    <div class="modal" id="hintModal">
-        <div class="modal-content">
-            <h2 style="color:#ffa500;">💡 Pista</h2>
-            <div class="sub">Una pequeña ayuda para ti</div>
-            
-            <div style="padding:20px;background:rgba(255,165,0,0.03);border:1px solid rgba(255,165,0,0.1);border-radius:10px;margin:10px 0;">
-                <p style="font-size:16px;font-family:'Courier New',monospace;color:#ffa500;" id="hintText">
-                    La IP está en el rango 192.168.x.x
-                </p>
-            </div>
-            
-            <div style="font-size:10px;opacity:0.2;">🔍 Cada octeto es un número entre 0 y 255</div>
-            
-            <div class="modal-actions">
-                <button class="btn btn-orange" onclick="closeModal('hintModal')" style="flex:1;">Entendido</button>
-            </div>
-        </div>
-    </div>
-    
     <script>
         // ============================================
-        // CONFIGURACIÓN DEL SISTEMA
+        // CONFIGURACIÓN REAL
         // ============================================
         
-        const SYSTEM = {
-            webhookUrl: '',
-            webhooksSent: 0,
-            logs: [],
-            stats: {
-                attempts: 0,
-                hits: 0,
-                maxStreak: 0,
-                idsExtracted: 0,
-                scansCompleted: 0,
-                webhooksSent: 0
-            },
-            currentStreak: 0,
-            extractedId: null,
-            scannedServer: null
-        };
+        const DISCORD_API = 'https://discord.com/api/v10';
+        let BOT_TOKEN = '';
+        let BOT_USER = null;
+        let BOT_GUILDS = [];
+        let REQUEST_COUNT = 0;
+        let WEBHOOK_URL = '';
+        let WEBHOOK_SENT = 0;
+        let LOGS = [];
         
         // ============================================
-        // SISTEMA DE IP HUNTER
+        // FUNCIONES DE API REAL
         // ============================================
         
-        const IP_GAME = {
-            targetIp: '',
-            revealed: [false, false, false, false],
-            complete: false,
-            startTime: Date.now()
-        };
-        
-        const IP_DATABASE = [
-            '192.168.1.1', '192.168.1.100', '192.168.0.1', '192.168.0.100',
-            '10.0.0.1', '10.0.0.25', '10.0.0.100', '172.16.0.1', '172.16.0.50',
-            '8.8.8.8', '1.1.1.1', '9.9.9.9', '208.67.222.222', '208.67.220.220',
-            '127.0.0.1', '192.168.2.1', '192.168.2.100', '10.0.1.1',
-            '203.0.113.42', '198.51.100.17', '45.33.22.11', '104.21.5.6',
-            '172.217.168.78', '142.250.185.46', '216.58.214.14', '74.125.200.94'
-        ];
-        
-        function generateIP() {
-            if (Math.random() < 0.7) {
-                return IP_DATABASE[Math.floor(Math.random() * IP_DATABASE.length)];
-            }
-            return `${rand(1,254)}.${rand(0,254)}.${rand(0,254)}.${rand(1,254)}`;
-        }
-        
-        function rand(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-        
-        function resetGame() {
-            IP_GAME.targetIp = generateIP();
-            IP_GAME.revealed = [false, false, false, false];
-            IP_GAME.complete = false;
-            IP_GAME.startTime = Date.now();
-            
-            document.querySelectorAll('.octet').forEach(el => {
-                el.classList.remove('revealed');
-                el.querySelector('.number').textContent = '??';
-                el.querySelector('.lock-icon').textContent = '🔒';
-            });
-            
-            document.getElementById('ipDisplay').innerHTML = `
-                <span class="hint">🔍 Haz clic en los octetos para revelar la IP</span>
-            `;
-            
-            document.getElementById('sendBtn').disabled = true;
-            document.getElementById('progressFill').style.width = '0%';
-            document.getElementById('progressLabel').textContent = '0%';
-            document.getElementById('progressDetail').textContent = '0/4 octetos';
-            
-            addLog('🔄 Nueva IP generada', 'info');
-            updateStats();
-        }
-        
-        function revealOctet(index) {
-            if (IP_GAME.complete) {
-                addLog('⚠️ Ya completaste esta IP', 'error');
-                return;
-            }
-            if (IP_GAME.revealed[index]) {
-                addLog(`⚠️ Octeto ${index + 1} ya revelado`, 'info');
-                return;
+        async function discordRequest(endpoint, method = 'GET', body = null) {
+            if (!BOT_TOKEN) {
+                addLog('⚠️ No hay token de bot configurado', 'error');
+                return null;
             }
             
-            IP_GAME.revealed[index] = true;
-            SYSTEM.stats.attempts++;
+            REQUEST_COUNT++;
+            document.getElementById('statRequests').textContent = REQUEST_COUNT;
             
-            const parts = IP_GAME.targetIp.split('.');
-            const el = document.querySelector(`.octet[data-index="${index}"]`);
-            el.querySelector('.number').textContent = parts[index];
-            el.querySelector('.lock-icon').textContent = '🔓';
-            el.classList.add('revealed');
-            
-            addLog(`🔍 Octeto ${index + 1} revelado: ${parts[index]}`, 'success');
-            
-            if (IP_GAME.revealed.every(v => v)) {
-                IP_GAME.complete = true;
-                SYSTEM.stats.hits++;
-                SYSTEM.currentStreak++;
-                if (SYSTEM.currentStreak > SYSTEM.stats.maxStreak) {
-                    SYSTEM.stats.maxStreak = SYSTEM.currentStreak;
-                }
-                
-                const timeTaken = Math.floor((Date.now() - IP_GAME.startTime) / 1000);
-                
-                document.getElementById('ipDisplay').innerHTML = `
-                    <span class="ip-found">🎯 ${IP_GAME.targetIp}</span>
-                    <span class="status-badge success">✅ IP ESCANEADA - ${timeTaken}s</span>
-                `;
-                
-                document.getElementById('sendBtn').disabled = false;
-                document.getElementById('progressFill').style.width = '100%';
-                document.getElementById('progressLabel').textContent = '100%';
-                document.getElementById('progressDetail').textContent = '✅ COMPLETADO';
-                
-                addLog(`🎉 IP COMPLETA: ${IP_GAME.targetIp} (${timeTaken}s)`, 'raid');
-                addLog(`🔥 Racha actual: ${SYSTEM.currentStreak}`, 'gold');
-                
-                document.getElementById('resultIp').textContent = IP_GAME.targetIp;
-                document.getElementById('resultStatus').textContent = '📨 Presiona "Enviar a Discord" para enviar la IP';
-                document.getElementById('resultModal').classList.add('active');
-                
-                updateStats();
-            } else {
-                const progress = IP_GAME.revealed.filter(v => v).length / 4 * 100;
-                document.getElementById('progressFill').style.width = progress + '%';
-                document.getElementById('progressLabel').textContent = Math.round(progress) + '%';
-                document.getElementById('progressDetail').textContent = `${IP_GAME.revealed.filter(v => v).length}/4 octetos`;
-                updateStats();
-            }
-        }
-        
-        function showHint() {
-            if (IP_GAME.complete) {
-                addLog('⚠️ Ya completaste la IP', 'info');
-                return;
-            }
-            
-            const parts = IP_GAME.targetIp.split('.');
-            let hint = '';
-            for (let i = 0; i < 4; i++) {
-                if (!IP_GAME.revealed[i]) {
-                    hint = `El octeto ${i + 1} está entre ${Math.max(0, parseInt(parts[i]) - 30)} y ${Math.min(255, parseInt(parts[i]) + 30)}`;
-                    break;
-                }
-            }
-            if (!hint) hint = 'La IP es ' + IP_GAME.targetIp;
-            
-            document.getElementById('hintText').textContent = hint;
-            document.getElementById('hintModal').classList.add('active');
-            addLog(`💡 Pista: ${hint}`, 'info');
-        }
-        
-        // ============================================
-        // SISTEMA DE EXTRACCIÓN DE IDS
-        // ============================================
-        
-        function extractDiscordInfo() {
-            const input = document.getElementById('discordIdInput').value.trim();
-            if (!input) {
-                alert('⚠️ Ingresa un ID o usuario de Discord');
-                return;
-            }
-            
-            // Extraer número del input (soporta @usuario y IDs numéricos)
-            let id = input.replace(/[^0-9]/g, '');
-            if (!id || id.length < 6) {
-                // Si no es un ID numérico, generar uno basado en el input
-                id = Math.floor(Math.random() * 100000000000000000) + '';
-            }
-            
-            // Asegurar que sea un ID válido de Discord (17-19 dígitos)
-            while (id.length < 17) {
-                id += Math.floor(Math.random() * 10);
-            }
-            if (id.length > 19) id = id.substring(0, 19);
-            
-            SYSTEM.extractedId = id;
-            SYSTEM.stats.idsExtracted++;
-            
-            // Generar información falsa pero realista
-            const timestamp = parseInt(id.substring(0, 8), 10) || Date.now();
-            const createdDate = new Date(timestamp + 1420070400000);
-            
-            const names = ['Eliseo', 'ZonaHack', 'CiberGhost', 'DarkNet', 'Neo', 'Trinity', 'Morpheus', 'ZeroCool', 'Cipher', 'Shadow', 'Vortex', 'Nexus'];
-            const discriminators = ['0001', '1337', '6969', '0420', '2020', '6666', '7777', '9999'];
-            
-            document.getElementById('extractedId').textContent = id;
-            document.getElementById('extractedUser').textContent = names[Math.floor(Math.random() * names.length)] + '#' + discriminators[Math.floor(Math.random() * discriminators.length)];
-            document.getElementById('extractedCreated').textContent = createdDate.toLocaleDateString() + ' ' + createdDate.toLocaleTimeString();
-            document.getElementById('extractedType').textContent = ['Usuario', 'Bot', 'Sistema', 'Admin'][Math.floor(Math.random() * 4)];
-            document.getElementById('extractedNumber').textContent = id.substring(0, 6) + '...' + id.substring(id.length - 4);
-            document.getElementById('extractedServers').textContent = Math.floor(Math.random() * 50) + 5;
-            document.getElementById('extractedStatus').textContent = '🔴 REAL';
-            document.getElementById('extractedStatus').style.color = '#ff0040';
-            
-            document.getElementById('extractedInfo').style.display = 'block';
-            document.getElementById('extractedPlaceholder').style.display = 'none';
-            
-            addLog(`🆔 ID extraído: ${id}`, 'discord');
-            addLog(`👤 Usuario: ${document.getElementById('extractedUser').textContent}`, 'success');
-            updateStats();
-        }
-        
-        function generateFakeID() {
-            let id = '';
-            for (let i = 0; i < 18; i++) {
-                id += Math.floor(Math.random() * 10);
-            }
-            document.getElementById('discordIdInput').value = id;
-            extractDiscordInfo();
-        }
-        
-        function sendIDToDiscord() {
-            if (!SYSTEM.webhookUrl) {
-                alert('⚠️ Configura un Webhook primero');
-                openWebhookModal();
-                return;
-            }
-            
-            const id = document.getElementById('extractedId').textContent;
-            const user = document.getElementById('extractedUser').textContent;
-            const created = document.getElementById('extractedCreated').textContent;
-            const type = document.getElementById('extractedType').textContent;
-            
-            const payload = {
-                content: `🆔 **ID DE DISCORD EXTRACCIÓN REAL**`,
-                embeds: [{
-                    title: '🆔 ID DE DISCORD',
-                    description: `**ID:** \`${id}\`\n**Usuario:** ${user}\n**Creado:** ${created}\n**Tipo:** ${type}`,
-                    color: 0x5865F2,
-                    fields: [
-                        { name: '📊 ID Número', value: id, inline: true },
-                        { name: '🔗 Webhook', value: '✅ Enviado exitosamente', inline: true },
-                        { name: '💀 Estado', value: '🔴 REAL', inline: true }
-                    ],
-                    footer: { text: '🔥 ZONAHACK ELISEO ULTRA - ID Extractor' },
-                    timestamp: new Date().toISOString()
-                }]
+            const url = `${DISCORD_API}${endpoint}`;
+            const headers = {
+                'Authorization': `Bot ${BOT_TOKEN}`,
+                'Content-Type': 'application/json'
             };
             
-            sendToWebhook(payload, 'ID de Discord');
-        }
-        
-        // ============================================
-        // SISTEMA DE ESCANEO
-        // ============================================
-        
-        function scanServer() {
-            const serverId = document.getElementById('scanServerId').value.trim();
-            if (!serverId) {
-                alert('⚠️ Ingresa un ID de servidor');
-                return;
-            }
-            
-            SYSTEM.stats.scansCompleted++;
-            
-            const serverNames = ['ZONAHACK ELIT', 'DarkNet Central', 'CiberMafia', 'Hackers United', 'Shadow Network', 'Vortex Core', 'Nexus Prime'];
-            const members = Math.floor(Math.random() * 500) + 50;
-            const channels = Math.floor(Math.random() * 30) + 5;
-            const roles = Math.floor(Math.random() * 15) + 3;
-            const online = Math.floor(members * (0.1 + Math.random() * 0.3));
-            
-            document.getElementById('scanServerName').textContent = serverNames[Math.floor(Math.random() * serverNames.length)];
-            document.getElementById('scanServerIdResult').textContent = serverId;
-            document.getElementById('scanMembers').textContent = members;
-            document.getElementById('scanChannels').textContent = channels;
-            document.getElementById('scanRoles').textContent = roles;
-            document.getElementById('scanOnline').textContent = online;
-            document.getElementById('scanExtra').textContent = `🔍 Servidor escaneado exitosamente - ${members} miembros, ${channels} canales, ${roles} roles`;
-            
-            SYSTEM.scannedServer = {
-                id: serverId,
-                name: document.getElementById('scanServerName').textContent,
-                members: members,
-                channels: channels,
-                roles: roles,
-                online: online
-            };
-            
-            document.getElementById('scanResults').style.display = 'block';
-            document.getElementById('scanPlaceholder').style.display = 'none';
-            
-            addLog(`📡 Servidor escaneado: ${serverId}`, 'raid');
-            addLog(`👥 ${members} miembros encontrados`, 'success');
-            updateStats();
-        }
-        
-        function scanAllServers() {
-            addLog('🌐 Escaneando todos los servidores...', 'info');
-            setTimeout(() => {
-                const servers = [
-                    { id: '123456789012345678', name: 'ZONAHACK ELIT', members: 256 },
-                    { id: '234567890123456789', name: 'DarkNet Central', members: 189 },
-                    { id: '345678901234567890', name: 'CiberMafia', members: 420 },
-                    { id: '456789012345678901', name: 'Hackers United', members: 312 },
-                    { id: '567890123456789012', name: 'Shadow Network', members: 150 }
-                ];
+            try {
+                const options = { method, headers };
+                if (body) options.body = JSON.stringify(body);
                 
-                let total = 0;
-                servers.forEach(s => { total += s.members; });
+                const response = await fetch(url, options);
+                const data = await response.json();
                 
-                addLog(`📡 ${servers.length} servidores escaneados`, 'raid');
-                addLog(`👥 Total de miembros: ${total}`, 'success');
-                
-                // Mostrar primero en el scanner
-                if (servers.length > 0) {
-                    document.getElementById('scanServerId').value = servers[0].id;
-                    scanServer();
+                if (!response.ok) {
+                    addLog(`❌ Error ${response.status}: ${data.message || 'Desconocido'}`, 'error');
+                    return null;
                 }
-            }, 1500);
-        }
-        
-        function sendScanToDiscord() {
-            if (!SYSTEM.webhookUrl) {
-                alert('⚠️ Configura un Webhook primero');
-                openWebhookModal();
-                return;
-            }
-            
-            if (!SYSTEM.scannedServer) {
-                alert('⚠️ Escanea un servidor primero');
-                return;
-            }
-            
-            const data = SYSTEM.scannedServer;
-            const payload = {
-                content: `📡 **ESCANEO DE SERVIDOR DISCORD**`,
-                embeds: [{
-                    title: `📡 ${data.name}`,
-                    description: `**ID:** \`${data.id}\`\n**Miembros:** ${data.members}\n**Canales:** ${data.channels}\n**Roles:** ${data.roles}\n**Online:** ${data.online}`,
-                    color: 0x00ffff,
-                    fields: [
-                        { name: '📊 Actividad', value: `${Math.round(data.online/data.members*100)}% online`, inline: true },
-                        { name: '🔗 Webhook', value: '✅ Enviado', inline: true },
-                        { name: '💀 Estado', value: '🔴 REAL', inline: true }
-                    ],
-                    footer: { text: '🔥 ZONAHACK ELISEO ULTRA - Scanner' },
-                    timestamp: new Date().toISOString()
-                }]
-            };
-            
-            sendToWebhook(payload, 'Escaneo de servidor');
-        }
-        
-        function clearScan() {
-            document.getElementById('scanResults').style.display = 'none';
-            document.getElementById('scanPlaceholder').style.display = 'block';
-            SYSTEM.scannedServer = null;
-        }
-        
-        function clearExtracted() {
-            document.getElementById('extractedInfo').style.display = 'none';
-            document.getElementById('extractedPlaceholder').style.display = 'block';
-            SYSTEM.extractedId = null;
-        }
-        
-        // ============================================
-        // SISTEMA DE WEBHOOK
-        // ============================================
-        
-        function openWebhookModal() {
-            document.getElementById('webhookInput').value = SYSTEM.webhookUrl || '';
-            document.getElementById('webhookModal').classList.add('active');
-        }
-        
-        function saveWebhook() {
-            const url = document.getElementById('webhookInput').value.trim();
-            
-            if (!url) {
-                alert('⚠️ Ingresa una URL de Webhook válida');
-                return;
-            }
-            
-            if (!url.startsWith('https://discord.com/api/webhooks/')) {
-                alert('⚠️ URL inválida. Debe ser: https://discord.com/api/webhooks/...');
-                return;
-            }
-            
-            SYSTEM.webhookUrl = url;
-            document.getElementById('statusDot').className = 'dot green';
-            document.getElementById('statusText').textContent = '✅ Webhook configurado';
-            document.getElementById('statWebhookStatus').textContent = '✅ Configurado';
-            
-            closeModal('webhookModal');
-            addLog('🔗 Webhook configurado correctamente', 'discord');
-        }
-        
-        function sendToWebhook(payload, type) {
-            if (!SYSTEM.webhookUrl) return;
-            
-            addLog(`📤 Enviando ${type} a Discord...`, 'discord');
-            
-            fetch(SYSTEM.webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if (response.ok) {
-                    SYSTEM.stats.webhooksSent++;
-                    SYSTEM.webhooksSent++;
-                    addLog(`✅ ${type} enviado a Discord`, 'raid');
-                    updateStats();
-                    document.getElementById('statWebhookStatus').textContent = '✅ Enviado';
-                    document.getElementById('statWebhooks').textContent = SYSTEM.webhooksSent;
-                } else {
-                    addLog(`❌ Error ${response.status} enviando ${type}`, 'error');
-                }
-            })
-            .catch(error => {
+                
+                return data;
+            } catch (error) {
                 addLog(`❌ Error de conexión: ${error.message}`, 'error');
-            });
-        }
-        
-        async function sendToDiscord() {
-            if (!SYSTEM.webhookUrl) {
-                alert('⚠️ Configura un Webhook primero');
-                openWebhookModal();
-                return;
+                return null;
             }
-            
-            if (!IP_GAME.complete) {
-                alert('⚠️ Primero descubre la IP');
-                return;
-            }
-            
-            const ip = IP_GAME.targetIp;
-            const timeTaken = Math.floor((Date.now() - IP_GAME.startTime) / 1000);
-            
-            const payload = {
-                content: `🎯 **IP ENCONTRADA - ZONAHACK ELISEO**`,
-                embeds: [{
-                    title: '🎯 IP ESCANEADA',
-                    description: `**IP:** \`${ip}\`\n**Fecha:** ${new Date().toLocaleString()}\n**Tiempo:** ${timeTaken}s\n**Estado:** 🔴 REAL`,
-                    color: 0xff0040,
-                    fields: [
-                        { name: '📡 Octetos', value: ip.split('.').map((p, i) => `Octeto ${i+1}: ${p}`).join('\n'), inline: true },
-                        { name: '🔥 Racha', value: `${SYSTEM.currentStreak} IPs consecutivas`, inline: true },
-                        { name: '💀 Total IPs', value: `${SYSTEM.stats.hits} encontradas`, inline: true },
-                        { name: '📤 Enviados', value: `${SYSTEM.stats.webhooksSent + 1} a Discord`, inline: true }
-                    ],
-                    footer: { text: '🔥 ZONAHACK ELISEO ULTRA - IP Hunter' },
-                    timestamp: new Date().toISOString()
-                }]
-            };
-            
-            await sendToWebhook(payload, 'IP');
-            document.getElementById('resultStatus').textContent = '✅ ¡ENVIADO A DISCORD!';
-            updateStats();
-            
-            setTimeout(() => {
-                closeModal('resultModal');
-            }, 1500);
         }
         
         // ============================================
-        // SISTEMA DE TABS
+        // FUNCIONES DE LOGS
         // ============================================
         
-        function switchTab(tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            
-            document.querySelector(`.tab[onclick*="${tab}"]`)?.classList.add('active');
-            document.getElementById(`tab-${tab}`).classList.add('active');
-            
-            addLog(`📂 Cambiando a pestaña: ${tab}`, 'info');
-            
-            if (tab === 'stats') updateStats();
-            if (tab === 'logs') renderFullLogs();
+        function getTimestamp() {
+            const now = new Date();
+            return now.toLocaleTimeString('es-ES', { hour12: false });
         }
-        
-        // ============================================
-        // SISTEMA DE LOGS
-        // ============================================
         
         function addLog(message, type = 'info') {
-            const timestamp = new Date().toLocaleTimeString();
-            SYSTEM.logs.unshift({ timestamp, message, type });
-            if (SYSTEM.logs.length > 100) SYSTEM.logs.pop();
-            renderLogs();
-            renderFullLogs();
-            document.getElementById('logCount').textContent = SYSTEM.logs.length;
+            const time = getTimestamp();
+            LOGS.push({ time, message, type });
+            
+            // Actualizar todos los log areas
+            updateLogAreas();
+            
+            // Actualizar contador
+            document.getElementById('logCount').textContent = LOGS.length;
+            
+            // Enviar a webhook si está configurado
+            if (WEBHOOK_URL) {
+                sendToWebhook(message, type);
+            }
         }
         
-        function renderLogs() {
-            const container = document.querySelector('#tab-hunter .log-area, #tab-home .log-area');
-            if (!container) return;
+        function updateLogAreas() {
+            // Actualizar logs en la pestaña principal
+            const logArea = document.querySelector('.log-area:not(#fullLogArea)');
+            if (logArea) {
+                // Mantener solo los últimos 50 logs en la vista principal
+                const recentLogs = LOGS.slice(-50);
+                logArea.innerHTML = recentLogs.map(log => 
+                    `<div class="log-entry ${log.type}">
+                        <span class="time">[${log.time}]</span>
+                        <span>${log.message}</span>
+                    </div>`
+                ).join('');
+            }
             
-            const html = SYSTEM.logs.slice(0, 10).map(log => {
-                const iconMap = {
-                    'success': '✅', 'error': '❌', 'info': 'ℹ️',
-                    'discord': '📤', 'raid': '💀', 'gold': '🌟',
-                    'purple': '🆔'
-                };
-                const icon = iconMap[log.type] || '•';
-                return `<div class="log-entry ${log.type}">
-                    <span class="time">[${log.timestamp}]</span>
-                    <span class="icon">${icon}</span>
-                    <span>${log.message}</span>
-                </div>`;
-            }).join('');
-            container.innerHTML = html;
-        }
-        
-        function renderFullLogs() {
-            const container = document.getElementById('fullLogArea');
-            if (!container) return;
-            
-            const html = SYSTEM.logs.map(log => {
-                const iconMap = {
-                    'success': '✅', 'error': '❌', 'info': 'ℹ️',
-                    'discord': '📤', 'raid': '💀', 'gold': '🌟',
-                    'purple': '🆔'
-                };
-                const icon = iconMap[log.type] || '•';
-                return `<div class="log-entry ${log.type}">
-                    <span class="time">[${log.timestamp}]</span>
-                    <span class="icon">${icon}</span>
-                    <span>${log.message}</span>
-                </div>`;
-            }).join('');
-            container.innerHTML = html || '<div class="log-entry info"><span class="time">[SYS]</span><span>No hay logs</span></div>';
+            // Actualizar logs completos
+            const fullLogArea = document.getElementById('fullLogArea');
+            if (fullLogArea) {
+                fullLogArea.innerHTML = LOGS.map(log => 
+                    `<div class="log-entry ${log.type}">
+                        <span class="time">[${log.time}]</span>
+                        <span>${log.message}</span>
+                    </div>`
+                ).join('');
+                fullLogArea.scrollTop = fullLogArea.scrollHeight;
+            }
         }
         
         function clearLogs() {
-            if (!confirm('🗑️ ¿Eliminar todos los logs?')) return;
-            SYSTEM.logs = [];
-            renderLogs();
-            renderFullLogs();
+            LOGS = [];
             document.getElementById('logCount').textContent = '0';
+            updateLogAreas();
             addLog('🗑️ Logs limpiados', 'info');
         }
         
         function exportLogs() {
-            const text = SYSTEM.logs.map(log => `[${log.timestamp}] ${log.type.toUpperCase()}: ${log.message}`).join('\n');
-            const blob = new Blob([text], { type: 'text/plain' });
+            if (LOGS.length === 0) {
+                addLog('⚠️ No hay logs para exportar', 'error');
+                return;
+            }
+            
+            const content = LOGS.map(log => `[${log.time}] ${log.message}`).join('\n');
+            const blob = new Blob([content], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `logs_${new Date().toISOString().slice(0,10)}.txt`;
+            a.download = `logs_discord_hunter_${Date.now()}.txt`;
             a.click();
             URL.revokeObjectURL(url);
-            addLog('📤 Logs exportados', 'success');
-        }
-        
-        function copyToClipboard(elementId) {
-            const text = document.getElementById(elementId).textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                addLog(`📋 Copiado: ${text}`, 'success');
-            }).catch(() => {
-                alert('📋 Copiar manualmente: ' + text);
-            });
+            addLog('📤 Logs exportados correctamente', 'success');
         }
         
         // ============================================
-        // SISTEMA DE MODALES
+        // FUNCIONES DE WEBHOOK
         // ============================================
+        
+        function openWebhookModal() {
+            document.getElementById('webhookModal').classList.add('active');
+            document.getElementById('webhookInput').value = WEBHOOK_URL;
+        }
         
         function closeModal(id) {
             document.getElementById(id).classList.remove('active');
         }
         
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+        function saveWebhook() {
+            const url = document.getElementById('webhookInput').value.trim();
+            if (url && url.startsWith('https://discord.com/api/webhooks/')) {
+                WEBHOOK_URL = url;
+                document.getElementById('webhookText').textContent = '✅ Webhook configurado';
+                document.getElementById('webhookDot').className = 'status-dot green';
+                addLog('🔗 Webhook configurado correctamente', 'success');
+                closeModal('webhookModal');
+            } else {
+                addLog('⚠️ URL de webhook inválida', 'error');
             }
-        });
+        }
         
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.remove('active');
-            });
-        });
+        async function sendToWebhook(message, type = 'info') {
+            if (!WEBHOOK_URL) return;
+            
+            const colors = {
+                success: 0x00ff41,
+                error: 0xff0040,
+                info: 0xffa500,
+                discord: 0x5865F2,
+                raid: 0xff0040,
+                gold: 0xffd700
+            };
+            
+            const embed = {
+                title: '📡 Discord Hunter REAL',
+                description: message,
+                color: colors[type] || 0x00ff41,
+                timestamp: new Date().toISOString(),
+                footer: {
+                    text: 'ZONAHACK ELISEO • Sistema Real'
+                }
+            };
+            
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ embeds: [embed] })
+                });
+                
+                if (response.ok) {
+                    WEBHOOK_SENT++;
+                }
+            } catch (error) {
+                // Silencioso para no llenar logs
+            }
+        }
         
         // ============================================
-        // SISTEMA DE STATS
+        // FUNCIONES DE NAVEGACIÓN
         // ============================================
         
-        function updateStats() {
-            document.getElementById('statTotalAttempts').textContent = SYSTEM.stats.attempts;
-            document.getElementById('statTotalHits').textContent = SYSTEM.stats.hits;
-            document.getElementById('statTotalWebhooks').textContent = SYSTEM.stats.webhooksSent;
-            document.getElementById('statMaxStreak').textContent = SYSTEM.stats.maxStreak;
-            document.getElementById('statTotalIDs').textContent = SYSTEM.stats.idsExtracted;
-            document.getElementById('statTotalScans').textContent = SYSTEM.stats.scansCompleted;
+        function switchTab(tab) {
+            // Ocultar todos los tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
             
-            document.getElementById('statAttempts').textContent = SYSTEM.stats.attempts;
-            document.getElementById('statHits').textContent = SYSTEM.stats.hits;
-            document.getElementById('statWebhooks').textContent = SYSTEM.stats.webhooksSent;
-            document.getElementById('statStreak').textContent = SYSTEM.currentStreak;
+            // Mostrar el tab seleccionado
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            document.querySelector(`.tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+        }
+        
+        // ============================================
+        // FUNCIONES DE CONEXIÓN
+        // ============================================
+        
+        async function connectBot() {
+            const tokenInput = document.getElementById('botToken');
+            BOT_TOKEN = tokenInput.value.trim();
             
-            const progress = IP_GAME.revealed.filter(v => v).length / 4 * 100;
-            document.getElementById('statProgress').textContent = Math.round(progress) + '%';
+            if (!BOT_TOKEN) {
+                addLog('⚠️ Ingresa un token de bot válido', 'error');
+                return;
+            }
+            
+            addLog('🔗 Conectando a Discord API...', 'info');
+            
+            const data = await discordRequest('/users/@me');
+            if (!data) {
+                addLog('❌ Error al conectar con el bot', 'error');
+                return;
+            }
+            
+            BOT_USER = data;
+            
+            // Actualizar UI
+            document.getElementById('statusDot').className = 'status-dot green';
+            document.getElementById('statusText').textContent = '✅ Conectado';
+            document.getElementById('statusText').style.color = '#00ff41';
+            document.getElementById('botInfo').style.display = 'block';
+            document.getElementById('botUsername').textContent = data.username + '#' + data.discriminator;
+            document.getElementById('botId').textContent = data.id;
+            document.getElementById('botCreated').textContent = new Date(parseInt(data.id) / 4194304 + 1420070400000).toLocaleDateString('es-ES');
+            
+            addLog(`✅ Conectado como ${data.username}#${data.discriminator}`, 'success');
+            
+            // Obtener servidores
+            const guilds = await discordRequest('/users/@me/guilds');
+            if (guilds) {
+                BOT_GUILDS = guilds;
+                document.getElementById('botGuilds').textContent = guilds.length;
+                document.getElementById('statServers').textContent = guilds.length;
+                addLog(`📋 Cargados ${guilds.length} servidores`, 'info');
+            }
+            
+            // Actualizar estadísticas
+            document.getElementById('statUsers').textContent = 1;
+        }
+        
+        function disconnectBot() {
+            BOT_TOKEN = '';
+            BOT_USER = null;
+            BOT_GUILDS = [];
+            
+            document.getElementById('statusDot').className = 'status-dot red';
+            document.getElementById('statusText').textContent = 'Desconectado';
+            document.getElementById('statusText').style.color = '#ff0040';
+            document.getElementById('botInfo').style.display = 'none';
+            document.getElementById('botGuilds').textContent = '-';
+            
+            addLog('⛔ Desconectado de Discord', 'error');
+        }
+        
+        // ============================================
+        // FUNCIONES DE USUARIO
+        // ============================================
+        
+        async function fetchUser() {
+            const userId = document.getElementById('userIdInput').value.trim();
+            if (!userId) {
+                addLog('⚠️ Ingresa un ID de usuario', 'error');
+                return;
+            }
+            
+            document.getElementById('userInfo').style.display = 'none';
+            document.getElementById('userNotFound').style.display = 'none';
+            
+            const data = await discordRequest(`/users/${userId}`);
+            if (!data) {
+                document.getElementById('userNotFound').style.display = 'block';
+                addLog(`❌ Usuario ${userId} no encontrado`, 'error');
+                return;
+            }
+            
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('userUsername').textContent = data.username + '#' + (data.discriminator || '0');
+            document.getElementById('userId').textContent = data.id;
+            document.getElementById('userCreated').textContent = new Date(parseInt(data.id) / 4194304 + 1420070400000).toLocaleDateString('es-ES');
+            document.getElementById('userType').textContent = data.bot ? '🤖 Bot' : '👤 Usuario';
+            document.getElementById('userAvatar').textContent = data.avatar ? `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png` : 'Sin avatar';
+            document.getElementById('userStatus').textContent = data.presence?.status || 'Desconocido';
+            
+            // Actualizar estadísticas
+            document.getElementById('statUsers').textContent = parseInt(document.getElementById('statUsers').textContent) + 1;
+            
+            addLog(`✅ Usuario ${data.username} encontrado (ID: ${data.id})`, 'success');
+        }
+        
+        // ============================================
+        // FUNCIONES DE SERVIDOR
+        // ============================================
+        
+        async function fetchGuild() {
+            const guildId = document.getElementById('guildIdInput').value.trim();
+            if (!guildId) {
+                addLog('⚠️ Ingresa un ID de servidor', 'error');
+                return;
+            }
+            
+            document.getElementById('guildInfo').style.display = 'none';
+            
+            const data = await discordRequest(`/guilds/${guildId}`);
+            if (!data) {
+                addLog(`❌ Servidor ${guildId} no encontrado`, 'error');
+                return;
+            }
+            
+            document.getElementById('guildInfo').style.display = 'block';
+            document.getElementById('guildName').textContent = data.name;
+            document.getElementById('guildId').textContent = data.id;
+            document.getElementById('guildMembers').textContent = data.approximate_member_count || 'Desconocido';
+            document.getElementById('guildChannels').textContent = data.approximate_presence_count || 'Desconocido';
+            document.getElementById('guildRoles').textContent = data.roles?.length || 0;
+            document.getElementById('guildCreated').textContent = new Date(data.id / 4194304 + 1420070400000).toLocaleDateString('es-ES');
+            
+            document.getElementById('statServers').textContent = parseInt(document.getElementById('statServers').textContent) + 1;
+            if (data.approximate_member_count) {
+                document.getElementById('statMembers').textContent = data.approximate_member_count;
+            }
+            
+            addLog(`✅ Servidor ${data.name} encontrado (ID: ${data.id})`, 'success');
+        }
+        
+        async function listGuilds() {
+            if (!BOT_TOKEN) {
+                addLog('⚠️ Conecta un bot primero', 'error');
+                return;
+            }
+            
+            const data = await discordRequest('/users/@me/guilds');
+            if (!data) {
+                addLog('❌ No se pudieron obtener los servidores', 'error');
+                return;
+            }
+            
+            BOT_GUILDS = data;
+            document.getElementById('guildList').style.display = 'block';
+            document.getElementById('botGuilds').textContent = data.length;
+            document.getElementById('statServers').textContent = data.length;
+            
+            const content = document.getElementById('guildListContent');
+            content.innerHTML = data.map(g => 
+                `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(0,255,65,0.03);">
+                    <span>${g.name}</span>
+                    <span style="opacity:0.3;font-size:9px;">${g.id}</span>
+                </div>`
+            ).join('');
+            
+            addLog(`📋 ${data.length} servidores cargados`, 'info');
+        }
+        
+        // ============================================
+        // FUNCIONES DE MIEMBROS
+        // ============================================
+        
+        async function fetchMembers() {
+            const guildId = document.getElementById('memberGuildId').value.trim();
+            if (!guildId) {
+                addLog('⚠️ Ingresa un ID de servidor', 'error');
+                return;
+            }
+            
+            document.getElementById('membersList').style.display = 'none';
+            
+            const data = await discordRequest(`/guilds/${guildId}/members?limit=100`);
+            if (!data) {
+                addLog(`❌ No se pudieron obtener los miembros del servidor ${guildId}`, 'error');
+                return;
+            }
+            
+            document.getElementById('membersList').style.display = 'block';
+            const content = document.getElementById('membersContent');
+            content.innerHTML = data.map(m => 
+                `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(0,255,65,0.03);">
+                    <span>${m.user?.username || 'Desconocido'}${m.user?.discriminator ? '#' + m.user.discriminator : ''}</span>
+                    <span style="opacity:0.3;font-size:9px;">${m.user?.id || 'Sin ID'}</span>
+                </div>`
+            ).join('');
+            
+            document.getElementById('statMembers').textContent = data.length;
+            addLog(`👥 ${data.length} miembros encontrados`, 'success');
         }
         
         // ============================================
         // INICIALIZACIÓN
         // ============================================
         
-        function init() {
-            addLog('🚀 DISCORD HUNTER ELISEO ULTRA - Modo REAL', 'raid');
-            addLog('🎯 Sistema completo de extracción de información', 'success');
-            addLog('🆔 Extractor de IDs de Discord activo', 'purple');
-            addLog('📡 Scanner de servidores activo', 'info');
-            addLog('📤 Webhook listo para configurar', 'discord');
-            addLog('💀 Sistema 100% funcional - ZONAHACK ELISEO', 'raid');
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('🚀 Sistema Discord Hunter REAL iniciado', 'info');
+            addLog('💡 Conecta un token de bot para comenzar', 'info');
             
-            resetGame();
-            updateStats();
-            
-            // Detectar IP pública
-            fetch('https://api.ipify.org?format=json')
-                .then(res => res.json())
-                .then(data => {
-                    addLog(`🌐 IP Pública: ${data.ip}`, 'success');
-                })
-                .catch(() => {});
-        }
+            // Cargar webhook guardado
+            const savedWebhook = localStorage.getItem('discord_hunter_webhook');
+            if (savedWebhook) {
+                WEBHOOK_URL = savedWebhook;
+                document.getElementById('webhookText').textContent = '✅ Webhook configurado';
+                document.getElementById('webhookDot').className = 'status-dot green';
+                addLog('🔗 Webhook cargado desde almacenamiento', 'success');
+            }
+        });
         
-        init();
+        // Guardar webhook en localStorage
+        const originalSaveWebhook = saveWebhook;
+        saveWebhook = function() {
+            originalSaveWebhook();
+            if (WEBHOOK_URL) {
+                localStorage.setItem('discord_hunter_webhook', WEBHOOK_URL);
+            }
+        };
+        
+        // ============================================
+        // FUNCIONES DE UTILIDAD
+        // ============================================
+        
+        window.copyToClipboard = function(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                addLog('📋 Copiado al portapapeles', 'success');
+            }).catch(() => {
+                addLog('⚠️ Error al copiar', 'error');
+            });
+        };
+        
+        console.log('🔥 Discord Hunter REAL - ZONAHACK ELISEO');
+        console.log('📡 Sistema de extracción de información de Discord');
+        console.log('⚠️ Uso educativo y legal únicamente');
     </script>
 </body>
 </html>
