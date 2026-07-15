@@ -547,6 +547,7 @@
             opacity: 0.7;
             margin: 4px 0;
             font-size: 11px;
+            list-style: none;
         }
         
         @media (max-width: 768px) {
@@ -662,12 +663,11 @@
                     
                     <div class="solution-box">
                         <h4>🔧 SOLUCIÓN PARA "FAILED TO FETCH"</h4>
-                        <ul style="list-style:none;text-align:left;">
-                            <li>✅ 1. Usa un proxy CORS: <span style="color:#00ff41;">https://cors-anywhere.herokuapp.com/</span></li>
+                        <ul>
+                            <li>✅ 1. Usa los proxies disponibles en la pestaña Token</li>
                             <li>✅ 2. Instala una extensión CORS en tu navegador</li>
                             <li>✅ 3. Ejecuta el código en un servidor local (Live Server)</li>
-                            <li>✅ 4. Usa un proxy propio o VPN</li>
-                            <li style="color:#ffa500;">💡 El sistema usa automáticamente el proxy CORS si falla</li>
+                            <li style="color:#ffa500;">💡 El sistema cambia automáticamente de proxy si falla</li>
                         </ul>
                     </div>
                     
@@ -722,14 +722,24 @@
                 
                 <div style="margin-bottom:12px;">
                     <p style="opacity:0.3;font-size:11px;">Ingresa el token de tu bot de Discord para conectarte a la API REAL</p>
-                    <p style="opacity:0.2;font-size:10px;">💡 Si tienes error "Failed to fetch", el sistema usará proxy CORS</p>
+                    <p style="opacity:0.2;font-size:10px;">💡 Si tienes error "Failed to fetch", cambia el proxy</p>
                 </div>
                 
                 <div class="flex mb-10">
-                    <input type="password" id="botToken" placeholder="Token del Bot (REAL)" style="flex:1;min-width:200px;">
+                    <input type="password" id="botToken" placeholder="Token del Bot (REAL)" style="flex:2;min-width:200px;">
+                    <select id="proxySelect" style="flex:1;">
+                        <option value="https://corsproxy.io/?">🌐 Proxy 1 (corsproxy.io)</option>
+                        <option value="https://api.allorigins.win/raw?url=">🌐 Proxy 2 (allorigins)</option>
+                        <option value="https://cors-anywhere.herokuapp.com/">🌐 Proxy 3 (cors-anywhere)</option>
+                        <option value="https://thingproxy.freeboard.io/fetch/">🌐 Proxy 4 (thingproxy)</option>
+                        <option value="DIRECT">🚀 Directo (sin proxy)</option>
+                    </select>
+                </div>
+                <div class="flex mb-10">
                     <button class="btn btn-discord" onclick="connectBot()">🔗 Conectar</button>
                     <button class="btn btn-danger" onclick="disconnectBot()">⛔ Desconectar</button>
-                    <button class="btn btn-gold" onclick="toggleProxy()">🌐 Proxy</button>
+                    <button class="btn btn-gold" onclick="testProxy()">📡 Test Proxy</button>
+                    <button class="btn btn-cyan" onclick="autoProxy()">🔄 Auto Proxy</button>
                 </div>
                 
                 <div id="connectionStatus" class="info-card" style="background:rgba(255,0,0,0.02);border-color:rgba(255,0,0,0.1);">
@@ -763,8 +773,8 @@
                             <div class="value pink" id="botIsBot">-</div>
                         </div>
                         <div class="info-card">
-                            <div class="label">🌐 Proxy</div>
-                            <div class="value cyan" id="proxyStatus">Desactivado</div>
+                            <div class="label">🌐 Proxy Activo</div>
+                            <div class="value cyan" id="proxyStatus">-</div>
                         </div>
                     </div>
                 </div>
@@ -779,6 +789,7 @@
                 <div class="flex mb-10">
                     <input type="text" id="userIdInput" placeholder="ID de usuario Discord..." style="flex:1;min-width:200px;">
                     <button class="btn btn-gold" onclick="fetchUser()">🔍 Buscar</button>
+                    <button class="btn btn-cyan" onclick="fetchUserMutual()">🔄 Mutual</button>
                 </div>
                 
                 <div id="userInfo" style="display:none;">
@@ -1012,14 +1023,20 @@
         // ============================================
         
         const DISCORD_API = 'https://discord.com/api/v10';
-        const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-        let USE_PROXY = false;
+        const PROXIES = [
+            'https://corsproxy.io/?',
+            'https://api.allorigins.win/raw?url=',
+            'https://cors-anywhere.herokuapp.com/',
+            'https://thingproxy.freeboard.io/fetch/'
+        ];
         let BOT_TOKEN = '';
         let BOT_USER = null;
         let BOT_GUILDS = [];
         let REQUEST_COUNT = 0;
         let WEBHOOK_URL = '';
         let LOGS = [];
+        let USE_PROXY = true;
+        let CURRENT_PROXY = PROXIES[0];
         
         // ============================================
         // FUNCIONES DE API CON PROXY
@@ -1035,8 +1052,10 @@
             document.getElementById('statRequests').textContent = REQUEST_COUNT;
             
             let url = `${DISCORD_API}${endpoint}`;
-            if (USE_PROXY) {
-                url = `${CORS_PROXY}${url}`;
+            const proxySelect = document.getElementById('proxySelect');
+            
+            if (proxySelect.value !== 'DIRECT') {
+                url = `${proxySelect.value}${encodeURIComponent(url)}`;
             }
             
             const headers = {
@@ -1050,33 +1069,47 @@
                 
                 const response = await fetch(url, options);
                 
-                // Si falla con proxy, intentar sin proxy
-                if (!response.ok && USE_PROXY) {
-                    addLog('🔄 Intentando sin proxy...', 'info');
-                    USE_PROXY = false;
-                    document.getElementById('proxyStatus').textContent = 'Desactivado';
-                    return await discordRequest(endpoint, method, body);
+                // Verificar si la respuesta es HTML (error de proxy)
+                const contentType = response.headers.get('content-type') || '';
+                if (contentType.includes('text/html')) {
+                    addLog('⚠️ Proxy devolvió HTML, probando otro...', 'error');
+                    // Cambiar al siguiente proxy automáticamente
+                    if (proxySelect.value !== 'DIRECT') {
+                        const currentIndex = PROXIES.indexOf(proxySelect.value);
+                        const nextIndex = (currentIndex + 1) % PROXIES.length;
+                        proxySelect.value = PROXIES[nextIndex];
+                        addLog(`🔄 Cambiando a proxy: ${PROXIES[nextIndex]}`, 'info');
+                        return await discordRequest(endpoint, method, body);
+                    }
+                    return null;
                 }
                 
                 const data = await response.json();
                 
                 if (!response.ok) {
                     addLog(`❌ Error ${response.status}: ${data.message || 'Desconocido'}`, 'error');
+                    // Si falla, intentar con otro proxy
+                    if (proxySelect.value !== 'DIRECT') {
+                        const currentIndex = PROXIES.indexOf(proxySelect.value);
+                        const nextIndex = (currentIndex + 1) % PROXIES.length;
+                        proxySelect.value = PROXIES[nextIndex];
+                        addLog(`🔄 Cambiando a proxy: ${PROXIES[nextIndex]}`, 'info');
+                        return await discordRequest(endpoint, method, body);
+                    }
                     return null;
                 }
                 
                 return data;
             } catch (error) {
-                // Si falla con proxy, intentar sin proxy
-                if (USE_PROXY) {
-                    addLog('🔄 Falló con proxy, intentando directo...', 'info');
-                    USE_PROXY = false;
-                    document.getElementById('proxyStatus').textContent = 'Desactivado';
+                addLog(`❌ Error: ${error.message}`, 'error');
+                // Intentar con otro proxy
+                if (proxySelect.value !== 'DIRECT') {
+                    const currentIndex = PROXIES.indexOf(proxySelect.value);
+                    const nextIndex = (currentIndex + 1) % PROXIES.length;
+                    proxySelect.value = PROXIES[nextIndex];
+                    addLog(`🔄 Cambiando a proxy: ${PROXIES[nextIndex]}`, 'info');
                     return await discordRequest(endpoint, method, body);
                 }
-                
-                addLog(`❌ Error de conexión: ${error.message}`, 'error');
-                addLog('💡 Intenta activar el proxy con el botón "Proxy"', 'info');
                 return null;
             }
         }
@@ -1093,9 +1126,8 @@
         function addLog(message, type = 'info') {
             const time = getTimestamp();
             LOGS.push({ time, message, type });
-            
-            updateLogAreas();
             document.getElementById('logCount').textContent = LOGS.length;
+            updateLogAreas();
             
             if (WEBHOOK_URL) {
                 sendToWebhook(message, type);
@@ -1209,15 +1241,70 @@
         }
         
         // ============================================
-        // FUNCIONES DE CONEXIÓN
+        // FUNCIONES DE PROXY
         // ============================================
         
-        function toggleProxy() {
-            USE_PROXY = !USE_PROXY;
-            document.getElementById('proxyStatus').textContent = USE_PROXY ? '✅ Activado' : 'Desactivado';
-            document.getElementById('proxyStatus').style.color = USE_PROXY ? '#00ff41' : '#ff0040';
-            addLog(`🌐 Proxy CORS ${USE_PROXY ? 'activado' : 'desactivado'}`, 'info');
+        function testProxy() {
+            const proxy = document.getElementById('proxySelect').value;
+            addLog(`📡 Probando proxy: ${proxy}`, 'info');
+            
+            if (proxy === 'DIRECT') {
+                addLog('🚀 Modo directo activado (sin proxy)', 'info');
+                return;
+            }
+            
+            // Probar el proxy haciendo una petición de prueba
+            fetch(proxy)
+                .then(() => {
+                    addLog(`✅ Proxy ${proxy} funciona correctamente`, 'success');
+                })
+                .catch(() => {
+                    addLog(`❌ Proxy ${proxy} no responde`, 'error');
+                    // Auto-cambiar al siguiente
+                    const currentIndex = PROXIES.indexOf(proxy);
+                    const nextIndex = (currentIndex + 1) % PROXIES.length;
+                    if (nextIndex !== currentIndex) {
+                        document.getElementById('proxySelect').value = PROXIES[nextIndex];
+                        addLog(`🔄 Cambiando a proxy: ${PROXIES[nextIndex]}`, 'info');
+                    }
+                });
         }
+        
+        function autoProxy() {
+            addLog('🔄 Buscando proxy funcional...', 'info');
+            
+            const testProxy = async (proxy) => {
+                try {
+                    const response = await fetch(proxy, { 
+                        mode: 'no-cors',
+                        signal: AbortSignal.timeout(5000) 
+                    });
+                    return true;
+                } catch {
+                    return false;
+                }
+            };
+            
+            const findWorkingProxy = async () => {
+                for (const proxy of PROXIES) {
+                    addLog(`📡 Probando ${proxy}...`, 'info');
+                    const works = await testProxy(proxy);
+                    if (works) {
+                        document.getElementById('proxySelect').value = proxy;
+                        addLog(`✅ Proxy funcional encontrado: ${proxy}`, 'success');
+                        return proxy;
+                    }
+                }
+                addLog('❌ No se encontró ningún proxy funcional', 'error');
+                return null;
+            };
+            
+            findWorkingProxy();
+        }
+        
+        // ============================================
+        // FUNCIONES DE CONEXIÓN
+        // ============================================
         
         async function connectBot() {
             const tokenInput = document.getElementById('botToken');
@@ -1229,19 +1316,23 @@
             }
             
             addLog('🔗 Conectando a Discord API...', 'info');
+            setStatus('Conectando...', false);
+            
+            // Guardar proxy actual
+            const proxySelect = document.getElementById('proxySelect');
+            document.getElementById('proxyStatus').textContent = proxySelect.value;
             
             const data = await discordRequest('/users/@me');
             if (!data) {
                 addLog('❌ Error al conectar con el bot', 'error');
-                addLog('💡 Activa el proxy si estás en local', 'info');
+                addLog('💡 Prueba cambiando el proxy o activando "Auto Proxy"', 'info');
+                setStatus('Error de conexión', false);
                 return;
             }
             
             BOT_USER = data;
+            setStatus('✅ Conectado', true);
             
-            document.getElementById('statusDot').className = 'status-dot green';
-            document.getElementById('statusText').textContent = '✅ Conectado';
-            document.getElementById('statusText').style.color = '#00ff41';
             document.getElementById('botInfo').style.display = 'block';
             document.getElementById('botUsername').textContent = data.username + '#' + (data.discriminator || '0');
             document.getElementById('botId').textContent = data.id;
@@ -1259,9 +1350,12 @@
             }
             
             document.getElementById('statUsers').textContent = 1;
-            
-            // Guardar token
             localStorage.setItem('discord_hunter_token', BOT_TOKEN);
+        }
+        
+        function setStatus(text, isConnected) {
+            document.getElementById('statusText').textContent = text;
+            document.getElementById('statusDot').className = `status-dot ${isConnected ? 'green' : 'red'}`;
         }
         
         function disconnectBot() {
@@ -1269,9 +1363,7 @@
             BOT_USER = null;
             BOT_GUILDS = [];
             
-            document.getElementById('statusDot').className = 'status-dot red';
-            document.getElementById('statusText').textContent = 'Desconectado';
-            document.getElementById('statusText').style.color = '#ff0040';
+            setStatus('Desconectado', false);
             document.getElementById('botInfo').style.display = 'none';
             document.getElementById('botGuilds').textContent = '-';
             
@@ -1309,6 +1401,23 @@
             
             document.getElementById('statUsers').textContent = parseInt(document.getElementById('statUsers').textContent) + 1;
             addLog(`✅ Usuario ${data.username} encontrado`, 'success');
+        }
+        
+        async function fetchUserMutual() {
+            const userId = document.getElementById('userIdInput').value.trim();
+            if (!userId) {
+                addLog('⚠️ Ingresa un ID de usuario', 'error');
+                return;
+            }
+            
+            const data = await discordRequest(`/users/${userId}/mutual-guilds`);
+            if (!data) {
+                addLog(`❌ No se encontraron servidores mutuos`, 'error');
+                return;
+            }
+            
+            addLog(`🔄 ${data.length} servidores mutuos encontrados`, 'success');
+            data.forEach(g => addLog(`🏰 ${g.name} (${g.id})`, 'discord'));
         }
         
         // ============================================
@@ -1560,7 +1669,7 @@
             addLog('🚀 Discord Hunter PRO iniciado', 'info');
             addLog('💡 Conecta un token de bot para comenzar', 'info');
             addLog('⭐ MODO PRO ACTIVADO - 10+ funciones', 'gold');
-            addLog('🌐 Si hay error, activa el proxy CORS', 'info');
+            addLog('🌐 Si hay error, usa "Auto Proxy" o cambia de proxy', 'info');
             
             const savedWebhook = localStorage.getItem('discord_hunter_webhook');
             if (savedWebhook) {
@@ -1574,7 +1683,6 @@
             if (savedToken) {
                 document.getElementById('botToken').value = savedToken;
                 addLog('🔑 Token cargado desde almacenamiento', 'info');
-                setTimeout(connectBot, 500);
             }
         });
         
@@ -1587,12 +1695,10 @@
             }
         };
         
-        console.log('🔥 Discord Hunter PRO - ZONAHACK ELISEO');
-        console.log('📡 Sistema de extracción de información de Discord');
-        console.log('⭐ MODO PRO: 10+ funciones avanzadas');
-        console.log('🌐 Proxy CORS incluido para evitar "Failed to fetch"');
-        console.log('⚠️ Uso educativo y legal únicamente');
+        console.log('%c🔥 DISCORD HUNTER PRO', 'color: #ffd700; font-size: 20px; font-weight: bold;');
+        console.log('%c📡 Sistema con Proxy CORS integrado', 'color: #00ff41;');
+        console.log('%c⭐ 10+ funciones avanzadas', 'color: #9b59b6;');
+        console.log('%c⚠️ Uso educativo y legal únicamente', 'color: #ffa500;');
     </script>
 </body>
 </html>
-                
