@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔍 INFO HUNTER PRO - ZONAHACK ELISEO</title>
+    <title>🔍 INFO HUNTER PRO - ADMINISTRACIÓN TOTAL</title>
     <style>
         /* ===== RESET Y BASE ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,17 +28,6 @@
             50% { box-shadow: 0 0 20px rgba(0,150,255,0.2), 0 0 40px rgba(0,150,255,0.1); }
         }
         
-        @keyframes progressAnim {
-            0% { width: 0%; }
-            50% { width: 70%; }
-            100% { width: 0%; }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
@@ -52,6 +41,12 @@
         @keyframes glowPulse {
             0%, 100% { box-shadow: 0 0 20px rgba(0,150,255,0.2), inset 0 0 20px rgba(0,150,255,0.05); }
             50% { box-shadow: 0 0 40px rgba(0,150,255,0.4), inset 0 0 40px rgba(0,150,255,0.1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
         
         body {
@@ -69,7 +64,6 @@
         ::-webkit-scrollbar-track { background: rgba(0,150,255,0.02); }
         ::-webkit-scrollbar-thumb { background: rgba(0,150,255,0.2); border-radius: 2px; }
         
-        /* ===== CONTENEDOR PRINCIPAL ===== */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -119,6 +113,7 @@
         .logo .bot { color: #5865F2; font-size: 14px; }
         .logo .game { color: #00ff88; font-size: 14px; animation: pulse 0.7s infinite; }
         .logo .tools { color: #ff69b4; font-size: 14px; }
+        .logo .admin { color: #ff4444; font-size: 14px; animation: pulse 0.3s infinite; }
         
         .subtitle {
             font-size: 12px;
@@ -128,12 +123,6 @@
             position: relative;
             z-index: 1;
         }
-        
-        .subtitle .highlight { color: #ff6b35; font-weight: bold; animation: pulse 1.5s infinite; }
-        .subtitle .legal { color: #00ff88; font-weight: bold; }
-        .subtitle .warning { color: #ffa500; font-weight: bold; }
-        .subtitle .discord { color: #5865F2; font-weight: bold; }
-        .subtitle .game { color: #ffd700; font-weight: bold; }
         
         /* ===== SISTEMA DE REGISTRO ===== */
         .auth-overlay {
@@ -203,7 +192,8 @@
             margin-bottom: 4px;
         }
         
-        .auth-box .form-group input {
+        .auth-box .form-group input,
+        .auth-box .form-group select {
             width: 100%;
             padding: 12px 16px;
             background: rgba(0,150,255,0.05);
@@ -215,7 +205,13 @@
             transition: all 0.3s;
         }
         
-        .auth-box .form-group input:focus {
+        .auth-box .form-group select option {
+            background: #0a0a12;
+            color: #00d4ff;
+        }
+        
+        .auth-box .form-group input:focus,
+        .auth-box .form-group select:focus {
             outline: none;
             border-color: #00d4ff;
             box-shadow: 0 0 30px rgba(0,150,255,0.05);
@@ -248,12 +244,6 @@
             color: #0a0a12;
             transform: scale(1.02);
             box-shadow: 0 0 40px rgba(0,150,255,0.15);
-        }
-        
-        .auth-box .btn-auth:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            transform: none !important;
         }
         
         .auth-box .auth-switch {
@@ -310,11 +300,11 @@
             letter-spacing: 1px;
         }
         
-        /* ===== INDICADOR DE SESIÓN ===== */
+        /* ===== BARRA DE USUARIO ===== */
         .user-bar {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
             gap: 12px;
             padding: 8px 15px;
             background: rgba(0,150,255,0.02);
@@ -362,6 +352,14 @@
         
         .user-bar .user-info .role-badge.admin { border-color: #ff4444; color: #ff4444; }
         .user-bar .user-info .role-badge.user { border-color: #00d4ff; color: #00d4ff; }
+        .user-bar .user-info .role-badge.moderator { border-color: #ffa500; color: #ffa500; }
+        
+        .user-bar .user-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
         
         .user-bar .btn-logout {
             padding: 5px 14px;
@@ -378,6 +376,25 @@
         }
         
         .user-bar .btn-logout:hover {
+            background: #ff4444;
+            color: #0a0a12;
+        }
+        
+        .user-bar .btn-admin {
+            padding: 5px 14px;
+            border: 1px solid rgba(255,68,68,0.3);
+            border-radius: 6px;
+            background: transparent;
+            color: #ff4444;
+            font-size: 9px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .user-bar .btn-admin:hover {
             background: #ff4444;
             color: #0a0a12;
         }
@@ -416,6 +433,8 @@
         .tab.game-tab.active { border-bottom-color: #ffd700; }
         .tab.tools-tab { color: #ff69b4; }
         .tab.tools-tab.active { border-bottom-color: #ff69b4; }
+        .tab.admin-tab { color: #ff4444; }
+        .tab.admin-tab.active { border-bottom-color: #ff4444; }
         
         .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: block; }
@@ -494,6 +513,7 @@
         .panel-title.discord-title { color: #5865F2; }
         .panel-title.game-title { color: #ffd700; }
         .panel-title.tools-title { color: #ff69b4; }
+        .panel-title.admin-title { color: #ff4444; }
         
         /* ===== BOTONES ===== */
         .btn {
@@ -549,6 +569,8 @@
         .btn-game:hover:not(:disabled) { background: #ffd700; color: #0a0a12; }
         .btn-tools { border-color: #ff69b4; color: #ff69b4; }
         .btn-tools:hover:not(:disabled) { background: #ff69b4; color: #0a0a12; }
+        .btn-admin { border-color: #ff4444; color: #ff4444; }
+        .btn-admin:hover:not(:disabled) { background: #ff4444; color: #0a0a12; }
 
         .btn-mantenimiento {
             border-color: #ff6b35;
@@ -574,6 +596,11 @@
             color: #0a0a12;
             transform: scale(1.05);
             box-shadow: 0 0 40px rgba(255,107,53,0.3);
+        }
+        
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 8px;
         }
         
         /* ===== MODALES ===== */
@@ -615,6 +642,38 @@
             font-size: 11px;
             opacity: 0.3;
             margin-bottom: 15px;
+        }
+        
+        .modal-content .form-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        
+        .modal-content .form-group label {
+            display: block;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.3;
+            margin-bottom: 4px;
+        }
+        
+        .modal-content .form-group input,
+        .modal-content .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(0,150,255,0.05);
+            border: 1px solid rgba(0,150,255,0.15);
+            border-radius: 8px;
+            color: #00d4ff;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            font-size: 13px;
+        }
+        
+        .modal-content .form-group input:focus,
+        .modal-content .form-group select:focus {
+            outline: none;
+            border-color: #00d4ff;
         }
         
         .modal-actions {
@@ -745,6 +804,12 @@
             animation: progressAnim 3s ease-in-out infinite;
         }
         
+        @keyframes progressAnim {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 0%; }
+        }
+        
         /* ===== JUEGO ===== */
         .game-container {
             max-width: 500px;
@@ -849,6 +914,11 @@
             margin: 10px 0;
         }
         
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
         /* ===== HERRAMIENTAS ===== */
         .tools-grid {
             display: grid;
@@ -894,6 +964,125 @@
             background: rgba(0,0,0,0.2);
             border-radius: 4px;
             border-left: 2px solid #ff69b4;
+        }
+        
+        /* ===== ADMIN PANEL ===== */
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .admin-stat-card {
+            background: rgba(255,68,68,0.03);
+            border: 1px solid rgba(255,68,68,0.08);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .admin-stat-card:hover {
+            transform: scale(1.02);
+            background: rgba(255,68,68,0.06);
+        }
+        
+        .admin-stat-card .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff4444;
+        }
+        
+        .admin-stat-card .label {
+            font-size: 8px;
+            opacity: 0.3;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+        
+        .user-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .user-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        
+        .user-list::-webkit-scrollbar-track {
+            background: rgba(0,150,255,0.02);
+        }
+        
+        .user-list::-webkit-scrollbar-thumb {
+            background: rgba(0,150,255,0.2);
+            border-radius: 2px;
+        }
+        
+        .user-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: rgba(0,150,255,0.02);
+            border: 1px solid rgba(0,150,255,0.05);
+            border-radius: 8px;
+            margin-bottom: 6px;
+            transition: all 0.3s;
+        }
+        
+        .user-list-item:hover {
+            background: rgba(0,150,255,0.05);
+        }
+        
+        .user-list-item .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-list-item .user-info .u-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff, #ff6b35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #0a0a12;
+        }
+        
+        .user-list-item .user-info .u-name {
+            font-weight: bold;
+            color: #ffd700;
+            font-size: 12px;
+        }
+        
+        .user-list-item .user-info .u-role {
+            font-size: 8px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid;
+            text-transform: uppercase;
+        }
+        
+        .user-list-item .user-info .u-role.admin { border-color: #ff4444; color: #ff4444; }
+        .user-list-item .user-info .u-role.user { border-color: #00d4ff; color: #00d4ff; }
+        .user-list-item .user-info .u-role.moderator { border-color: #ffa500; color: #ffa500; }
+        
+        .user-list-item .user-actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .user-list-item .user-actions .btn {
+            padding: 3px 10px;
+            font-size: 7px;
+            border-width: 1px;
         }
         
         /* ===== UTILIDADES ===== */
@@ -989,6 +1178,7 @@
         .log-area .log-entry.discord { color: #5865F2; }
         .log-area .log-entry.game { color: #ffd700; }
         .log-area .log-entry.pink { color: #ff69b4; }
+        .log-area .log-entry.admin { color: #ff4444; }
         
         .badge {
             display: inline-block;
@@ -1007,6 +1197,7 @@
         .badge-pink { border-color: #ff69b4; color: #ff69b4; }
         .badge-orange { border-color: #ff6b35; color: #ff6b35; }
         .badge-discord { border-color: #5865F2; color: #5865F2; }
+        .badge-admin { border-color: #ff4444; color: #ff4444; }
         
         .result-item {
             padding: 10px;
@@ -1125,31 +1316,6 @@
             border-radius: 2px;
         }
         
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .container { padding: 12px; }
-            .logo { font-size: 24px; }
-            .info-grid { grid-template-columns: 1fr; }
-            .grid-2 { grid-template-columns: 1fr; }
-            .grid-3 { grid-template-columns: 1fr; }
-            .tabs .tab { font-size: 8px; padding: 5px 8px; }
-            .stats-row { grid-template-columns: repeat(3, 1fr); }
-            .modal-mantenimiento .modal-content { padding: 20px; }
-            .modal-mantenimiento .modal-content h2 { font-size: 22px; }
-            .game-board { gap: 5px; }
-            .game-card { font-size: 20px; min-height: 50px; }
-            .auth-box { padding: 25px; }
-            .user-bar { justify-content: center; }
-        }
-        
-        @media (max-width: 480px) {
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-            .game-board { gap: 4px; }
-            .game-card { font-size: 18px; min-height: 45px; }
-            .auth-box { padding: 20px; }
-            .auth-box .auth-logo { font-size: 20px; }
-        }
-        
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1209,6 +1375,34 @@
             font-size: 9px;
             border: 1px solid rgba(0,150,255,0.1);
         }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 12px; }
+            .logo { font-size: 24px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .tabs .tab { font-size: 8px; padding: 5px 8px; }
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+            .modal-mantenimiento .modal-content { padding: 20px; }
+            .modal-mantenimiento .modal-content h2 { font-size: 22px; }
+            .game-board { gap: 5px; }
+            .game-card { font-size: 20px; min-height: 50px; }
+            .auth-box { padding: 25px; }
+            .user-bar { justify-content: center; }
+            .user-list-item { flex-direction: column; gap: 8px; align-items: stretch; }
+            .user-list-item .user-actions { justify-content: center; }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .game-board { gap: 4px; }
+            .game-card { font-size: 18px; min-height: 45px; }
+            .auth-box { padding: 20px; }
+            .auth-box .auth-logo { font-size: 20px; }
+            .admin-stats { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -1221,7 +1415,7 @@
                 <span class="pro">PRO</span>
             </div>
             <div class="auth-sub">
-                <span class="highlight">⚡ ZONAHACK ELISEO</span> • Sistema de seguridad
+                <span class="highlight">⚡ ADMINISTRACIÓN TOTAL</span> • Sistema de seguridad
             </div>
             
             <div id="authForm">
@@ -1245,7 +1439,8 @@
             
             <div class="security-badge">
                 <span>🔒 Conexión segura</span>
-                <span>⚡ Encendido</span>
+                <span>⚡ Administración</span>
+                <span>👑 Control total</span>
             </div>
         </div>
     </div>
@@ -1261,14 +1456,10 @@
                 <span class="bot">🤖 BOT</span>
                 <span class="game">🎮 GAME</span>
                 <span class="tools">🛠️ TOOLS</span>
+                <span class="admin">👑 ADMIN</span>
             </div>
             <div class="subtitle">
-                🎯 Extracción de información pública y legal
-                <span class="legal">| ⚖️ Scraping Ético</span>
-                <span class="highlight">| ⚡ MODO REAL</span>
-                <span class="discord">| 🤖 Discord Bot</span>
-                <span class="game">| 🎮 Juego</span>
-                <span class="warning">| 🛠️ Herramientas</span>
+                🎯 Extracción de información pública y legal • Sistema de Administración Total
             </div>
         </div>
         
@@ -1279,7 +1470,10 @@
                 <span class="username" id="userDisplayName">Usuario</span>
                 <span class="role-badge user" id="userRoleBadge">Usuario</span>
             </div>
-            <button class="btn-logout" onclick="logout()">🚪 Salir</button>
+            <div class="user-actions">
+                <button class="btn-admin" id="btnAdminPanel" onclick="switchTab('admin')" style="display:none;">👑 Admin</button>
+                <button class="btn-logout" onclick="logout()">🚪 Salir</button>
+            </div>
         </div>
         
         <!-- ===== TABS ===== -->
@@ -1293,6 +1487,7 @@
             <div class="tab" data-tab="domain" onclick="switchTab('domain')">🌍 Dominio</div>
             <div class="tab game-tab" data-tab="game" onclick="switchTab('game')">🎮 Juego</div>
             <div class="tab tools-tab" data-tab="tools" onclick="switchTab('tools')">🛠️ Tools</div>
+            <div class="tab admin-tab" data-tab="admin" onclick="switchTab('admin')">👑 Admin</div>
             <div class="tab" data-tab="logs" onclick="switchTab('logs')">📄 Logs</div>
         </div>
         
@@ -1330,21 +1525,24 @@
                 <div class="number pink" id="statMembers">0</div>
                 <div class="label">👥 Miembros</div>
             </div>
+            <div class="stat-item">
+                <div class="number red" id="statUsers">1</div>
+                <div class="label">👤 Usuarios</div>
+            </div>
         </div>
         
         <!-- ===== TAB: HOME ===== -->
         <div id="tab-home" class="tab-content active">
             <div class="panel">
-                <div class="panel-title">🔍 INFO HUNTER PRO - HERRAMIENTAS DE INVESTIGACIÓN</div>
+                <div class="panel-title">🔍 INFO HUNTER PRO - ADMINISTRACIÓN TOTAL</div>
                 
                 <div style="text-align:center;padding:20px;">
-                    <div style="font-size:48px;margin-bottom:10px;">🕵️</div>
-                    <h2 style="color:#ffd700;font-size:24px;">INFO HUNTER PRO</h2>
-                    <p style="opacity:0.3;font-size:13px;margin:10px 0;">Herramientas legales para extracción de información pública</p>
+                    <div style="font-size:48px;margin-bottom:10px;">👑</div>
+                    <h2 style="color:#ffd700;font-size:24px;">SISTEMA DE ADMINISTRACIÓN TOTAL</h2>
+                    <p style="opacity:0.3;font-size:13px;margin:10px 0;">Gestiona usuarios, herramientas y control total del sistema</p>
                     
                     <div style="margin:15px 0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-                        <!-- ===== BOTÓN MANTENIMIENTO - SOLO ADMIN ===== -->
-                        <button class="btn-mantenimiento" id="btnMantenimiento" onclick="abrirMantenimiento()" style="display:none;">
+                        <button class="btn-mantenimiento" id="btnMantenimiento" onclick="abrirMantenimiento()">
                             🔧 MODO MANTENIMIENTO
                         </button>
                         <button class="btn-game" onclick="switchTab('game')" style="border-color:#ffd700;color:#ffd700;padding:10px 25px;font-size:12px;border-radius:8px;cursor:pointer;background:rgba(255,215,0,0.05);border:2px solid #ffd700;font-family:'Segoe UI','Courier New',monospace;font-weight:bold;text-transform:uppercase;letter-spacing:1px;display:inline-flex;align-items:center;gap:10px;">
@@ -1353,18 +1551,21 @@
                         <button class="btn-tools" onclick="switchTab('tools')" style="border-color:#ff69b4;color:#ff69b4;padding:10px 25px;font-size:12px;border-radius:8px;cursor:pointer;background:rgba(255,105,180,0.05);border:2px solid #ff69b4;font-family:'Segoe UI','Courier New',monospace;font-weight:bold;text-transform:uppercase;letter-spacing:1px;display:inline-flex;align-items:center;gap:10px;">
                             🛠️ HERRAMIENTAS
                         </button>
+                        <button class="btn-admin" onclick="switchTab('admin')" style="border-color:#ff4444;color:#ff4444;padding:10px 25px;font-size:12px;border-radius:8px;cursor:pointer;background:rgba(255,68,68,0.05);border:2px solid #ff4444;font-family:'Segoe UI','Courier New',monospace;font-weight:bold;text-transform:uppercase;letter-spacing:1px;display:inline-flex;align-items:center;gap:10px;">
+                            👑 ADMINISTRAR
+                        </button>
                     </div>
                     
                     <div class="grid-4" style="margin:15px 0;">
+                        <div style="background:rgba(255,68,68,0.02);border:1px solid rgba(255,68,68,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('admin')">
+                            <div style="font-size:28px;">👑</div>
+                            <div style="font-size:11px;font-weight:bold;color:#ff4444;margin-top:5px;">Panel Admin</div>
+                            <div style="font-size:9px;opacity:0.2;">Gestiona usuarios y sistema</div>
+                        </div>
                         <div style="background:rgba(88,101,242,0.02);border:1px solid rgba(88,101,242,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('discord')">
                             <div style="font-size:28px;">🤖</div>
                             <div style="font-size:11px;font-weight:bold;color:#5865F2;margin-top:5px;">Discord Bot</div>
                             <div style="font-size:9px;opacity:0.2;">Conectar y extraer</div>
-                        </div>
-                        <div style="background:rgba(0,150,255,0.02);border:1px solid rgba(0,150,255,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('phone')">
-                            <div style="font-size:28px;">📱</div>
-                            <div style="font-size:11px;font-weight:bold;color:#00d4ff;margin-top:5px;">Teléfono</div>
-                            <div style="font-size:9px;opacity:0.2;">Información de número</div>
                         </div>
                         <div style="background:rgba(255,215,0,0.02);border:1px solid rgba(255,215,0,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('game')">
                             <div style="font-size:28px;">🎮</div>
@@ -1378,27 +1579,15 @@
                         </div>
                     </div>
                     
-                    <div class="flex" style="justify-content:center;">
-                        <button class="btn btn-discord" onclick="switchTab('discord')">🤖 Discord</button>
-                        <button class="btn btn-cyan" onclick="switchTab('phone')">📱 Teléfono</button>
-                        <button class="btn btn-green" onclick="switchTab('web')">🌐 Web</button>
-                        <button class="btn btn-orange" onclick="switchTab('social')">📱 Social</button>
-                        <button class="btn btn-gold" onclick="switchTab('email')">✉️ Email</button>
-                        <button class="btn btn-purple" onclick="switchTab('domain')">🌍 Dominio</button>
-                        <button class="btn btn-game" onclick="switchTab('game')">🎮 Juego</button>
-                        <button class="btn btn-tools" onclick="switchTab('tools')">🛠️ Tools</button>
-                    </div>
-                    
-                    <div style="margin-top:15px;padding:10px;background:rgba(255,215,0,0.03);border:1px solid rgba(255,215,0,0.05);border-radius:8px;">
-                        <span class="badge badge-gold">⭐ MODO PRO</span>
-                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">+30 Fuentes de información</span>
-                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🤖 Discord API REAL</span>
-                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🎮 Juego</span>
-                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🛠️ 10+ Herramientas</span>
+                    <div style="margin-top:15px;padding:10px;background:rgba(255,68,68,0.03);border:1px solid rgba(255,68,68,0.05);border-radius:8px;">
+                        <span class="badge badge-admin">👑 ADMIN TOTAL</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| Gestión de usuarios</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| Control de roles</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| Sistema completo</span>
                     </div>
                     
                     <div style="margin-top:10px;padding:8px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.05);border-radius:8px;">
-                        <span style="font-size:9px;opacity:0.4;">⚠️ Esta herramienta solo utiliza fuentes públicas y legales</span>
+                        <span style="font-size:9px;opacity:0.4;">⚠️ Solo usuarios ADMIN tienen acceso al panel de administración</span>
                     </div>
                 </div>
             </div>
@@ -1700,6 +1889,62 @@
             </div>
         </div>
         
+        <!-- ===== TAB: ADMIN ===== -->
+        <div id="tab-admin" class="tab-content">
+            <div class="panel">
+                <div class="panel-title admin-title">👑 PANEL DE ADMINISTRACIÓN</div>
+                
+                <div id="adminAccessDenied" style="display:none;text-align:center;padding:40px;">
+                    <div style="font-size:64px;">🚫</div>
+                    <h2 style="color:#ff4444;font-size:20px;margin:10px 0;">Acceso Denegado</h2>
+                    <p style="opacity:0.3;">Solo los administradores pueden acceder a este panel</p>
+                </div>
+                
+                <div id="adminContent">
+                    <!-- Estadísticas de administración -->
+                    <div class="admin-stats">
+                        <div class="admin-stat-card">
+                            <div class="number" id="adminTotalUsers">0</div>
+                            <div class="label">👤 Total Usuarios</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="number" id="adminTotalAdmins">0</div>
+                            <div class="label">👑 Administradores</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="number" id="adminTotalMods">0</div>
+                            <div class="label">🛡️ Moderadores</div>
+                        </div>
+                        <div class="admin-stat-card">
+                            <div class="number" id="adminTotalUsersCount">0</div>
+                            <div class="label">👤 Usuarios Normales</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Acciones rápidas -->
+                    <div style="margin-bottom:15px;">
+                        <div class="flex" style="justify-content:center;">
+                            <button class="btn btn-success btn-sm" onclick="openCreateUserModal()">➕ Crear Usuario</button>
+                            <button class="btn btn-danger btn-sm" onclick="confirmClearAll()">🗑️ Limpiar Todo</button>
+                            <button class="btn btn-gold btn-sm" onclick="exportUsersData()">📤 Exportar Datos</button>
+                            <button class="btn btn-cyan btn-sm" onclick="refreshAdminPanel()">🔄 Refrescar</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Lista de usuarios -->
+                    <div style="margin-top:15px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:5px;">
+                            <span style="font-size:10px;opacity:0.3;text-transform:uppercase;letter-spacing:1px;">📋 Lista de Usuarios</span>
+                            <span style="font-size:9px;opacity:0.2;" id="userCountDisplay">0 usuarios</span>
+                        </div>
+                        <div class="user-list" id="userList">
+                            <!-- Los usuarios se cargan con JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- ===== TAB: LOGS ===== -->
         <div id="tab-logs" class="tab-content">
             <div class="panel">
@@ -1714,7 +1959,7 @@
                 <div class="log-area" id="fullLogArea" style="max-height:400px;">
                     <div class="log-entry info">
                         <span class="time">[INIT]</span>
-                        <span>Info Hunter PRO iniciado - MODO REAL</span>
+                        <span>Info Hunter PRO iniciado - ADMINISTRACIÓN TOTAL</span>
                     </div>
                 </div>
             </div>
@@ -1742,6 +1987,66 @@
             <div class="modal-actions">
                 <button class="btn btn-success" onclick="saveWebhook()" style="flex:1;">💾 Guardar</button>
                 <button class="btn btn-danger" onclick="closeModal('webhookModal')" style="flex:1;">❌ Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ===== MODAL CREAR USUARIO ===== -->
+    <div class="modal" id="createUserModal">
+        <div class="modal-content">
+            <h2>➕ Crear Usuario</h2>
+            <div class="sub">Crea un nuevo usuario en el sistema</div>
+            
+            <div class="form-group">
+                <label>👤 Nombre de usuario</label>
+                <input type="text" id="newUsername" placeholder="usuario" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label>🔑 Contraseña</label>
+                <input type="password" id="newPassword" placeholder="Mínimo 4 caracteres" minlength="4">
+            </div>
+            <div class="form-group">
+                <label>🎭 Rol</label>
+                <select id="newRole">
+                    <option value="user">👤 Usuario</option>
+                    <option value="moderator">🛡️ Moderador</option>
+                    <option value="admin">👑 Administrador</option>
+                </select>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-success" onclick="createUser()">✅ Crear</button>
+                <button class="btn btn-danger" onclick="closeModal('createUserModal')">❌ Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ===== MODAL EDITAR USUARIO ===== -->
+    <div class="modal" id="editUserModal">
+        <div class="modal-content">
+            <h2>✏️ Editar Usuario</h2>
+            <div class="sub">Modifica los datos del usuario</div>
+            
+            <div class="form-group">
+                <label>👤 Nombre de usuario</label>
+                <input type="text" id="editUsername" disabled style="opacity:0.5;">
+            </div>
+            <div class="form-group">
+                <label>🔑 Nueva contraseña (dejar vacío para no cambiar)</label>
+                <input type="password" id="editPassword" placeholder="Nueva contraseña">
+            </div>
+            <div class="form-group">
+                <label>🎭 Rol</label>
+                <select id="editRole">
+                    <option value="user">👤 Usuario</option>
+                    <option value="moderator">🛡️ Moderador</option>
+                    <option value="admin">👑 Administrador</option>
+                </select>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-success" onclick="saveUserEdit()">💾 Guardar</button>
+                <button class="btn btn-danger" onclick="closeModal('editUserModal')">❌ Cancelar</button>
             </div>
         </div>
     </div>
@@ -1783,11 +2088,16 @@
     
     <script>
         // ============================================
-        // SISTEMA DE REGISTRO Y AUTENTICACIÓN
+        // SISTEMA DE ADMINISTRACIÓN COMPLETO
         // ============================================
         
         let CURRENT_USER = null;
-        let AUTH_MODE = 'register'; // 'register' o 'login'
+        let AUTH_MODE = 'register';
+        let EDITING_USER = null;
+        
+        // ============================================
+        // GESTIÓN DE USUARIOS
+        // ============================================
         
         function getUsers() {
             try {
@@ -1817,6 +2127,18 @@
             }
             CURRENT_USER = user;
         }
+        
+        function isAdmin() {
+            return CURRENT_USER && CURRENT_USER.role === 'admin';
+        }
+        
+        function isModerator() {
+            return CURRENT_USER && (CURRENT_USER.role === 'admin' || CURRENT_USER.role === 'moderator');
+        }
+        
+        // ============================================
+        // AUTENTICACIÓN
+        // ============================================
         
         function switchAuthMode() {
             const btn = document.getElementById('authBtn');
@@ -1867,11 +2189,12 @@
                     return;
                 }
                 
-                // ===== TODOS LOS USUARIOS SON ADMIN =====
+                // El primer usuario es admin, los demás son usuarios normales
+                const isFirstUser = Object.keys(users).length === 0;
                 users[username] = {
                     password: password,
                     created: new Date().toISOString(),
-                    role: 'admin'  // ✅ Todos son administradores
+                    role: isFirstUser ? 'admin' : 'user'
                 };
                 saveUsers(users);
                 
@@ -1922,26 +2245,39 @@
             if (user.role === 'admin') {
                 roleBadge.textContent = '👑 Admin';
                 roleBadge.className = 'role-badge admin';
+            } else if (user.role === 'moderator') {
+                roleBadge.textContent = '🛡️ Moderador';
+                roleBadge.className = 'role-badge moderator';
             } else {
                 roleBadge.textContent = '👤 Usuario';
                 roleBadge.className = 'role-badge user';
             }
             
-            // ===== CONTROL DEL BOTÓN MANTENIMIENTO =====
+            // Mostrar/ocultar botón de admin
+            const adminBtn = document.getElementById('btnAdminPanel');
+            if (isAdmin()) {
+                adminBtn.style.display = 'inline-block';
+            } else {
+                adminBtn.style.display = 'none';
+            }
+            
+            // Mostrar/ocultar botón de mantenimiento
             const mantenimientoBtn = document.getElementById('btnMantenimiento');
-            if (user.role === 'admin') {
+            if (isAdmin()) {
                 mantenimientoBtn.style.display = 'inline-flex';
-                addLog('🔧 Botón de mantenimiento visible (Admin)', 'gold');
             } else {
                 mantenimientoBtn.style.display = 'none';
-                addLog('🔧 Botón de mantenimiento oculto (usuario normal)', 'info');
             }
             
             addLog(`👤 Usuario ${user.username} ha iniciado sesión`, 'success');
-            addLog(`⭐ Rol: ${user.role === 'admin' ? 'Administrador' : 'Usuario'}`, 'gold');
+            addLog(`⭐ Rol: ${user.role === 'admin' ? 'Administrador' : user.role === 'moderator' ? 'Moderador' : 'Usuario'}`, 'gold');
+            
+            // Actualizar estadísticas
+            updateStats();
             
             initGame();
             loadSavedData();
+            refreshAdminPanel();
         }
         
         function logout() {
@@ -1949,7 +2285,6 @@
             document.getElementById('mainContainer').style.display = 'none';
             document.getElementById('authOverlay').classList.add('active');
             
-            // Limpiar campos
             document.getElementById('authUsername').value = '';
             document.getElementById('authPassword').value = '';
             document.getElementById('authError').style.display = 'none';
@@ -1962,21 +2297,196 @@
             addLog('👋 Sesión cerrada', 'info');
         }
         
-        function loadSavedData() {
-            const savedWebhook = localStorage.getItem('info_hunter_webhook');
-            if (savedWebhook) {
-                WEBHOOK_URL = savedWebhook;
-                document.getElementById('webhookText').textContent = '✅ Webhook configurado';
-                document.getElementById('webhookDot').className = 'status-dot green';
-                addLog('🔗 Webhook cargado desde almacenamiento', 'success');
+        // ============================================
+        // FUNCIONES DE ADMINISTRACIÓN
+        // ============================================
+        
+        function refreshAdminPanel() {
+            if (!isAdmin()) {
+                document.getElementById('adminContent').style.display = 'none';
+                document.getElementById('adminAccessDenied').style.display = 'block';
+                return;
             }
             
-            const savedToken = localStorage.getItem('discord_hunter_token');
-            if (savedToken) {
-                document.getElementById('botToken').value = savedToken;
-                addLog('🔑 Token de Discord cargado', 'info');
-                setTimeout(connectDiscord, 500);
+            document.getElementById('adminContent').style.display = 'block';
+            document.getElementById('adminAccessDenied').style.display = 'none';
+            
+            const users = getUsers();
+            const userList = document.getElementById('userList');
+            
+            // Estadísticas
+            let admins = 0, mods = 0, normals = 0;
+            Object.values(users).forEach(u => {
+                if (u.role === 'admin') admins++;
+                else if (u.role === 'moderator') mods++;
+                else normals++;
+            });
+            
+            document.getElementById('adminTotalUsers').textContent = Object.keys(users).length;
+            document.getElementById('adminTotalAdmins').textContent = admins;
+            document.getElementById('adminTotalMods').textContent = mods;
+            document.getElementById('adminTotalUsersCount').textContent = normals;
+            document.getElementById('statUsers').textContent = Object.keys(users).length;
+            
+            // Lista de usuarios
+            let html = '';
+            Object.entries(users).forEach(([username, data]) => {
+                const isCurrentUser = username === CURRENT_USER.username;
+                const roleClass = data.role || 'user';
+                const roleLabel = {
+                    'admin': '👑 Admin',
+                    'moderator': '🛡️ Moderador',
+                    'user': '👤 Usuario'
+                }[roleClass] || '👤 Usuario';
+                
+                html += `
+                    <div class="user-list-item">
+                        <div class="user-info">
+                            <div class="u-avatar">${username.charAt(0).toUpperCase()}</div>
+                            <span class="u-name">${username} ${isCurrentUser ? '⭐' : ''}</span>
+                            <span class="u-role ${roleClass}">${roleLabel}</span>
+                            ${isCurrentUser ? '<span style="font-size:8px;opacity:0.3;">(tú)</span>' : ''}
+                        </div>
+                        <div class="user-actions">
+                            ${!isCurrentUser ? `
+                                <button class="btn btn-cyan btn-sm" onclick="openEditUserModal('${username}')">✏️</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteUser('${username}')">🗑️</button>
+                            ` : `
+                                <span style="font-size:7px;opacity:0.2;">No puedes editarte a ti mismo</span>
+                            `}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            userList.innerHTML = html;
+            document.getElementById('userCountDisplay').textContent = `${Object.keys(users).length} usuarios`;
+        }
+        
+        function openCreateUserModal() {
+            if (!isAdmin()) return;
+            document.getElementById('newUsername').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('newRole').value = 'user';
+            document.getElementById('createUserModal').classList.add('active');
+        }
+        
+        function createUser() {
+            const username = document.getElementById('newUsername').value.trim();
+            const password = document.getElementById('newPassword').value.trim();
+            const role = document.getElementById('newRole').value;
+            
+            if (!username || username.length < 2) {
+                alert('⚠️ El usuario debe tener al menos 2 caracteres');
+                return;
             }
+            
+            if (!password || password.length < 4) {
+                alert('⚠️ La contraseña debe tener al menos 4 caracteres');
+                return;
+            }
+            
+            const users = getUsers();
+            if (users[username]) {
+                alert('⚠️ Este usuario ya existe');
+                return;
+            }
+            
+            users[username] = {
+                password: password,
+                created: new Date().toISOString(),
+                role: role
+            };
+            saveUsers(users);
+            
+            closeModal('createUserModal');
+            refreshAdminPanel();
+            updateStats();
+            addLog(`👑 Administrador creó usuario: ${username} (${role})`, 'admin');
+        }
+        
+        function openEditUserModal(username) {
+            if (!isAdmin()) return;
+            const users = getUsers();
+            if (!users[username]) return;
+            
+            EDITING_USER = username;
+            document.getElementById('editUsername').value = username;
+            document.getElementById('editPassword').value = '';
+            document.getElementById('editRole').value = users[username].role || 'user';
+            document.getElementById('editUserModal').classList.add('active');
+        }
+        
+        function saveUserEdit() {
+            if (!EDITING_USER) return;
+            
+            const password = document.getElementById('editPassword').value.trim();
+            const role = document.getElementById('editRole').value;
+            
+            const users = getUsers();
+            if (!users[EDITING_USER]) {
+                alert('❌ Usuario no encontrado');
+                return;
+            }
+            
+            if (password) {
+                users[EDITING_USER].password = password;
+            }
+            users[EDITING_USER].role = role;
+            saveUsers(users);
+            
+            closeModal('editUserModal');
+            refreshAdminPanel();
+            updateStats();
+            addLog(`👑 Usuario ${EDITING_USER} actualizado (rol: ${role})`, 'admin');
+            EDITING_USER = null;
+        }
+        
+        function deleteUser(username) {
+            if (!isAdmin()) return;
+            if (username === CURRENT_USER.username) {
+                alert('❌ No puedes eliminarte a ti mismo');
+                return;
+            }
+            
+            if (!confirm(`⚠️ ¿Estás seguro de eliminar al usuario "${username}"?`)) return;
+            
+            const users = getUsers();
+            delete users[username];
+            saveUsers(users);
+            
+            refreshAdminPanel();
+            updateStats();
+            addLog(`👑 Usuario ${username} eliminado por administrador`, 'admin');
+        }
+        
+        function confirmClearAll() {
+            if (!isAdmin()) return;
+            if (!confirm('⚠️ ¿Estás seguro de ELIMINAR TODOS LOS USUARIOS? (excepto tú)')) return;
+            if (!confirm('⚠️ CONFIRMA: Esta acción no se puede deshacer')) return;
+            
+            const users = getUsers();
+            const currentUser = CURRENT_USER.username;
+            const newUsers = {};
+            newUsers[currentUser] = users[currentUser];
+            saveUsers(newUsers);
+            
+            refreshAdminPanel();
+            updateStats();
+            addLog('👑 Todos los usuarios eliminados (excepto administrador)', 'admin');
+        }
+        
+        function exportUsersData() {
+            if (!isAdmin()) return;
+            const users = getUsers();
+            const data = JSON.stringify(users, null, 2);
+            downloadFile(data, `usuarios_${new Date().toISOString().slice(0,10)}.json`, 'application/json');
+            addLog('📤 Datos de usuarios exportados', 'admin');
+        }
+        
+        function updateStats() {
+            const users = getUsers();
+            document.getElementById('statUsers').textContent = Object.keys(users).length;
         }
         
         // ============================================
@@ -2001,6 +2511,18 @@
             if (tabEl) {
                 tabEl.classList.add('active');
             }
+            
+            if (tab === 'admin') {
+                refreshAdminPanel();
+            }
+        }
+        
+        // ============================================
+        // FUNCIONES DE MODALES
+        // ============================================
+        
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
         }
         
         // ============================================
@@ -2008,9 +2530,13 @@
         // ============================================
         
         function abrirMantenimiento() {
+            if (!isAdmin()) {
+                alert('⚠️ Solo los administradores pueden acceder al modo mantenimiento');
+                return;
+            }
             document.getElementById('modalMantenimiento').classList.add('active');
             document.body.style.overflow = 'hidden';
-            addLog('🔧 Modo mantenimiento activado', 'orange');
+            addLog('🔧 Modo mantenimiento activado', 'admin');
             
             const img = document.getElementById('gifMantenimiento');
             if (img) {
@@ -2029,6 +2555,9 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 cerrarMantenimiento();
+                closeModal('webhookModal');
+                closeModal('createUserModal');
+                closeModal('editUserModal');
             }
         });
         
@@ -2550,10 +3079,6 @@
             document.getElementById('webhookInput').value = WEBHOOK_URL;
         }
         
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-        }
-        
         function saveWebhook() {
             const url = document.getElementById('webhookInput').value.trim();
             if (url && url.startsWith('https://discord.com/api/webhooks/')) {
@@ -2582,7 +3107,8 @@
                 pink: 0xff69b4,
                 green: 0x00ff88,
                 discord: 0x5865F2,
-                game: 0xffd700
+                game: 0xffd700,
+                admin: 0xff4444
             };
             
             const embed = {
@@ -2590,7 +3116,7 @@
                 description: message.substring(0, 2000),
                 color: colors[type] || 0x00d4ff,
                 timestamp: new Date().toISOString(),
-                footer: { text: 'ZONAHACK ELISEO • PRO' }
+                footer: { text: 'ZONAHACK ELISEO • ADMIN TOTAL' }
             };
             
             try {
@@ -3679,11 +4205,31 @@
         }
         
         // ============================================
+        // FUNCIONES DE CARGA DE DATOS
+        // ============================================
+        
+        function loadSavedData() {
+            const savedWebhook = localStorage.getItem('info_hunter_webhook');
+            if (savedWebhook) {
+                WEBHOOK_URL = savedWebhook;
+                document.getElementById('webhookText').textContent = '✅ Webhook configurado';
+                document.getElementById('webhookDot').className = 'status-dot green';
+                addLog('🔗 Webhook cargado desde almacenamiento', 'success');
+            }
+            
+            const savedToken = localStorage.getItem('discord_hunter_token');
+            if (savedToken) {
+                document.getElementById('botToken').value = savedToken;
+                addLog('🔑 Token de Discord cargado', 'info');
+                setTimeout(connectDiscord, 500);
+            }
+        }
+        
+        // ============================================
         // INICIALIZACIÓN
         // ============================================
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Verificar sesión
             const session = getCurrentUser();
             if (session) {
                 enterApp(session);
@@ -3692,7 +4238,6 @@
                 document.getElementById('authOverlay').classList.add('active');
             }
             
-            // Placeholders
             document.getElementById('phoneInput').placeholder = '+34 600 000 000';
             document.getElementById('urlInput').placeholder = 'https://ejemplo.com';
             document.getElementById('socialInput').placeholder = 'usuario';
@@ -3700,14 +4245,16 @@
             document.getElementById('domainInput').placeholder = 'ejemplo.com';
             document.getElementById('guildIdInput').placeholder = 'ID REAL del servidor Discord...';
             
-            console.log('🔍 Info Hunter PRO - ZONAHACK ELISEO');
-            console.log('📡 Sistema de registro y autenticación');
-            console.log('⭐ MODO REAL: 30+ funciones con datos REALES');
-            console.log('🤖 Discord Bot - Conexión REAL con API oficial');
-            console.log('🎮 Juego de memorama incluido');
+            console.log('🔍 INFO HUNTER PRO - ADMINISTRACIÓN TOTAL');
+            console.log('👑 Sistema de administración completo');
+            console.log('📡 Gestión de usuarios y roles');
+            console.log('⭐ MODO REAL: 30+ funciones');
+            console.log('🤖 Discord Bot - Conexión REAL');
+            console.log('🎮 Juego de memorama');
             console.log('🛠️ 10+ Herramientas extra');
             console.log('⚖️ Uso ético y responsable');
         });
     </script>
 </body>
 </html>
+    
