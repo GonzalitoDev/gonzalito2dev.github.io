@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔍 INFO HUNTER PRO - ZONAHACK ELISEO</title>
     <style>
+        /* ===== ESTILOS EXISTENTES ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         @keyframes glitch {
@@ -68,6 +69,7 @@
             z-index: 0;
         }
         
+        /* ===== HEADER ===== */
         .header {
             text-align: center;
             margin-bottom: 20px;
@@ -102,6 +104,7 @@
         .subtitle .warning { color: #ffa500; font-weight: bold; }
         .subtitle .discord { color: #5865F2; font-weight: bold; }
         
+        /* ===== TABS ===== */
         .tabs {
             display: flex;
             gap: 3px;
@@ -140,6 +143,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* ===== STATS ===== */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -187,6 +191,7 @@
             letter-spacing: 1px;
         }
         
+        /* ===== PANELES ===== */
         .panel {
             background: rgba(0,150,255,0.02);
             border: 1px solid rgba(0,150,255,0.08);
@@ -210,6 +215,7 @@
         
         .panel-title.discord-title { color: #5865F2; }
         
+        /* ===== BOTONES ===== */
         .btn {
             padding: 10px 20px;
             border: 2px solid #00d4ff;
@@ -259,7 +265,149 @@
         .btn-green:hover:not(:disabled) { background: #00ff88; color: #0a0a12; }
         .btn-discord { border-color: #5865F2; color: #5865F2; }
         .btn-discord:hover:not(:disabled) { background: #5865F2; color: #0a0a12; }
+
+        /* ===== NUEVO BOTÓN DE MANTENIMIENTO ===== */
+        .btn-mantenimiento {
+            border-color: #ff6b35;
+            color: #ff6b35;
+            background: rgba(255,107,53,0.05);
+            padding: 8px 16px;
+            font-size: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
         
+        .btn-mantenimiento:hover {
+            background: #ff6b35;
+            color: #0a0a12;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255,107,53,0.2);
+        }
+
+        /* ===== MODAL DE MANTENIMIENTO ===== */
+        .modal-mantenimiento {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-mantenimiento.active {
+            display: flex;
+            animation: fadeIn 0.5s;
+        }
+        
+        .modal-mantenimiento .modal-content {
+            background: #0a0a12;
+            border: 2px solid #ff6b35;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 0 80px rgba(255,107,53,0.1);
+        }
+        
+        .modal-mantenimiento .modal-content .gif-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(255,107,53,0.2);
+        }
+        
+        .modal-mantenimiento .modal-content .gif-container img {
+            width: 100%;
+            display: block;
+        }
+        
+        .modal-mantenimiento .modal-content h2 {
+            font-size: 28px;
+            color: #ff6b35;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .modal-mantenimiento .modal-content .sub {
+            font-size: 14px;
+            opacity: 0.5;
+            margin-bottom: 5px;
+        }
+        
+        .modal-mantenimiento .modal-content .mensaje {
+            font-size: 13px;
+            opacity: 0.7;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        
+        .modal-mantenimiento .modal-content .btn-cerrar {
+            border-color: #ff6b35;
+            color: #ff6b35;
+            background: transparent;
+            padding: 10px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+        
+        .modal-mantenimiento .modal-content .btn-cerrar:hover {
+            background: #ff6b35;
+            color: #0a0a12;
+            transform: scale(1.05);
+        }
+        
+        .modal-mantenimiento .modal-content .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(255,107,53,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .modal-mantenimiento .modal-content .progress-bar .fill {
+            height: 100%;
+            background: #ff6b35;
+            width: 0%;
+            transition: width 0.3s;
+            animation: progressAnim 3s ease-in-out infinite;
+        }
+        
+        @keyframes progressAnim {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 0%; }
+        }
+
+        /* ===== OTROS ELEMENTOS ===== */
         .flex { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .mb-10 { margin-bottom: 10px; }
         .mt-10 { margin-top: 10px; }
@@ -313,14 +461,6 @@
             font-family: 'Segoe UI', 'Courier New', monospace;
             word-break: break-all;
         }
-        
-        .info-card .value.green { color: #00ff88; }
-        .info-card .value.orange { color: #ff6b35; }
-        .info-card .value.gold { color: #ffd700; }
-        .info-card .value.purple { color: #9b59b6; }
-        .info-card .value.pink { color: #ff69b4; }
-        .info-card .value.red { color: #ff4444; }
-        .info-card .value.discord { color: #5865F2; }
         
         .log-area {
             margin-top: 15px;
@@ -495,10 +635,6 @@
             z-index: 1;
         }
         
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
-        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-        
         .server-item {
             padding: 8px 12px;
             margin: 4px 0;
@@ -591,6 +727,8 @@
             .grid-2 { grid-template-columns: 1fr; }
             .tabs .tab { font-size: 8px; padding: 5px 8px; }
             .stats-row { grid-template-columns: repeat(3, 1fr); }
+            .modal-mantenimiento .modal-content { padding: 20px; }
+            .modal-mantenimiento .modal-content h2 { font-size: 22px; }
         }
         
         @media (max-width: 480px) {
@@ -619,7 +757,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
+        <!-- ===== HEADER ===== -->
         <div class="header">
             <div class="logo">
                 <span class="info">🔍 INFO</span>
@@ -629,15 +767,15 @@
                 <span class="bot">🤖 BOT</span>
             </div>
             <div class="subtitle">
-                🎯 Extracción de información REAL de Discord
-                <span class="legal">| ⚖️ API Oficial</span>
+                🎯 Extracción de información pública y legal
+                <span class="legal">| ⚖️ Scraping Ético</span>
                 <span class="highlight">| ⚡ MODO REAL</span>
                 <span class="discord">| 🤖 Discord Bot</span>
                 <span class="warning">| 🌐 Proxy CORS</span>
             </div>
         </div>
         
-        <!-- TABS -->
+        <!-- ===== TABS ===== -->
         <div class="tabs">
             <div class="tab active" data-tab="home">🏠 Inicio</div>
             <div class="tab discord-tab" data-tab="discord">🤖 Discord</div>
@@ -649,7 +787,7 @@
             <div class="tab" data-tab="logs">📄 Logs</div>
         </div>
         
-        <!-- STATS -->
+        <!-- ===== STATS ===== -->
         <div class="stats-row">
             <div class="stat-item">
                 <div class="number" id="statSearches">0</div>
@@ -685,21 +823,28 @@
             </div>
         </div>
         
-        <!-- TAB: HOME -->
+        <!-- ===== TAB: HOME ===== -->
         <div id="tab-home" class="tab-content active">
             <div class="panel">
-                <div class="panel-title">🔍 INFO HUNTER PRO - EXTRACCIÓN REAL</div>
+                <div class="panel-title">🔍 INFO HUNTER PRO - HERRAMIENTAS DE INVESTIGACIÓN</div>
                 
                 <div style="text-align:center;padding:20px;">
                     <div style="font-size:48px;margin-bottom:10px;">🕵️</div>
                     <h2 style="color:#ffd700;font-size:24px;">INFO HUNTER PRO</h2>
-                    <p style="opacity:0.3;font-size:13px;margin:10px 0;">Extracción REAL de información desde Discord API</p>
+                    <p style="opacity:0.3;font-size:13px;margin:10px 0;">Herramientas legales para extracción de información pública</p>
+                    
+                    <div class="flex" style="justify-content:center;margin:15px 0;">
+                        <!-- ===== NUEVO BOTÓN DE MANTENIMIENTO ===== -->
+                        <button class="btn-mantenimiento" onclick="abrirMantenimiento()">
+                            🔧 MANTENIMIENTO
+                        </button>
+                    </div>
                     
                     <div class="grid-4" style="margin:15px 0;">
                         <div style="background:rgba(88,101,242,0.02);border:1px solid rgba(88,101,242,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('discord')">
                             <div style="font-size:28px;">🤖</div>
                             <div style="font-size:11px;font-weight:bold;color:#5865F2;margin-top:5px;">Discord Bot</div>
-                            <div style="font-size:9px;opacity:0.2;">API Oficial REAL</div>
+                            <div style="font-size:9px;opacity:0.2;">Conectar y extraer</div>
                         </div>
                         <div style="background:rgba(0,150,255,0.02);border:1px solid rgba(0,150,255,0.05);border-radius:8px;padding:15px;cursor:pointer;" onclick="switchTab('phone')">
                             <div style="font-size:28px;">📱</div>
@@ -719,7 +864,7 @@
                     </div>
                     
                     <div class="flex" style="justify-content:center;">
-                        <button class="btn btn-discord" onclick="switchTab('discord')">🤖 Discord REAL</button>
+                        <button class="btn btn-discord" onclick="switchTab('discord')">🤖 Discord</button>
                         <button class="btn btn-cyan" onclick="switchTab('phone')">📱 Teléfono</button>
                         <button class="btn btn-green" onclick="switchTab('web')">🌐 Web</button>
                         <button class="btn btn-orange" onclick="switchTab('social')">📱 Social</button>
@@ -736,13 +881,13 @@
                     </div>
                     
                     <div style="margin-top:10px;padding:8px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.05);border-radius:8px;">
-                        <span style="font-size:9px;opacity:0.4;">⚠️ Esta herramienta utiliza la API oficial de Discord</span>
+                        <span style="font-size:9px;opacity:0.4;">⚠️ Esta herramienta solo utiliza fuentes públicas y legales</span>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- TAB: DISCORD BOT REAL -->
+        <!-- ===== TAB: DISCORD ===== -->
         <div id="tab-discord" class="tab-content">
             <div class="panel">
                 <div class="panel-title discord-title">🤖 DISCORD BOT - CONEXIÓN REAL</div>
@@ -818,7 +963,7 @@
             </div>
         </div>
         
-        <!-- TAB: PHONE -->
+        <!-- ===== TAB: PHONE ===== -->
         <div id="tab-phone" class="tab-content">
             <div class="panel">
                 <div class="panel-title">📱 INFORMACIÓN DE TELÉFONO</div>
@@ -844,7 +989,7 @@
             </div>
         </div>
         
-        <!-- TAB: WEB SCRAPING -->
+        <!-- ===== TAB: WEB ===== -->
         <div id="tab-web" class="tab-content">
             <div class="panel">
                 <div class="panel-title">🌐 WEB SCRAPING</div>
@@ -865,7 +1010,7 @@
             </div>
         </div>
         
-        <!-- TAB: SOCIAL -->
+        <!-- ===== TAB: SOCIAL ===== -->
         <div id="tab-social" class="tab-content">
             <div class="panel">
                 <div class="panel-title">📱 REDES SOCIALES</div>
@@ -894,7 +1039,7 @@
             </div>
         </div>
         
-        <!-- TAB: EMAIL -->
+        <!-- ===== TAB: EMAIL ===== -->
         <div id="tab-email" class="tab-content">
             <div class="panel">
                 <div class="panel-title">✉️ INFORMACIÓN DE EMAIL</div>
@@ -914,7 +1059,7 @@
             </div>
         </div>
         
-        <!-- TAB: DOMAIN -->
+        <!-- ===== TAB: DOMAIN ===== -->
         <div id="tab-domain" class="tab-content">
             <div class="panel">
                 <div class="panel-title">🌍 INFORMACIÓN DE DOMINIO</div>
@@ -934,7 +1079,7 @@
             </div>
         </div>
         
-        <!-- TAB: LOGS -->
+        <!-- ===== TAB: LOGS ===== -->
         <div id="tab-logs" class="tab-content">
             <div class="panel">
                 <div class="panel-title">📄 LOGS DEL SISTEMA</div>
@@ -954,7 +1099,7 @@
             </div>
         </div>
         
-        <!-- WEBHOOK STATUS -->
+        <!-- ===== WEBHOOK STATUS ===== -->
         <div class="webhook-status">
             <span class="status-dot blue" id="webhookDot"></span>
             <span id="webhookText">🔍 Sistema listo</span>
@@ -964,7 +1109,7 @@
         </div>
     </div>
     
-    <!-- MODAL: Webhook -->
+    <!-- ===== MODAL: Webhook ===== -->
     <div class="modal" id="webhookModal">
         <div class="modal-content">
             <h2>🔗 Webhook Discord</h2>
@@ -980,7 +1125,67 @@
         </div>
     </div>
     
+    <!-- ===== MODAL: MANTENIMIENTO CON GIF ===== -->
+    <div class="modal-mantenimiento" id="modalMantenimiento">
+        <div class="modal-content">
+            <!-- GIF de Jesús bailando desde Pinterest -->
+            <div class="gif-container">
+                <img src="https://i.pinimg.com/originals/2e/1a/dc/2e1adc8e32ee1fd8d9f0b305416d83c2.gif" 
+                     alt="Jesús bailando - Modo mantenimiento"
+                     loading="lazy">
+            </div>
+            
+            <h2>🔧 MODO MANTENIMIENTO</h2>
+            <div class="sub">Estamos trabajando para mejorar la herramienta</div>
+            
+            <div class="progress-bar">
+                <div class="fill"></div>
+            </div>
+            
+            <p class="mensaje">
+                ⏳ Estamos realizando mejoras en el sistema.<br>
+                <span style="opacity:0.5;font-size:12px;">No te preocupes, Jesús está bailando mientras tanto 🙏</span>
+            </p>
+            
+            <div style="margin-top:10px;padding:8px;background:rgba(255,107,53,0.05);border-radius:6px;border:1px solid rgba(255,107,53,0.05);">
+                <span style="font-size:9px;opacity:0.3;">⏰ Tiempo estimado: unos minutos</span>
+            </div>
+            
+            <button class="btn-cerrar" onclick="cerrarMantenimiento()">✖ Cerrar</button>
+        </div>
+    </div>
+    
     <script>
+        // ============================================
+        // FUNCIONES DEL MODAL DE MANTENIMIENTO
+        // ============================================
+        
+        function abrirMantenimiento() {
+            document.getElementById('modalMantenimiento').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            addLog('🔧 Modo mantenimiento activado', 'orange');
+        }
+        
+        function cerrarMantenimiento() {
+            document.getElementById('modalMantenimiento').classList.remove('active');
+            document.body.style.overflow = '';
+            addLog('✅ Modo mantenimiento cerrado', 'success');
+        }
+        
+        // Cerrar con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                cerrarMantenimiento();
+            }
+        });
+        
+        // Cerrar click fuera del modal
+        document.getElementById('modalMantenimiento').addEventListener('click', function(e) {
+            if (e.target === this) {
+                cerrarMantenimiento();
+            }
+        });
+
         // ============================================
         // CONFIGURACIÓN
         // ============================================
@@ -1213,7 +1418,6 @@
             
             let url = `${DISCORD_API}${endpoint}`;
             
-            // Si el proxy está activado, usamos el proxy
             if (USE_PROXY) {
                 const proxy = CORS_PROXIES[CURRENT_PROXY % CORS_PROXIES.length];
                 url = `${proxy}${url}`;
@@ -1231,14 +1435,12 @@
                 
                 const response = await fetch(url, options);
                 
-                // Si falla con un proxy, intentar con el siguiente
                 if (!response.ok && USE_PROXY) {
                     CURRENT_PROXY++;
                     addLog(`🔄 Cambiando a siguiente proxy...`, 'info');
                     return await discordRequest(endpoint, method, body);
                 }
                 
-                // Si falla con proxy, intentar sin proxy
                 if (!response.ok && USE_PROXY) {
                     USE_PROXY = false;
                     document.getElementById('proxyBtn').textContent = '🌐 Proxy: OFF';
@@ -1252,7 +1454,6 @@
                 if (!response.ok) {
                     addLog(`❌ Error Discord ${response.status}: ${data.message || 'Desconocido'}`, 'error');
                     
-                    // Si es error 401, el token es inválido
                     if (response.status === 401) {
                         addLog('⚠️ Token inválido o expirado', 'error');
                         document.getElementById('discordError').style.display = 'block';
@@ -1264,7 +1465,6 @@
                 
                 return data;
             } catch (error) {
-                // Si hay error de CORS, activar proxy automáticamente
                 if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
                     if (!USE_PROXY) {
                         USE_PROXY = true;
@@ -1299,7 +1499,6 @@
             document.getElementById('discordError').style.display = 'none';
             addLog('🤖 Conectando a Discord API REAL...', 'discord');
             
-            // Intentar conexión con proxy si está activado
             if (!USE_PROXY) {
                 addLog('💡 Si hay error CORS, activa el proxy', 'info');
             }
@@ -1324,7 +1523,6 @@
             addLog(`✅ Conectado REAL como ${data.username}#${data.discriminator}`, 'success');
             addLog(`🆔 ID: ${data.id}`, 'info');
             
-            // Obtener servidores REALES
             const guilds = await discordRequest('/users/@me/guilds');
             if (guilds) {
                 BOT_GUILDS = guilds;
@@ -1332,14 +1530,12 @@
                 document.getElementById('statServers').textContent = guilds.length;
                 addLog(`📋 ${guilds.length} servidores REALES cargados`, 'info');
                 
-                // Mostrar lista de servidores
                 if (guilds.length > 0) {
                     guilds.forEach(g => {
                         addLog(`🏰 ${g.name} (${g.id})`, 'discord');
                     });
                 }
                 
-                // Contar miembros totales REALES
                 let totalMembers = 0;
                 for (const guild of guilds) {
                     try {
@@ -1354,7 +1550,6 @@
                 document.getElementById('statMembers').textContent = totalMembers;
             }
             
-            // Guardar token
             localStorage.setItem('discord_hunter_token', BOT_TOKEN);
         }
         
@@ -2420,3 +2615,4 @@
     </script>
 </body>
 </html>
+    
