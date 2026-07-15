@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔍 INFO HUNTER PRO - ZONAHACK ELISEO</title>
     <style>
+        /* ===== RESET Y BASE ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         @keyframes glitch {
@@ -38,10 +39,19 @@
             50% { transform: translateY(-10px); }
         }
         
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0,150,255,0.2), inset 0 0 20px rgba(0,150,255,0.05); }
+            50% { box-shadow: 0 0 40px rgba(0,150,255,0.4), inset 0 0 40px rgba(0,150,255,0.1); }
         }
         
         body {
@@ -59,6 +69,7 @@
         ::-webkit-scrollbar-track { background: rgba(0,150,255,0.02); }
         ::-webkit-scrollbar-thumb { background: rgba(0,150,255,0.2); border-radius: 2px; }
         
+        /* ===== CONTENEDOR PRINCIPAL ===== */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -69,6 +80,7 @@
             box-shadow: 0 0 80px rgba(0,150,255,0.05);
             position: relative;
             overflow: hidden;
+            animation: glowPulse 4s infinite;
         }
         
         .container::before {
@@ -85,6 +97,7 @@
             z-index: 0;
         }
         
+        /* ===== HEADER ===== */
         .header {
             text-align: center;
             margin-bottom: 20px;
@@ -122,6 +135,254 @@
         .subtitle .discord { color: #5865F2; font-weight: bold; }
         .subtitle .game { color: #ffd700; font-weight: bold; }
         
+        /* ===== SISTEMA DE REGISTRO ===== */
+        .auth-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.97);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .auth-overlay.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .auth-box {
+            background: #0a0a12;
+            border: 2px solid #00d4ff;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 440px;
+            width: 100%;
+            position: relative;
+            animation: slideDown 0.5s ease;
+            box-shadow: 0 0 60px rgba(0,150,255,0.05);
+        }
+        
+        .auth-box .auth-logo {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+        
+        .auth-box .auth-logo .info { color: #00d4ff; }
+        .auth-box .auth-logo .hunter { color: #ff6b35; }
+        .auth-box .auth-logo .pro { color: #ffd700; }
+        
+        .auth-box .auth-sub {
+            text-align: center;
+            font-size: 11px;
+            opacity: 0.3;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .auth-box .auth-sub .highlight { color: #ffd700; opacity: 1; }
+        
+        .auth-box .form-group {
+            margin-bottom: 14px;
+        }
+        
+        .auth-box .form-group label {
+            display: block;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.3;
+            margin-bottom: 4px;
+        }
+        
+        .auth-box .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0,150,255,0.05);
+            border: 1px solid rgba(0,150,255,0.15);
+            border-radius: 10px;
+            color: #00d4ff;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .auth-box .form-group input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 30px rgba(0,150,255,0.05);
+            background: rgba(0,150,255,0.08);
+        }
+        
+        .auth-box .form-group input::placeholder {
+            opacity: 0.2;
+        }
+        
+        .auth-box .btn-auth {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #00d4ff;
+            border-radius: 10px;
+            background: transparent;
+            color: #00d4ff;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 5px;
+        }
+        
+        .auth-box .btn-auth:hover {
+            background: #00d4ff;
+            color: #0a0a12;
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(0,150,255,0.15);
+        }
+        
+        .auth-box .btn-auth:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .auth-box .auth-switch {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 11px;
+            opacity: 0.3;
+        }
+        
+        .auth-box .auth-switch a {
+            color: #ffd700;
+            text-decoration: none;
+            cursor: pointer;
+            opacity: 1;
+            transition: all 0.3s;
+        }
+        
+        .auth-box .auth-switch a:hover {
+            text-decoration: underline;
+        }
+        
+        .auth-box .auth-error {
+            color: #ff4444;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+            padding: 8px;
+            background: rgba(255,68,68,0.05);
+            border-radius: 6px;
+            border: 1px solid rgba(255,68,68,0.05);
+        }
+        
+        .auth-box .auth-success {
+            color: #00ff88;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+            padding: 8px;
+            background: rgba(0,255,136,0.05);
+            border-radius: 6px;
+            border: 1px solid rgba(0,255,136,0.05);
+        }
+        
+        .auth-box .security-badge {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 8px;
+            opacity: 0.15;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* ===== INDICADOR DE SESIÓN ===== */
+        .user-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 8px 15px;
+            background: rgba(0,150,255,0.02);
+            border: 1px solid rgba(0,150,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .user-bar .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+        }
+        
+        .user-bar .user-info .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff, #ff6b35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #0a0a12;
+        }
+        
+        .user-bar .user-info .username {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .user-bar .user-info .role-badge {
+            font-size: 8px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            border: 1px solid;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .user-bar .user-info .role-badge.admin { border-color: #ff4444; color: #ff4444; }
+        .user-bar .user-info .role-badge.user { border-color: #00d4ff; color: #00d4ff; }
+        
+        .user-bar .btn-logout {
+            padding: 5px 14px;
+            border: 1px solid rgba(255,68,68,0.3);
+            border-radius: 6px;
+            background: transparent;
+            color: #ff4444;
+            font-size: 9px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .user-bar .btn-logout:hover {
+            background: #ff4444;
+            color: #0a0a12;
+        }
+        
+        /* ===== TABS ===== */
         .tabs {
             display: flex;
             gap: 3px;
@@ -156,14 +417,10 @@
         .tab.tools-tab { color: #ff69b4; }
         .tab.tools-tab.active { border-bottom-color: #ff69b4; }
         
-        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: block; }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
+        /* ===== STATS ===== */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -181,6 +438,7 @@
             text-align: center;
             transition: all 0.3s;
             animation: neon 2s infinite;
+            cursor: default;
         }
         
         .stat-item:hover {
@@ -211,6 +469,7 @@
             letter-spacing: 1px;
         }
         
+        /* ===== PANELES ===== */
         .panel {
             background: rgba(0,150,255,0.02);
             border: 1px solid rgba(0,150,255,0.08);
@@ -236,6 +495,7 @@
         .panel-title.game-title { color: #ffd700; }
         .panel-title.tools-title { color: #ff69b4; }
         
+        /* ===== BOTONES ===== */
         .btn {
             padding: 10px 20px;
             border: 2px solid #00d4ff;
@@ -315,7 +575,59 @@
             transform: scale(1.05);
             box-shadow: 0 0 40px rgba(255,107,53,0.3);
         }
-
+        
+        /* ===== MODALES ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal.active { display: flex; animation: fadeIn 0.3s ease; }
+        
+        .modal-content {
+            background: #0a0a12;
+            border: 2px solid #00d4ff;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-content h2 {
+            font-size: 24px;
+            color: #00d4ff;
+            margin-bottom: 5px;
+        }
+        
+        .modal-content .sub {
+            font-size: 11px;
+            opacity: 0.3;
+            margin-bottom: 15px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .modal-actions .btn { flex: 1; min-width: 100px; }
+        
+        /* ===== MODAL MANTENIMIENTO ===== */
         .modal-mantenimiento {
             display: none;
             position: fixed;
@@ -333,7 +645,7 @@
         
         .modal-mantenimiento.active {
             display: flex;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.5s ease;
         }
         
         .modal-mantenimiento .modal-content {
@@ -432,8 +744,8 @@
             transition: width 0.3s;
             animation: progressAnim 3s ease-in-out infinite;
         }
-
-        /* ===== ESTILOS DEL JUEGO ===== */
+        
+        /* ===== JUEGO ===== */
         .game-container {
             max-width: 500px;
             margin: 0 auto;
@@ -473,6 +785,7 @@
         .game-card.flipped {
             background: rgba(255,215,0,0.2);
             border-color: #ffd700;
+            transform: rotateY(180deg);
         }
         
         .game-card.matched {
@@ -480,6 +793,7 @@
             border-color: #00ff88;
             cursor: default;
             opacity: 0.6;
+            transform: rotateY(180deg);
         }
         
         .game-card.matched:hover {
@@ -534,8 +848,8 @@
             font-size: 24px;
             margin: 10px 0;
         }
-
-        /* ===== ESTILOS DE HERRAMIENTAS ===== */
+        
+        /* ===== HERRAMIENTAS ===== */
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -562,8 +876,7 @@
         .tool-card .icon { font-size: 32px; margin-bottom: 10px; }
         .tool-card .name { font-size: 11px; font-weight: bold; color: #ff69b4; }
         .tool-card .desc { font-size: 9px; opacity: 0.3; margin-top: 5px; }
-
-        /* ===== RESULTADOS DE HERRAMIENTAS ===== */
+        
         .tool-result {
             margin-top: 15px;
             padding: 15px;
@@ -573,7 +886,7 @@
             display: none;
         }
         
-        .tool-result.active { display: block; }
+        .tool-result.active { display: block; animation: fadeIn 0.3s ease; }
         
         .tool-result .result-item {
             padding: 8px;
@@ -582,7 +895,8 @@
             border-radius: 4px;
             border-left: 2px solid #ff69b4;
         }
-
+        
+        /* ===== UTILIDADES ===== */
         .flex { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .mb-10 { margin-bottom: 10px; }
         .mt-10 { margin-top: 10px; }
@@ -724,63 +1038,6 @@
             margin-top: 2px;
         }
         
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .modal.active { display: flex; }
-        
-        .modal-content {
-            background: #0a0a12;
-            border: 2px solid #00d4ff;
-            border-radius: 16px;
-            padding: 30px;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .modal-content h2 {
-            font-size: 24px;
-            color: #00d4ff;
-            margin-bottom: 5px;
-        }
-        
-        .modal-content .sub {
-            font-size: 11px;
-            opacity: 0.3;
-            margin-bottom: 15px;
-        }
-        
-        .modal-actions {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .modal-actions .btn { flex: 1; min-width: 100px; }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin: 10px 0;
-        }
-        
         .status-dot {
             width: 8px;
             height: 8px;
@@ -811,6 +1068,93 @@
             flex-wrap: wrap;
             position: relative;
             z-index: 1;
+        }
+        
+        .solution-box {
+            background: rgba(255,165,0,0.05);
+            border: 1px solid rgba(255,165,0,0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+        
+        .solution-box h4 {
+            color: #ffa500;
+            margin-bottom: 6px;
+            font-size: 11px;
+        }
+        
+        .solution-box li {
+            opacity: 0.7;
+            margin: 3px 0;
+            font-size: 10px;
+            list-style: none;
+        }
+        
+        .solution-box li.success { color: #00ff88; }
+        .solution-box li.warning { color: #ffa500; }
+        
+        .proxy-status {
+            font-size: 9px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: rgba(0,150,255,0.05);
+            border: 1px solid rgba(0,150,255,0.05);
+        }
+        
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+        
+        .scrollable-list {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        
+        .scrollable-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        
+        .scrollable-list::-webkit-scrollbar-track {
+            background: rgba(0,150,255,0.02);
+        }
+        
+        .scrollable-list::-webkit-scrollbar-thumb {
+            background: rgba(0,150,255,0.2);
+            border-radius: 2px;
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 12px; }
+            .logo { font-size: 24px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .tabs .tab { font-size: 8px; padding: 5px 8px; }
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+            .modal-mantenimiento .modal-content { padding: 20px; }
+            .modal-mantenimiento .modal-content h2 { font-size: 22px; }
+            .game-board { gap: 5px; }
+            .game-card { font-size: 20px; min-height: 50px; }
+            .auth-box { padding: 25px; }
+            .user-bar { justify-content: center; }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .game-board { gap: 4px; }
+            .game-card { font-size: 18px; min-height: 45px; }
+            .auth-box { padding: 20px; }
+            .auth-box .auth-logo { font-size: 20px; }
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 10px 0;
         }
         
         .server-item {
@@ -865,85 +1209,49 @@
             font-size: 9px;
             border: 1px solid rgba(0,150,255,0.1);
         }
-        
-        .solution-box {
-            background: rgba(255,165,0,0.05);
-            border: 1px solid rgba(255,165,0,0.1);
-            border-radius: 8px;
-            padding: 12px;
-            margin: 10px 0;
-        }
-        
-        .solution-box h4 {
-            color: #ffa500;
-            margin-bottom: 6px;
-            font-size: 11px;
-        }
-        
-        .solution-box li {
-            opacity: 0.7;
-            margin: 3px 0;
-            font-size: 10px;
-            list-style: none;
-        }
-        
-        .solution-box li.success { color: #00ff88; }
-        .solution-box li.warning { color: #ffa500; }
-        
-        .proxy-status {
-            font-size: 9px;
-            padding: 4px 10px;
-            border-radius: 4px;
-            background: rgba(0,150,255,0.05);
-            border: 1px solid rgba(0,150,255,0.05);
-        }
-        
-        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-        
-        @media (max-width: 768px) {
-            .container { padding: 12px; }
-            .logo { font-size: 24px; }
-            .info-grid { grid-template-columns: 1fr; }
-            .grid-2 { grid-template-columns: 1fr; }
-            .grid-3 { grid-template-columns: 1fr; }
-            .tabs .tab { font-size: 8px; padding: 5px 8px; }
-            .stats-row { grid-template-columns: repeat(3, 1fr); }
-            .modal-mantenimiento .modal-content { padding: 20px; }
-            .modal-mantenimiento .modal-content h2 { font-size: 22px; }
-            .game-board { gap: 5px; }
-            .game-card { font-size: 20px; min-height: 50px; }
-        }
-        
-        @media (max-width: 480px) {
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-            .game-board { gap: 4px; }
-            .game-card { font-size: 18px; min-height: 45px; }
-        }
-        
-        .scrollable-list {
-            max-height: 250px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-        
-        .scrollable-list::-webkit-scrollbar {
-            width: 3px;
-        }
-        
-        .scrollable-list::-webkit-scrollbar-track {
-            background: rgba(0,150,255,0.02);
-        }
-        
-        .scrollable-list::-webkit-scrollbar-thumb {
-            background: rgba(0,150,255,0.2);
-            border-radius: 2px;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- ===== SISTEMA DE REGISTRO ===== -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-box">
+            <div class="auth-logo">
+                <span class="info">🔍 INFO</span>
+                <span class="hunter">HUNTER</span>
+                <span class="pro">PRO</span>
+            </div>
+            <div class="auth-sub">
+                <span class="highlight">⚡ ZONAHACK ELISEO</span> • Sistema de seguridad
+            </div>
+            
+            <div id="authForm">
+                <div class="form-group">
+                    <label>👤 Usuario</label>
+                    <input type="text" id="authUsername" placeholder="Elije un nombre de usuario" maxlength="20">
+                </div>
+                <div class="form-group">
+                    <label>🔑 Contraseña</label>
+                    <input type="password" id="authPassword" placeholder="Mínimo 4 caracteres" minlength="4">
+                </div>
+                <button class="btn-auth" id="authBtn" onclick="handleAuth()">🚀 Registrarse</button>
+                
+                <div class="auth-switch">
+                    ¿Ya tienes cuenta? <a onclick="switchAuthMode()">Iniciar sesión</a>
+                </div>
+            </div>
+            
+            <div class="auth-error" id="authError"></div>
+            <div class="auth-success" id="authSuccess"></div>
+            
+            <div class="security-badge">
+                <span>🔒 Conexión segura</span>
+                <span>⚡ Encendido</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <div class="container" id="mainContainer" style="display:none;">
         <div class="header">
             <div class="logo">
                 <span class="info">🔍 INFO</span>
@@ -964,6 +1272,17 @@
             </div>
         </div>
         
+        <!-- ===== BARRA DE USUARIO ===== -->
+        <div class="user-bar">
+            <div class="user-info" id="userInfo">
+                <div class="avatar" id="userAvatar">U</div>
+                <span class="username" id="userDisplayName">Usuario</span>
+                <span class="role-badge user" id="userRoleBadge">Usuario</span>
+            </div>
+            <button class="btn-logout" onclick="logout()">🚪 Salir</button>
+        </div>
+        
+        <!-- ===== TABS ===== -->
         <div class="tabs">
             <div class="tab active" data-tab="home" onclick="switchTab('home')">🏠 Inicio</div>
             <div class="tab discord-tab" data-tab="discord" onclick="switchTab('discord')">🤖 Discord</div>
@@ -977,6 +1296,7 @@
             <div class="tab" data-tab="logs" onclick="switchTab('logs')">📄 Logs</div>
         </div>
         
+        <!-- ===== STATS ===== -->
         <div class="stats-row">
             <div class="stat-item">
                 <div class="number" id="statSearches">0</div>
@@ -1312,7 +1632,7 @@
             </div>
         </div>
         
-        <!-- ===== TAB: HERRAMIENTAS (NUEVO) ===== -->
+        <!-- ===== TAB: HERRAMIENTAS ===== -->
         <div id="tab-tools" class="tab-content">
             <div class="panel">
                 <div class="panel-title tools-title">🛠️ HERRAMIENTAS EXTRA</div>
@@ -1399,6 +1719,7 @@
             </div>
         </div>
         
+        <!-- ===== WEBHOOK STATUS ===== -->
         <div class="webhook-status">
             <span class="status-dot blue" id="webhookDot"></span>
             <span id="webhookText">🔍 Sistema listo</span>
@@ -1408,6 +1729,7 @@
         </div>
     </div>
     
+    <!-- ===== MODAL WEBHOOK ===== -->
     <div class="modal" id="webhookModal">
         <div class="modal-content">
             <h2>🔗 Webhook Discord</h2>
@@ -1423,6 +1745,7 @@
         </div>
     </div>
     
+    <!-- ===== MODAL MANTENIMIENTO ===== -->
     <div class="modal-mantenimiento" id="modalMantenimiento">
         <div class="modal-content">
             <div class="gif-container">
@@ -1458,6 +1781,192 @@
     </div>
     
     <script>
+        // ============================================
+        // SISTEMA DE REGISTRO Y AUTENTICACIÓN
+        // ============================================
+        
+        let CURRENT_USER = null;
+        let AUTH_MODE = 'register'; // 'register' o 'login'
+        
+        function getUsers() {
+            try {
+                return JSON.parse(localStorage.getItem('info_hunter_users')) || {};
+            } catch {
+                return {};
+            }
+        }
+        
+        function saveUsers(users) {
+            localStorage.setItem('info_hunter_users', JSON.stringify(users));
+        }
+        
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem('info_hunter_session'));
+            } catch {
+                return null;
+            }
+        }
+        
+        function setCurrentUser(user) {
+            if (user) {
+                localStorage.setItem('info_hunter_session', JSON.stringify(user));
+            } else {
+                localStorage.removeItem('info_hunter_session');
+            }
+            CURRENT_USER = user;
+        }
+        
+        function switchAuthMode() {
+            const btn = document.getElementById('authBtn');
+            const switchLink = document.querySelector('.auth-switch a');
+            
+            if (AUTH_MODE === 'register') {
+                AUTH_MODE = 'login';
+                btn.textContent = '🔑 Iniciar Sesión';
+                switchLink.textContent = 'Registrarse';
+                document.getElementById('authError').style.display = 'none';
+                document.getElementById('authSuccess').style.display = 'none';
+            } else {
+                AUTH_MODE = 'register';
+                btn.textContent = '🚀 Registrarse';
+                switchLink.textContent = 'Iniciar sesión';
+                document.getElementById('authError').style.display = 'none';
+                document.getElementById('authSuccess').style.display = 'none';
+            }
+        }
+        
+        function handleAuth() {
+            const username = document.getElementById('authUsername').value.trim();
+            const password = document.getElementById('authPassword').value.trim();
+            const errorEl = document.getElementById('authError');
+            const successEl = document.getElementById('authSuccess');
+            
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+            
+            if (!username || username.length < 2) {
+                errorEl.textContent = '⚠️ El usuario debe tener al menos 2 caracteres';
+                errorEl.style.display = 'block';
+                return;
+            }
+            
+            if (!password || password.length < 4) {
+                errorEl.textContent = '⚠️ La contraseña debe tener al menos 4 caracteres';
+                errorEl.style.display = 'block';
+                return;
+            }
+            
+            const users = getUsers();
+            
+            if (AUTH_MODE === 'register') {
+                if (users[username]) {
+                    errorEl.textContent = '⚠️ Este usuario ya existe. Inicia sesión.';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+                
+                users[username] = {
+                    password: password,
+                    created: new Date().toISOString(),
+                    role: Object.keys(users).length === 0 ? 'admin' : 'user'
+                };
+                saveUsers(users);
+                
+                successEl.textContent = '✅ ¡Registro exitoso! Iniciando sesión...';
+                successEl.style.display = 'block';
+                
+                const userData = { username, role: users[username].role };
+                setCurrentUser(userData);
+                
+                setTimeout(() => {
+                    enterApp(userData);
+                }, 500);
+                
+            } else {
+                if (!users[username]) {
+                    errorEl.textContent = '❌ Usuario no encontrado. Regístrate primero.';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+                
+                if (users[username].password !== password) {
+                    errorEl.textContent = '❌ Contraseña incorrecta.';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+                
+                successEl.textContent = '✅ ¡Inicio de sesión exitoso!';
+                successEl.style.display = 'block';
+                
+                const userData = { username, role: users[username].role };
+                setCurrentUser(userData);
+                
+                setTimeout(() => {
+                    enterApp(userData);
+                }, 500);
+            }
+        }
+        
+        function enterApp(user) {
+            document.getElementById('authOverlay').classList.remove('active');
+            document.getElementById('mainContainer').style.display = 'block';
+            
+            // Actualizar barra de usuario
+            document.getElementById('userDisplayName').textContent = user.username;
+            document.getElementById('userAvatar').textContent = user.username.charAt(0).toUpperCase();
+            
+            const roleBadge = document.getElementById('userRoleBadge');
+            if (user.role === 'admin') {
+                roleBadge.textContent = '👑 Admin';
+                roleBadge.className = 'role-badge admin';
+            } else {
+                roleBadge.textContent = '👤 Usuario';
+                roleBadge.className = 'role-badge user';
+            }
+            
+            addLog(`👤 Usuario ${user.username} ha iniciado sesión`, 'success');
+            addLog(`⭐ Rol: ${user.role === 'admin' ? 'Administrador' : 'Usuario'}`, 'gold');
+            
+            initGame();
+            loadSavedData();
+        }
+        
+        function logout() {
+            setCurrentUser(null);
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('authOverlay').classList.add('active');
+            
+            // Limpiar campos
+            document.getElementById('authUsername').value = '';
+            document.getElementById('authPassword').value = '';
+            document.getElementById('authError').style.display = 'none';
+            document.getElementById('authSuccess').style.display = 'none';
+            
+            AUTH_MODE = 'register';
+            document.getElementById('authBtn').textContent = '🚀 Registrarse';
+            document.querySelector('.auth-switch a').textContent = 'Iniciar sesión';
+            
+            addLog('👋 Sesión cerrada', 'info');
+        }
+        
+        function loadSavedData() {
+            const savedWebhook = localStorage.getItem('info_hunter_webhook');
+            if (savedWebhook) {
+                WEBHOOK_URL = savedWebhook;
+                document.getElementById('webhookText').textContent = '✅ Webhook configurado';
+                document.getElementById('webhookDot').className = 'status-dot green';
+                addLog('🔗 Webhook cargado desde almacenamiento', 'success');
+            }
+            
+            const savedToken = localStorage.getItem('discord_hunter_token');
+            if (savedToken) {
+                document.getElementById('botToken').value = savedToken;
+                addLog('🔑 Token de Discord cargado', 'info');
+                setTimeout(connectDiscord, 500);
+            }
+        }
+        
         // ============================================
         // FUNCIONES DE NAVEGACIÓN
         // ============================================
@@ -1516,7 +2025,7 @@
                 cerrarMantenimiento();
             }
         });
-
+        
         // ============================================
         // JUEGO DE MEMORAMA
         // ============================================
@@ -1535,6 +2044,7 @@
         
         function initGame() {
             const board = document.getElementById('gameBoard');
+            if (!board) return;
             board.innerHTML = '';
             
             let deck = [...EMOJIS, ...EMOJIS];
@@ -1567,10 +2077,15 @@
                 gameState.timer = null;
             }
             
-            document.getElementById('gameMoves').textContent = '0';
-            document.getElementById('gamePairs').textContent = '0';
-            document.getElementById('gameTime').textContent = '0s';
-            document.getElementById('gameWin').style.display = 'none';
+            const movesEl = document.getElementById('gameMoves');
+            const pairsEl = document.getElementById('gamePairs');
+            const timeEl = document.getElementById('gameTime');
+            const winEl = document.getElementById('gameWin');
+            
+            if (movesEl) movesEl.textContent = '0';
+            if (pairsEl) pairsEl.textContent = '0';
+            if (timeEl) timeEl.textContent = '0s';
+            if (winEl) winEl.style.display = 'none';
             
             let timerStarted = false;
             const startTimer = () => {
@@ -1578,7 +2093,8 @@
                     timerStarted = true;
                     gameState.timer = setInterval(() => {
                         gameState.time++;
-                        document.getElementById('gameTime').textContent = gameState.time + 's';
+                        const timeEl2 = document.getElementById('gameTime');
+                        if (timeEl2) timeEl2.textContent = gameState.time + 's';
                     }, 1000);
                 }
             };
@@ -1601,7 +2117,8 @@
             
             gameState.secondCard = card;
             gameState.moves++;
-            document.getElementById('gameMoves').textContent = gameState.moves;
+            const movesEl = document.getElementById('gameMoves');
+            if (movesEl) movesEl.textContent = gameState.moves;
             
             const emoji1 = gameState.firstCard.dataset.emoji;
             const emoji2 = gameState.secondCard.dataset.emoji;
@@ -1610,7 +2127,8 @@
                 gameState.firstCard.classList.add('matched');
                 gameState.secondCard.classList.add('matched');
                 gameState.pairs++;
-                document.getElementById('gamePairs').textContent = gameState.pairs;
+                const pairsEl = document.getElementById('gamePairs');
+                if (pairsEl) pairsEl.textContent = gameState.pairs;
                 
                 gameState.firstCard = null;
                 gameState.secondCard = null;
@@ -1621,8 +2139,10 @@
                             clearInterval(gameState.timer);
                             gameState.timer = null;
                         }
-                        document.getElementById('winMoves').textContent = gameState.moves;
-                        document.getElementById('gameWin').style.display = 'block';
+                        const winMoves = document.getElementById('winMoves');
+                        const winEl = document.getElementById('gameWin');
+                        if (winMoves) winMoves.textContent = gameState.moves;
+                        if (winEl) winEl.style.display = 'block';
                         addLog(`🏆 ¡Ganaste el memorama en ${gameState.moves} intentos y ${gameState.time}s!`, 'game');
                     }, 300);
                 }
@@ -1646,7 +2166,7 @@
             initGame();
             addLog('🔄 Juego reiniciado', 'game');
         }
-
+        
         // ============================================
         // HERRAMIENTAS EXTRA
         // ============================================
@@ -1654,9 +2174,7 @@
         function runTool(tool) {
             const resultDiv = document.getElementById('toolResult');
             const content = document.getElementById('toolContent');
-            resultDiv.classList.add('active');
-            
-            let result = '';
+            if (resultDiv) resultDiv.classList.add('active');
             
             switch(tool) {
                 case 'ip':
@@ -1835,15 +2353,10 @@
                 default:
                     content.innerHTML = `<div class="result-item">❌ Herramienta no disponible</div>`;
             }
-            
-            if (result) {
-                content.innerHTML = result;
-                addLog(`🛠️ Herramienta ejecutada: ${tool}`, 'pink');
-            }
         }
-
+        
         // ============================================
-        // FUNCIONES ADICIONALES MEJORADAS
+        // FUNCIONES ADICIONALES
         // ============================================
         
         function getSiteInfo() {
@@ -1915,7 +2428,7 @@
             `;
             addLog(`📅 Edad del dominio ${domain}: ${age} años`, 'pink');
         }
-
+        
         // ============================================
         // CONFIGURACIÓN
         // ============================================
@@ -1953,7 +2466,8 @@
             LOGS.push({ time, message, type });
             
             updateLogAreas();
-            document.getElementById('logCount').textContent = LOGS.length;
+            const logCount = document.getElementById('logCount');
+            if (logCount) logCount.textContent = LOGS.length;
             
             if (WEBHOOK_URL) {
                 sendToWebhook(message, type);
@@ -1975,7 +2489,8 @@
         
         function clearLogs() {
             LOGS = [];
-            document.getElementById('logCount').textContent = '0';
+            const logCount = document.getElementById('logCount');
+            if (logCount) logCount.textContent = '0';
             updateLogAreas();
             addLog('🗑️ Logs limpiados', 'info');
         }
@@ -2410,7 +2925,6 @@
                 </div>
             `;
             
-            document.getElementById('statChannels').textContent = data.length;
             LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Canales REALES', data: `${data.length} canales` });
             addLog(`📢 ${data.length} canales REALES obtenidos`, 'success');
         }
@@ -2448,7 +2962,6 @@
                 </div>
             `;
             
-            document.getElementById('statRoles').textContent = data.length;
             LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Roles REALES', data: `${data.length} roles` });
             addLog(`🎭 ${data.length} roles REALES obtenidos`, 'success');
         }
@@ -2487,7 +3000,6 @@
                 </div>
             `;
             
-            document.getElementById('statInvites').textContent = data.length;
             LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Invites REALES', data: `${data.length} invitaciones` });
             addLog(`📨 ${data.length} invitaciones REALES obtenidas`, 'success');
         }
@@ -3159,50 +3671,32 @@
         // ============================================
         
         document.addEventListener('DOMContentLoaded', function() {
-            addLog('🚀 Info Hunter PRO iniciado - MODO REAL', 'info');
-            addLog('💡 Herramientas de investigación legal', 'info');
-            addLog('⭐ MODO REAL ACTIVADO - 30+ funciones', 'gold');
-            addLog('🤖 Discord Bot - Conexión REAL con API', 'discord');
-            addLog('🎮 Juego de memorama incluido', 'game');
-            addLog('🛠️ 10+ Herramientas extra', 'pink');
-            addLog('⚖️ Uso ético y responsable', 'green');
-            addLog('💡 Activa el proxy CORS si hay errores de conexión', 'info');
-            addLog('🙏 Botón de mantenimiento con Jesús bailando', 'gold');
-            
-            initGame();
-            
-            const savedWebhook = localStorage.getItem('info_hunter_webhook');
-            if (savedWebhook) {
-                WEBHOOK_URL = savedWebhook;
-                document.getElementById('webhookText').textContent = '✅ Webhook configurado';
-                document.getElementById('webhookDot').className = 'status-dot green';
-                addLog('🔗 Webhook cargado desde almacenamiento', 'success');
+            // Verificar sesión
+            const session = getCurrentUser();
+            if (session) {
+                enterApp(session);
+                addLog('🚀 Sesión restaurada', 'info');
+            } else {
+                document.getElementById('authOverlay').classList.add('active');
             }
             
-            const savedToken = localStorage.getItem('discord_hunter_token');
-            if (savedToken) {
-                document.getElementById('botToken').value = savedToken;
-                addLog('🔑 Token de Discord cargado', 'info');
-                setTimeout(connectDiscord, 500);
-            }
-            
+            // Placeholders
             document.getElementById('phoneInput').placeholder = '+34 600 000 000';
             document.getElementById('urlInput').placeholder = 'https://ejemplo.com';
             document.getElementById('socialInput').placeholder = 'usuario';
             document.getElementById('emailInput').placeholder = 'usuario@ejemplo.com';
             document.getElementById('domainInput').placeholder = 'ejemplo.com';
             document.getElementById('guildIdInput').placeholder = 'ID REAL del servidor Discord...';
+            
+            console.log('🔍 Info Hunter PRO - ZONAHACK ELISEO');
+            console.log('📡 Sistema de registro y autenticación');
+            console.log('⭐ MODO REAL: 30+ funciones con datos REALES');
+            console.log('🤖 Discord Bot - Conexión REAL con API oficial');
+            console.log('🎮 Juego de memorama incluido');
+            console.log('🛠️ 10+ Herramientas extra');
+            console.log('⚖️ Uso ético y responsable');
         });
-        
-        console.log('🔍 Info Hunter PRO - ZONAHACK ELISEO');
-        console.log('📡 Herramientas de investigación legal - MODO REAL');
-        console.log('⭐ MODO REAL: 30+ funciones con datos REALES');
-        console.log('🤖 Discord Bot - Conexión REAL con API oficial');
-        console.log('🎮 Juego de memorama incluido - Diviértete');
-        console.log('🛠️ 10+ Herramientas extra');
-        console.log('⚖️ Uso ético y responsable');
-        console.log('💡 Activa el proxy CORS si hay errores de conexión');
-        console.log('🙏 Botón de mantenimiento con Jesús bailando');
     </script>
 </body>
 </html>
+    
