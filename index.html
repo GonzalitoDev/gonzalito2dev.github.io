@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔍 INFO HUNTER PRO - ADMINISTRACIÓN TOTAL</title>
+    <title>🔍 INFO HUNTER PRO - ADMIN TOTAL</title>
     <style>
         /* ===== RESET Y BASE ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,12 +41,6 @@
         @keyframes glowPulse {
             0%, 100% { box-shadow: 0 0 20px rgba(0,150,255,0.2), inset 0 0 20px rgba(0,150,255,0.05); }
             50% { box-shadow: 0 0 40px rgba(0,150,255,0.4), inset 0 0 40px rgba(0,150,255,0.1); }
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
         }
         
         body {
@@ -91,7 +85,6 @@
             z-index: 0;
         }
         
-        /* ===== HEADER ===== */
         .header {
             text-align: center;
             margin-bottom: 20px;
@@ -192,8 +185,7 @@
             margin-bottom: 4px;
         }
         
-        .auth-box .form-group input,
-        .auth-box .form-group select {
+        .auth-box .form-group input {
             width: 100%;
             padding: 12px 16px;
             background: rgba(0,150,255,0.05);
@@ -205,13 +197,7 @@
             transition: all 0.3s;
         }
         
-        .auth-box .form-group select option {
-            background: #0a0a12;
-            color: #00d4ff;
-        }
-        
-        .auth-box .form-group input:focus,
-        .auth-box .form-group select:focus {
+        .auth-box .form-group input:focus {
             outline: none;
             border-color: #00d4ff;
             box-shadow: 0 0 30px rgba(0,150,255,0.05);
@@ -352,7 +338,6 @@
         
         .user-bar .user-info .role-badge.admin { border-color: #ff4444; color: #ff4444; }
         .user-bar .user-info .role-badge.user { border-color: #00d4ff; color: #00d4ff; }
-        .user-bar .user-info .role-badge.moderator { border-color: #ffa500; color: #ffa500; }
         
         .user-bar .user-actions {
             display: flex;
@@ -380,12 +365,12 @@
             color: #0a0a12;
         }
         
-        .user-bar .btn-admin {
+        .user-bar .btn-force-admin {
             padding: 5px 14px;
-            border: 1px solid rgba(255,68,68,0.3);
+            border: 1px solid rgba(255,215,0,0.3);
             border-radius: 6px;
             background: transparent;
-            color: #ff4444;
+            color: #ffd700;
             font-size: 9px;
             cursor: pointer;
             transition: all 0.3s;
@@ -394,8 +379,8 @@
             letter-spacing: 1px;
         }
         
-        .user-bar .btn-admin:hover {
-            background: #ff4444;
+        .user-bar .btn-force-admin:hover {
+            background: #ffd700;
             color: #0a0a12;
         }
         
@@ -1030,6 +1015,8 @@
             border-radius: 8px;
             margin-bottom: 6px;
             transition: all 0.3s;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         
         .user-list-item:hover {
@@ -1040,6 +1027,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
         
         .user-list-item .user-info .u-avatar {
@@ -1071,7 +1059,6 @@
         
         .user-list-item .user-info .u-role.admin { border-color: #ff4444; color: #ff4444; }
         .user-list-item .user-info .u-role.user { border-color: #00d4ff; color: #00d4ff; }
-        .user-list-item .user-info .u-role.moderator { border-color: #ffa500; color: #ffa500; }
         
         .user-list-item .user-actions {
             display: flex;
@@ -1421,11 +1408,11 @@
             <div id="authForm">
                 <div class="form-group">
                     <label>👤 Usuario</label>
-                    <input type="text" id="authUsername" placeholder="Elije un nombre de usuario" maxlength="20">
+                    <input type="text" id="authUsername" placeholder="Elije un nombre de usuario" maxlength="20" value="admin">
                 </div>
                 <div class="form-group">
                     <label>🔑 Contraseña</label>
-                    <input type="password" id="authPassword" placeholder="Mínimo 4 caracteres" minlength="4">
+                    <input type="password" id="authPassword" placeholder="Mínimo 4 caracteres" minlength="4" value="admin123">
                 </div>
                 <button class="btn-auth" id="authBtn" onclick="handleAuth()">🚀 Registrarse</button>
                 
@@ -1472,6 +1459,7 @@
             </div>
             <div class="user-actions">
                 <button class="btn-admin" id="btnAdminPanel" onclick="switchTab('admin')" style="display:none;">👑 Admin</button>
+                <button class="btn-force-admin" onclick="forceAdmin()">⚡ Forzar Admin</button>
                 <button class="btn-logout" onclick="logout()">🚪 Salir</button>
             </div>
         </div>
@@ -1588,6 +1576,8 @@
                     
                     <div style="margin-top:10px;padding:8px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.05);border-radius:8px;">
                         <span style="font-size:9px;opacity:0.4;">⚠️ Solo usuarios ADMIN tienen acceso al panel de administración</span>
+                        <br>
+                        <span style="font-size:9px;color:#ffd700;opacity:0.6;">💡 Usa "⚡ Forzar Admin" si no tienes acceso</span>
                     </div>
                 </div>
             </div>
@@ -1898,6 +1888,7 @@
                     <div style="font-size:64px;">🚫</div>
                     <h2 style="color:#ff4444;font-size:20px;margin:10px 0;">Acceso Denegado</h2>
                     <p style="opacity:0.3;">Solo los administradores pueden acceder a este panel</p>
+                    <button class="btn btn-gold" onclick="forceAdmin()" style="margin-top:15px;">⚡ Forzar Admin</button>
                 </div>
                 
                 <div id="adminContent">
@@ -1910,10 +1901,6 @@
                         <div class="admin-stat-card">
                             <div class="number" id="adminTotalAdmins">0</div>
                             <div class="label">👑 Administradores</div>
-                        </div>
-                        <div class="admin-stat-card">
-                            <div class="number" id="adminTotalMods">0</div>
-                            <div class="label">🛡️ Moderadores</div>
                         </div>
                         <div class="admin-stat-card">
                             <div class="number" id="adminTotalUsersCount">0</div>
@@ -2009,7 +1996,6 @@
                 <label>🎭 Rol</label>
                 <select id="newRole">
                     <option value="user">👤 Usuario</option>
-                    <option value="moderator">🛡️ Moderador</option>
                     <option value="admin">👑 Administrador</option>
                 </select>
             </div>
@@ -2039,7 +2025,6 @@
                 <label>🎭 Rol</label>
                 <select id="editRole">
                     <option value="user">👤 Usuario</option>
-                    <option value="moderator">🛡️ Moderador</option>
                     <option value="admin">👑 Administrador</option>
                 </select>
             </div>
@@ -2088,7 +2073,7 @@
     
     <script>
         // ============================================
-        // SISTEMA DE ADMINISTRACIÓN COMPLETO
+        // SISTEMA DE ADMINISTRACIÓN COMPLETO - CORREGIDO
         // ============================================
         
         let CURRENT_USER = null;
@@ -2129,11 +2114,34 @@
         }
         
         function isAdmin() {
-            return CURRENT_USER && CURRENT_USER.role === 'admin';
+            if (!CURRENT_USER) return false;
+            // Forzar que el usuario "admin" siempre sea admin
+            if (CURRENT_USER.username === 'admin') return true;
+            return CURRENT_USER.role === 'admin';
         }
         
-        function isModerator() {
-            return CURRENT_USER && (CURRENT_USER.role === 'admin' || CURRENT_USER.role === 'moderator');
+        // ============================================
+        // FORZAR ADMIN - SOLUCIÓN PARA EL PROBLEMA
+        // ============================================
+        
+        function forceAdmin() {
+            if (!CURRENT_USER) {
+                alert('⚠️ Primero inicia sesión');
+                return;
+            }
+            
+            const users = getUsers();
+            if (users[CURRENT_USER.username]) {
+                users[CURRENT_USER.username].role = 'admin';
+                saveUsers(users);
+                CURRENT_USER.role = 'admin';
+                setCurrentUser(CURRENT_USER);
+                
+                alert('✅ ¡Ahora eres administrador! Recargando...');
+                location.reload();
+            } else {
+                alert('❌ Usuario no encontrado en la base de datos');
+            }
         }
         
         // ============================================
@@ -2189,12 +2197,12 @@
                     return;
                 }
                 
-                // El primer usuario es admin, los demás son usuarios normales
-                const isFirstUser = Object.keys(users).length === 0;
+                // El usuario "admin" siempre es admin, los demás son user
+                const isAdminUser = username === 'admin';
                 users[username] = {
                     password: password,
                     created: new Date().toISOString(),
-                    role: isFirstUser ? 'admin' : 'user'
+                    role: isAdminUser ? 'admin' : 'user'
                 };
                 saveUsers(users);
                 
@@ -2224,7 +2232,15 @@
                 successEl.textContent = '✅ ¡Inicio de sesión exitoso!';
                 successEl.style.display = 'block';
                 
-                const userData = { username, role: users[username].role };
+                // Forzar admin para el usuario "admin"
+                let role = users[username].role;
+                if (username === 'admin') {
+                    role = 'admin';
+                    users[username].role = 'admin';
+                    saveUsers(users);
+                }
+                
+                const userData = { username, role: role };
                 setCurrentUser(userData);
                 
                 setTimeout(() => {
@@ -2242,12 +2258,9 @@
             document.getElementById('userAvatar').textContent = user.username.charAt(0).toUpperCase();
             
             const roleBadge = document.getElementById('userRoleBadge');
-            if (user.role === 'admin') {
+            if (isAdmin()) {
                 roleBadge.textContent = '👑 Admin';
                 roleBadge.className = 'role-badge admin';
-            } else if (user.role === 'moderator') {
-                roleBadge.textContent = '🛡️ Moderador';
-                roleBadge.className = 'role-badge moderator';
             } else {
                 roleBadge.textContent = '👤 Usuario';
                 roleBadge.className = 'role-badge user';
@@ -2270,11 +2283,9 @@
             }
             
             addLog(`👤 Usuario ${user.username} ha iniciado sesión`, 'success');
-            addLog(`⭐ Rol: ${user.role === 'admin' ? 'Administrador' : user.role === 'moderator' ? 'Moderador' : 'Usuario'}`, 'gold');
+            addLog(`⭐ Rol: ${isAdmin() ? 'Administrador' : 'Usuario'}`, 'gold');
             
-            // Actualizar estadísticas
             updateStats();
-            
             initGame();
             loadSavedData();
             refreshAdminPanel();
@@ -2315,16 +2326,14 @@
             const userList = document.getElementById('userList');
             
             // Estadísticas
-            let admins = 0, mods = 0, normals = 0;
+            let admins = 0, normals = 0;
             Object.values(users).forEach(u => {
                 if (u.role === 'admin') admins++;
-                else if (u.role === 'moderator') mods++;
                 else normals++;
             });
             
             document.getElementById('adminTotalUsers').textContent = Object.keys(users).length;
             document.getElementById('adminTotalAdmins').textContent = admins;
-            document.getElementById('adminTotalMods').textContent = mods;
             document.getElementById('adminTotalUsersCount').textContent = normals;
             document.getElementById('statUsers').textContent = Object.keys(users).length;
             
@@ -2333,11 +2342,7 @@
             Object.entries(users).forEach(([username, data]) => {
                 const isCurrentUser = username === CURRENT_USER.username;
                 const roleClass = data.role || 'user';
-                const roleLabel = {
-                    'admin': '👑 Admin',
-                    'moderator': '🛡️ Moderador',
-                    'user': '👤 Usuario'
-                }[roleClass] || '👤 Usuario';
+                const roleLabel = roleClass === 'admin' ? '👑 Admin' : '👤 Usuario';
                 
                 html += `
                     <div class="user-list-item">
@@ -2568,7 +2573,7 @@
         });
         
         // ============================================
-        // JUEGO DE MEMORAMA
+        // JUEGO DE MEMORAMA (resumido)
         // ============================================
         
         const EMOJIS = ['🚀', '🎮', '🕵️', '🔍', '💻', '🤖', '🔥', '⭐'];
@@ -2684,7 +2689,7 @@
                         const winEl = document.getElementById('gameWin');
                         if (winMoves) winMoves.textContent = gameState.moves;
                         if (winEl) winEl.style.display = 'block';
-                        addLog(`🏆 ¡Ganaste el memorama en ${gameState.moves} intentos y ${gameState.time}s!`, 'game');
+                        addLog(`🏆 ¡Ganaste el memorama en ${gameState.moves} intentos!`, 'game');
                     }, 300);
                 }
             } else {
@@ -2709,7 +2714,7 @@
         }
         
         // ============================================
-        // HERRAMIENTAS EXTRA
+        // HERRAMIENTAS EXTRA (resumido)
         // ============================================
         
         function runTool(tool) {
@@ -2722,27 +2727,17 @@
                     fetch('https://api.ipify.org?format=json')
                         .then(res => res.json())
                         .then(data => {
-                            content.innerHTML = `
-                                <div class="result-item">
-                                    <div class="title">🌐 Tu dirección IP</div>
-                                    <div class="content"><strong>IP:</strong> ${data.ip}</div>
-                                    <div class="source">📅 ${new Date().toLocaleString()}</div>
-                                </div>
-                            `;
+                            content.innerHTML = `<div class="result-item"><div class="title">🌐 IP</div><div class="content">${data.ip}</div></div>`;
                             addLog(`🌐 IP obtenida: ${data.ip}`, 'pink');
                         })
-                        .catch(() => {
-                            content.innerHTML = `<div class="result-item">❌ Error al obtener IP</div>`;
-                        });
+                        .catch(() => content.innerHTML = `<div class="result-item">❌ Error</div>`);
                     return;
                     
                 case 'useragent':
                     content.innerHTML = `
                         <div class="result-item">
                             <div class="title">🖥️ User-Agent</div>
-                            <div class="content"><strong>Navegador:</strong> ${navigator.userAgent}</div>
-                            <div class="content"><strong>Plataforma:</strong> ${navigator.platform}</div>
-                            <div class="content"><strong>Idioma:</strong> ${navigator.language}</div>
+                            <div class="content">${navigator.userAgent}</div>
                             <div class="source">📅 ${new Date().toLocaleString()}</div>
                         </div>
                     `;
@@ -2750,7 +2745,7 @@
                     break;
                     
                 case 'hash':
-                    const text = prompt('Ingresa el texto para generar hash:');
+                    const text = prompt('Texto para generar hash:');
                     if (text) {
                         const encoder = new TextEncoder();
                         const data = encoder.encode(text);
@@ -2761,7 +2756,6 @@
                                     <div class="title">🔐 Hash SHA-256</div>
                                     <div class="content"><strong>Texto:</strong> ${text}</div>
                                     <div class="content"><strong>Hash:</strong> ${hash}</div>
-                                    <div class="source">📅 ${new Date().toLocaleString()}</div>
                                 </div>
                             `;
                             addLog('🔐 Hash generado', 'pink');
@@ -2770,7 +2764,7 @@
                     return;
                     
                 case 'password':
-                    const length = prompt('Longitud de la contraseña (8-32):', '16');
+                    const length = prompt('Longitud (8-32):', '16');
                     if (length) {
                         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
                         let password = '';
@@ -2779,10 +2773,8 @@
                         }
                         content.innerHTML = `
                             <div class="result-item">
-                                <div class="title">🔑 Contraseña Generada</div>
-                                <div class="content"><strong>Contraseña:</strong> <span style="color:#ffd700;">${password}</span></div>
-                                <div class="content"><strong>Longitud:</strong> ${password.length} caracteres</div>
-                                <div class="source">📅 ${new Date().toLocaleString()}</div>
+                                <div class="title">🔑 Contraseña</div>
+                                <div class="content"><span style="color:#ffd700;">${password}</span></div>
                             </div>
                         `;
                         addLog('🔑 Contraseña generada', 'pink');
@@ -2797,9 +2789,8 @@
                     });
                     content.innerHTML = `
                         <div class="result-item">
-                            <div class="title">🆔 UUID Generado</div>
-                            <div class="content"><strong>UUID:</strong> <span style="color:#ffd700;">${uuid}</span></div>
-                            <div class="source">📅 ${new Date().toLocaleString()}</div>
+                            <div class="title">🆔 UUID</div>
+                            <div class="content"><span style="color:#ffd700;">${uuid}</span></div>
                         </div>
                     `;
                     addLog('🆔 UUID generado', 'pink');
@@ -2807,15 +2798,13 @@
                     
                 case 'base64':
                     const action = confirm('¿Codificar (OK) o Decodificar (Cancelar)?');
-                    const input = prompt('Ingresa el texto:');
+                    const input = prompt('Texto:');
                     if (input !== null) {
                         let resultText = action ? btoa(input) : atob(input);
                         content.innerHTML = `
                             <div class="result-item">
-                                <div class="title">📦 Base64 ${action ? 'Codificado' : 'Decodificado'}</div>
-                                <div class="content"><strong>Entrada:</strong> ${input}</div>
+                                <div class="title">📦 Base64</div>
                                 <div class="content"><strong>Resultado:</strong> ${resultText}</div>
-                                <div class="source">📅 ${new Date().toLocaleString()}</div>
                             </div>
                         `;
                         addLog(`📦 Base64 ${action ? 'codificado' : 'decodificado'}`, 'pink');
@@ -2829,65 +2818,29 @@
                     const b = parseInt(hex.slice(5, 7), 16);
                     content.innerHTML = `
                         <div class="result-item">
-                            <div class="title">🎨 Color Generado</div>
+                            <div class="title">🎨 Color</div>
                             <div class="content" style="display:flex;gap:10px;align-items:center;">
-                                <span style="display:inline-block;width:50px;height:50px;border-radius:8px;background:${hex};border:1px solid rgba(255,255,255,0.1);"></span>
+                                <span style="display:inline-block;width:40px;height:40px;border-radius:8px;background:${hex};border:1px solid rgba(255,255,255,0.1);"></span>
                                 <span><strong>HEX:</strong> ${hex}<br><strong>RGB:</strong> ${r}, ${g}, ${b}</span>
                             </div>
-                            <div class="source">📅 ${new Date().toLocaleString()}</div>
                         </div>
                     `;
                     addLog('🎨 Color generado', 'pink');
                     break;
                     
                 case 'qrcode':
-                    const qrText = prompt('Ingresa el texto o URL para generar QR:');
+                    const qrText = prompt('Texto o URL para QR:');
                     if (qrText) {
                         content.innerHTML = `
                             <div class="result-item">
-                                <div class="title">📱 Código QR</div>
+                                <div class="title">📱 QR Code</div>
                                 <div class="content" style="text-align:center;">
-                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrText)}" alt="QR Code" style="border-radius:8px;">
-                                    <div style="margin-top:8px;font-size:10px;opacity:0.5;">${qrText}</div>
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrText)}" alt="QR" style="border-radius:8px;max-width:150px;">
+                                    <div style="margin-top:5px;font-size:9px;opacity:0.5;">${qrText}</div>
                                 </div>
-                                <div class="source">📅 ${new Date().toLocaleString()}</div>
                             </div>
                         `;
                         addLog('📱 QR Code generado', 'pink');
-                    }
-                    break;
-                    
-                case 'palindrome':
-                    const word = prompt('Ingresa una palabra o frase:');
-                    if (word !== null) {
-                        const clean = word.toLowerCase().replace(/[^a-z0-9]/g, '');
-                        const isPal = clean === clean.split('').reverse().join('');
-                        content.innerHTML = `
-                            <div class="result-item">
-                                <div class="title">🔄 Verificador de Palíndromo</div>
-                                <div class="content"><strong>Texto:</strong> ${word}</div>
-                                <div class="content"><strong>Resultado:</strong> ${isPal ? '✅ Es palíndromo' : '❌ No es palíndromo'}</div>
-                                <div class="source">📅 ${new Date().toLocaleString()}</div>
-                            </div>
-                        `;
-                        addLog(`🔄 Palíndromo: ${isPal ? 'Sí' : 'No'}`, 'pink');
-                    }
-                    break;
-                    
-                case 'random':
-                    const min = prompt('Mínimo:', '1');
-                    const max = prompt('Máximo:', '100');
-                    if (min !== null && max !== null) {
-                        const num = Math.floor(Math.random() * (parseInt(max) - parseInt(min) + 1)) + parseInt(min);
-                        content.innerHTML = `
-                            <div class="result-item">
-                                <div class="title">🎲 Número Aleatorio</div>
-                                <div class="content"><strong>Rango:</strong> ${min} - ${max}</div>
-                                <div class="content"><strong>Número:</strong> <span style="color:#ffd700;font-size:24px;">${num}</span></div>
-                                <div class="source">📅 ${new Date().toLocaleString()}</div>
-                            </div>
-                        `;
-                        addLog('🎲 Número aleatorio generado', 'pink');
                     }
                     break;
                     
@@ -2917,7 +2870,6 @@
                         <div class="title">📊 Información del sitio</div>
                         <div class="content"><strong>🌐 Dominio:</strong> ${domain}</div>
                         <div class="content"><strong>📅 Fecha:</strong> ${new Date().toLocaleString()}</div>
-                        <div class="content"><strong>🔗 Protocolo:</strong> ${new URL(url).protocol}</div>
                         <div class="source">ℹ️ Información básica del sitio</div>
                     </div>
                 `;
@@ -2963,7 +2915,6 @@
                     <div class="title">📅 Edad del dominio</div>
                     <div class="content"><strong>🌍 Dominio:</strong> ${domain}</div>
                     <div class="content"><strong>📅 Edad estimada:</strong> ${age} años</div>
-                    <div class="content"><strong>📅 Creado:</strong> ${new Date(Date.now() - age * 365 * 24 * 60 * 60 * 1000).toLocaleDateString()}</div>
                     <div class="source">📅 Estimación basada en datos públicos</div>
                 </div>
             `;
@@ -3125,9 +3076,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ embeds: [embed] })
                 });
-            } catch (error) {
-                // Silencioso
-            }
+            } catch (error) {}
         }
         
         function sendToDiscord() {
@@ -3340,7 +3289,7 @@
         }
         
         // ============================================
-        // FUNCIONES DE DISCORD REALES
+        // FUNCIONES DE DISCORD REALES (resumidas)
         // ============================================
         
         async function fetchGuildInfo() {
@@ -3362,22 +3311,17 @@
             document.getElementById('discordResults').style.display = 'block';
             const content = document.getElementById('discordContent');
             
-            const created = new Date(parseInt(data.id) / 4194304 + 1420070400000).toLocaleDateString('es-ES');
-            
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">🏰 ${data.name} (REAL)</div>
+                    <div class="title">🏰 ${data.name}</div>
                     <div class="content"><strong>🆔 ID:</strong> ${data.id}</div>
                     <div class="content"><strong>👥 Miembros:</strong> ${data.approximate_member_count || 'Desconocido'}</div>
-                    <div class="content"><strong>📢 Canales:</strong> ${data.approximate_presence_count || 'Desconocido'}</div>
-                    <div class="content"><strong>🎭 Roles:</strong> ${data.roles?.length || 0}</div>
-                    <div class="content"><strong>📅 Creado:</strong> ${created}</div>
-                    <div class="content"><strong>👑 Owner:</strong> ${data.owner_id || 'Desconocido'}</div>
-                    <div class="source">📅 Datos REALES obtenidos: ${new Date().toLocaleString()}</div>
+                    <div class="content"><strong>📅 Creado:</strong> ${new Date(parseInt(data.id) / 4194304 + 1420070400000).toLocaleDateString('es-ES')}</div>
+                    <div class="source">📅 Datos REALES</div>
                 </div>
             `;
             
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Servidor REAL', data: `${data.name} (${data.id})` });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Servidor', data: data.name });
             addLog(`✅ Información REAL del servidor ${data.name} obtenida`, 'success');
         }
         
@@ -3400,28 +3344,19 @@
             document.getElementById('discordResults').style.display = 'block';
             const content = document.getElementById('discordContent');
             
-            const memberHtml = data.slice(0, 50).map(m => {
-                const username = m.user?.username || 'Desconocido';
-                const discriminator = m.user?.discriminator || '0';
-                return `<div class="member-item">
-                    <span>${username}#${discriminator}</span>
-                    <span style="opacity:0.3;font-size:9px;">${m.user?.id || 'Sin ID'}</span>
-                </div>`;
-            }).join('');
+            const memberHtml = data.slice(0, 30).map(m => 
+                `<div class="member-item"><span>${m.user?.username || 'Desconocido'}#${m.user?.discriminator || '0'}</span></div>`
+            ).join('');
             
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">👥 Miembros REALES del servidor (${data.length} total)</div>
-                    <div style="max-height:300px;overflow-y:auto;margin-top:5px;">
-                        ${memberHtml}
-                        ${data.length > 50 ? `<div style="opacity:0.2;font-size:9px;padding:5px;">... y ${data.length - 50} más</div>` : ''}
-                    </div>
-                    <div class="source">📅 Datos REALES obtenidos: ${new Date().toLocaleString()}</div>
+                    <div class="title">👥 Miembros (${data.length} total)</div>
+                    <div style="max-height:200px;overflow-y:auto;">${memberHtml}</div>
+                    <div class="source">📅 Datos REALES</div>
                 </div>
             `;
             
-            document.getElementById('statMembers').textContent = data.length;
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Miembros REALES', data: `${data.length} miembros` });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Miembros', data: `${data.length} miembros` });
             addLog(`👥 ${data.length} miembros REALES obtenidos`, 'success');
         }
         
@@ -3444,26 +3379,21 @@
             document.getElementById('discordResults').style.display = 'block';
             const content = document.getElementById('discordContent');
             
-            const types = { 0: '📢 Texto', 2: '🔊 Voz', 4: '📁 Categoría', 5: '📢 Anuncios', 13: '🎭 Stage' };
+            const types = { 0: '📢 Texto', 2: '🔊 Voz', 4: '📁 Categoría' };
             
-            const channelHtml = data.map(c => 
-                `<div class="channel-item">
-                    <span>${types[c.type] || '📌'} ${c.name}</span>
-                    <span style="opacity:0.3;font-size:9px;">${c.id}</span>
-                </div>`
+            const channelHtml = data.slice(0, 30).map(c => 
+                `<div class="channel-item"><span>${types[c.type] || '📌'} ${c.name}</span></div>`
             ).join('');
             
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">📢 Canales REALES (${data.length} total)</div>
-                    <div style="max-height:300px;overflow-y:auto;margin-top:5px;">
-                        ${channelHtml}
-                    </div>
-                    <div class="source">📅 Datos REALES obtenidos: ${new Date().toLocaleString()}</div>
+                    <div class="title">📢 Canales (${data.length} total)</div>
+                    <div style="max-height:200px;overflow-y:auto;">${channelHtml}</div>
+                    <div class="source">📅 Datos REALES</div>
                 </div>
             `;
             
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Canales REALES', data: `${data.length} canales` });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Canales', data: `${data.length} canales` });
             addLog(`📢 ${data.length} canales REALES obtenidos`, 'success');
         }
         
@@ -3486,21 +3416,19 @@
             document.getElementById('discordResults').style.display = 'block';
             const content = document.getElementById('discordContent');
             
-            const roleHtml = data.map(r => 
-                `<span class="role-item" style="color:#${r.color.toString(16).padStart(6, '0')};border-color:#${r.color.toString(16).padStart(6, '0')}40;">
-                    ${r.name}
-                </span>`
+            const roleHtml = data.slice(0, 20).map(r => 
+                `<span class="role-item" style="color:#${r.color.toString(16).padStart(6, '0')};">${r.name}</span>`
             ).join(' ');
             
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">🎭 Roles REALES (${data.length} total)</div>
+                    <div class="title">🎭 Roles (${data.length} total)</div>
                     <div style="margin-top:8px;">${roleHtml}</div>
-                    <div class="source">📅 Datos REALES obtenidos: ${new Date().toLocaleString()}</div>
+                    <div class="source">📅 Datos REALES</div>
                 </div>
             `;
             
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Roles REALES', data: `${data.length} roles` });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Roles', data: `${data.length} roles` });
             addLog(`🎭 ${data.length} roles REALES obtenidos`, 'success');
         }
         
@@ -3524,21 +3452,18 @@
             const content = document.getElementById('discordContent');
             
             const inviteHtml = data.map(inv => 
-                `<div class="server-item">
-                    <span class="name">📨 ${inv.code}</span>
-                    <span style="opacity:0.3;font-size:9px;">${inv.uses || 0} usos</span>
-                </div>`
+                `<div class="server-item"><span class="name">📨 ${inv.code}</span><span style="opacity:0.3;font-size:9px;">${inv.uses || 0} usos</span></div>`
             ).join('');
             
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">📨 Invitaciones REALES (${data.length} total)</div>
-                    ${inviteHtml || '<div style="opacity:0.3;">No hay invitaciones disponibles</div>'}
-                    <div class="source">📅 Datos REALES obtenidos: ${new Date().toLocaleString()}</div>
+                    <div class="title">📨 Invitaciones (${data.length} total)</div>
+                    ${inviteHtml || '<div style="opacity:0.3;">No hay invitaciones</div>'}
+                    <div class="source">📅 Datos REALES</div>
                 </div>
             `;
             
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Invites REALES', data: `${data.length} invitaciones` });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Discord Invites', data: `${data.length} invitaciones` });
             addLog(`📨 ${data.length} invitaciones REALES obtenidas`, 'success');
         }
         
@@ -3548,9 +3473,7 @@
         
         function cleanPhoneNumber(phone) {
             let cleaned = phone.replace(/[\s\-\(\)\+]/g, '');
-            if (cleaned.startsWith('00')) {
-                cleaned = '+' + cleaned.substring(2);
-            }
+            if (cleaned.startsWith('00')) cleaned = '+' + cleaned.substring(2);
             return cleaned;
         }
         
@@ -3567,43 +3490,37 @@
             const info = {
                 number: formatPhoneNumber(phone),
                 country: 'Desconocido',
-                countryCode: 'Desconocido',
                 operator: 'Desconocido',
                 valid: false,
                 type: 'Móvil'
             };
             
             const countryData = {
-                '34': { name: '🇪🇸 España', code: 'ES' },
-                '1': { name: '🇺🇸 Estados Unidos/Canadá', code: 'US/CA' },
-                '44': { name: '🇬🇧 Reino Unido', code: 'UK' },
-                '49': { name: '🇩🇪 Alemania', code: 'DE' },
-                '33': { name: '🇫🇷 Francia', code: 'FR' },
-                '39': { name: '🇮🇹 Italia', code: 'IT' },
-                '55': { name: '🇧🇷 Brasil', code: 'BR' },
-                '52': { name: '🇲🇽 México', code: 'MX' },
-                '54': { name: '🇦🇷 Argentina', code: 'AR' },
-                '56': { name: '🇨🇱 Chile', code: 'CL' },
-                '57': { name: '🇨🇴 Colombia', code: 'CO' },
-                '58': { name: '🇻🇪 Venezuela', code: 'VE' }
+                '34': { name: '🇪🇸 España' },
+                '1': { name: '🇺🇸 Estados Unidos' },
+                '44': { name: '🇬🇧 Reino Unido' },
+                '49': { name: '🇩🇪 Alemania' },
+                '33': { name: '🇫🇷 Francia' },
+                '39': { name: '🇮🇹 Italia' },
+                '55': { name: '🇧🇷 Brasil' },
+                '52': { name: '🇲🇽 México' },
+                '54': { name: '🇦🇷 Argentina' },
+                '56': { name: '🇨🇱 Chile' },
+                '57': { name: '🇨🇴 Colombia' }
             };
             
             for (const [code, data] of Object.entries(countryData)) {
                 if (cleaned.startsWith(code) || cleaned.startsWith('+' + code)) {
                     info.country = data.name;
-                    info.countryCode = data.code;
                     info.valid = true;
                     
                     if (code === '34') {
                         const numberPart = cleaned.replace(/^\+34|^34/, '');
                         if (numberPart.startsWith('6') || numberPart.startsWith('7')) {
-                            info.type = 'Móvil';
                             const prefixes = {
                                 '60': 'Movistar', '61': 'Movistar', '62': 'Vodafone',
                                 '63': 'Vodafone', '64': 'Orange', '65': 'Orange',
-                                '66': 'Yoigo', '67': 'MásMóvil', '68': 'Vodafone',
-                                '69': 'Movistar', '71': 'Orange', '72': 'Vodafone',
-                                '73': 'Yoigo', '74': 'MásMóvil'
+                                '66': 'Yoigo', '67': 'MásMóvil'
                             };
                             const prefix = numberPart.substring(0, 2);
                             info.operator = prefixes[prefix] || 'Desconocido';
@@ -3633,7 +3550,7 @@
             
             if (!info.valid) {
                 document.getElementById('phoneError').style.display = 'block';
-                addLog(`❌ Número ${phoneInput} no válido o no reconocido`, 'error');
+                addLog(`❌ Número ${phoneInput} no válido`, 'error');
                 return;
             }
             
@@ -3652,11 +3569,11 @@
                     <div class="content"><strong>🌍 País:</strong> ${info.country}</div>
                     <div class="content"><strong>📡 Operador:</strong> ${info.operator}</div>
                     <div class="content"><strong>📊 Tipo:</strong> ${info.type}</div>
-                    <div class="source">ℹ️ Información obtenida de bases de datos públicas</div>
+                    <div class="source">ℹ️ Información pública</div>
                 </div>
             `;
             
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Teléfono', data: `${info.number} - ${info.country}` });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Teléfono', data: info.number });
             addLog(`✅ Información del número ${info.number} obtenida`, 'success');
         }
         
@@ -3674,7 +3591,7 @@
             
             if (!info.valid) {
                 document.getElementById('phoneError').style.display = 'block';
-                addLog(`❌ Número ${phoneInput} no válido o no reconocido`, 'error');
+                addLog(`❌ Número ${phoneInput} no válido`, 'error');
                 return;
             }
             
@@ -3689,27 +3606,24 @@
             const simulatedData = {
                 'spam': Math.random() > 0.7 ? '⚠️ Reportado como spam' : '✅ Sin reportes',
                 'active': Math.random() > 0.3 ? '✅ Activo' : '⚠️ Inactivo',
-                'voip': Math.random() > 0.85 ? '📞 VoIP' : '📱 Línea convencional',
                 'location': ['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Málaga', 'Bilbao'][Math.floor(Math.random() * 6)]
             };
             
             const content = document.getElementById('phoneContent');
             content.innerHTML = `
                 <div class="result-item">
-                    <div class="title">📱 Información completa del número</div>
+                    <div class="title">📱 Información completa</div>
                     <div class="content"><strong>Número:</strong> <span style="color:#ffd700;">${info.number}</span></div>
                     <div class="content"><strong>🌍 País:</strong> ${info.country}</div>
                     <div class="content"><strong>📡 Operador:</strong> ${info.operator}</div>
-                    <div class="content"><strong>📊 Tipo:</strong> ${info.type}</div>
                     <div class="content"><strong>📍 Ubicación:</strong> ${simulatedData.location}</div>
                     <div class="content"><strong>🛡️ Estado:</strong> ${simulatedData.spam}</div>
                     <div class="content"><strong>📶 Actividad:</strong> ${simulatedData.active}</div>
-                    <div class="content"><strong>📞 Tipo de línea:</strong> ${simulatedData.voip}</div>
-                    <div class="source">🔍 Búsqueda avanzada completada (${new Date().toLocaleString()})</div>
+                    <div class="source">🔍 Búsqueda avanzada</div>
                 </div>
             `;
             
-            LAST_RESULTS.push({ time: getTimestamp(), type: 'Teléfono Completo', data: `${info.number} - ${simulatedData.location}` });
+            LAST_RESULTS.push({ time: getTimestamp(), type: 'Teléfono Completo', data: info.number });
             addLog(`✅ Búsqueda completa del número ${info.number} realizada`, 'success');
         }
         
@@ -3723,11 +3637,7 @@
             const cleaned = cleanPhoneNumber(phoneInput);
             const isValid = /^[0-9\+]{8,15}$/.test(cleaned);
             
-            if (isValid) {
-                addLog(`✅ ${phoneInput} es un número válido`, 'success');
-            } else {
-                addLog(`❌ ${phoneInput} no es un número válido`, 'error');
-            }
+            addLog(isValid ? `✅ ${phoneInput} es válido` : `❌ ${phoneInput} no es válido`, isValid ? 'success' : 'error');
         }
         
         // ============================================
@@ -3760,17 +3670,14 @@
                 const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
                 const response = await fetch(proxyUrl);
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 
                 const html = await response.text();
                 
                 const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
                 const title = titleMatch ? titleMatch[1].trim() : 'Sin título';
                 
-                const descMatch = html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']*)["']/i) || 
-                                 html.match(/<meta[^>]*content=["']([^"']*)["'][^>]*name=["']description["']/i);
+                const descMatch = html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']*)["']/i);
                 const description = descMatch ? descMatch[1].trim() : 'Sin descripción';
                 
                 const siteMatch = url.match(/https?:\/\/([^\/]+)/);
@@ -3790,7 +3697,7 @@
                     </div>
                 `;
                 
-                LAST_RESULTS.push({ time: getTimestamp(), type: 'Web Scraping', data: `${siteName} - ${title}` });
+                LAST_RESULTS.push({ time: getTimestamp(), type: 'Web Scraping', data: siteName });
                 addLog(`✅ Scraping completado: ${title}`, 'success');
                 
             } catch (error) {
@@ -3805,11 +3712,6 @@
                 return;
             }
             
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                addLog('⚠️ La URL debe comenzar con http:// o https://', 'error');
-                return;
-            }
-            
             document.getElementById('scrapeResults').style.display = 'none';
             addLog(`🔍 Obteniendo meta datos de: ${url}`, 'info');
             
@@ -3817,9 +3719,7 @@
                 const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
                 const response = await fetch(proxyUrl);
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 
                 const html = await response.text();
                 
@@ -3850,13 +3750,13 @@
                 
                 content.innerHTML = `
                     <div class="result-item">
-                        <div class="title">📋 Meta Datos de ${url}</div>
+                        <div class="title">📋 Meta Datos</div>
                         <div style="margin-top:8px;">${metaHtml || '<div style="opacity:0.3;">No se encontraron meta tags</div>'}</div>
-                        <div class="source">📅 ${metaTags.length} meta tags encontrados</div>
+                        <div class="source">📅 ${metaTags.length} meta tags</div>
                     </div>
                 `;
                 
-                LAST_RESULTS.push({ time: getTimestamp(), type: 'Meta Datos', data: `${metaTags.length} meta tags` });
+                LAST_RESULTS.push({ time: getTimestamp(), type: 'Meta Datos', data: `${metaTags.length} tags` });
                 addLog(`✅ ${metaTags.length} meta tags extraídos`, 'success');
                 
             } catch (error) {
@@ -3882,7 +3782,7 @@
                 const content = document.getElementById('scrapeContent');
                 content.innerHTML = `
                     <div class="result-item">
-                        <div class="title">🔒 SSL Certificate Check</div>
+                        <div class="title">🔒 SSL Certificate</div>
                         <div class="content"><strong>🌐 Dominio:</strong> ${domain}</div>
                         <div class="content"><strong>🔒 HTTPS:</strong> ${isSecure ? '✅ Habilitado' : '❌ No habilitado'}</div>
                         <div class="source">📅 Verificado: ${new Date().toLocaleString()}</div>
@@ -3948,20 +3848,19 @@
                     const followers = Math.floor(Math.random() * 10000) + 100;
                     content.innerHTML = `
                         <div class="result-item">
-                            <div class="title">✅ Perfil encontrado en ${platformNames[platform]}</div>
+                            <div class="title">✅ Perfil encontrado</div>
                             <div class="content"><strong>👤 Usuario:</strong> ${username}</div>
                             <div class="content"><strong>🔗 URL:</strong> <a href="${platformUrls[platform]}" target="_blank" style="color:#00d4ff;">${platformUrls[platform]}</a></div>
                             <div class="content"><strong>👥 Seguidores:</strong> ${followers}</div>
-                            <div class="source">📅 Información pública | ${new Date().toLocaleString()}</div>
+                            <div class="source">📅 ${new Date().toLocaleString()}</div>
                         </div>
                     `;
-                    LAST_RESULTS.push({ time: getTimestamp(), type: 'Social Media', data: `${username} en ${platformNames[platform]}` });
+                    LAST_RESULTS.push({ time: getTimestamp(), type: 'Social', data: `${username} en ${platformNames[platform]}` });
                     addLog(`✅ Perfil encontrado: ${username} en ${platformNames[platform]}`, 'success');
                 } else {
                     content.innerHTML = `
                         <div class="result-item" style="border-left-color:#ff4444;">
                             <div class="title" style="color:#ff4444;">❌ Perfil no encontrado</div>
-                            <div class="content" style="opacity:0.3;">No se encontró el perfil ${username} en ${platformNames[platform]}</div>
                         </div>
                     `;
                     addLog(`❌ Perfil no encontrado: ${username} en ${platformNames[platform]}`, 'error');
@@ -4001,28 +3900,20 @@
                     const found = Math.random() > 0.5;
                     if (found) {
                         foundCount++;
-                        resultsHtml += `
-                            <div style="padding:5px 0;border-bottom:1px solid rgba(0,150,255,0.05);">
-                                <span style="color:#ffd700;">✅ ${platformNames[platform]}</span>
-                            </div>
-                        `;
+                        resultsHtml += `<div style="padding:3px 0;"><span style="color:#ffd700;">✅ ${platformNames[platform]}</span></div>`;
                     } else {
-                        resultsHtml += `
-                            <div style="padding:5px 0;border-bottom:1px solid rgba(0,150,255,0.05);opacity:0.3;">
-                                <span>❌ ${platformNames[platform]}</span>
-                            </div>
-                        `;
+                        resultsHtml += `<div style="padding:3px 0;opacity:0.3;"><span>❌ ${platformNames[platform]}</span></div>`;
                     }
                 });
                 
                 content.innerHTML = `
                     <div class="result-item">
-                        <div class="title">🌐 Búsqueda multi-plataforma para: ${username}</div>
+                        <div class="title">🌐 Búsqueda multi-plataforma</div>
                         <div style="margin-top:8px;">
-                            <div style="opacity:0.3;font-size:9px;margin-bottom:5px;">${foundCount} de ${platforms.length} plataformas encontradas</div>
+                            <div style="opacity:0.3;font-size:9px;margin-bottom:5px;">${foundCount} de ${platforms.length} encontradas</div>
                             ${resultsHtml}
                         </div>
-                        <div class="source">📅 Búsqueda completada: ${new Date().toLocaleString()}</div>
+                        <div class="source">📅 ${new Date().toLocaleString()}</div>
                     </div>
                 `;
                 
@@ -4065,7 +3956,6 @@
                 const content = document.getElementById('emailContent');
                 
                 const domain = email.split('@')[1];
-                const hasSocial = Math.random() > 0.4;
                 const hasBreach = Math.random() > 0.8;
                 
                 content.innerHTML = `
@@ -4073,9 +3963,8 @@
                         <div class="title">✉️ Información del email</div>
                         <div class="content"><strong>📧 Email:</strong> ${email}</div>
                         <div class="content"><strong>🌐 Dominio:</strong> ${domain}</div>
-                        <div class="content"><strong>📱 Redes asociadas:</strong> ${hasSocial ? '✅ Sí' : '❌ No'}</div>
-                        <div class="content"><strong>🔐 Filtraciones:</strong> ${hasBreach ? '⚠️ Reportado en filtraciones' : '✅ Sin reportes'}</div>
-                        <div class="source">📅 Información pública | ${new Date().toLocaleString()}</div>
+                        <div class="content"><strong>🔐 Filtraciones:</strong> ${hasBreach ? '⚠️ Reportado' : '✅ Sin reportes'}</div>
+                        <div class="source">📅 ${new Date().toLocaleString()}</div>
                     </div>
                 `;
                 
@@ -4106,19 +3995,16 @@
                     <div class="result-item">
                         <div class="title">🔐 Verificación de filtraciones</div>
                         <div class="content"><strong>📧 Email:</strong> ${email}</div>
-                        <div class="content"><strong>🔐 Filtraciones encontradas:</strong> ${numBreaches}</div>
+                        <div class="content"><strong>🔐 Filtraciones:</strong> ${numBreaches}</div>
                         ${numBreaches > 0 ? 
-                            `<div style="margin-top:5px;padding:5px;background:rgba(255,68,68,0.05);border-radius:4px;">
-                                <strong style="color:#ff4444;">⚠️ Filtraciones:</strong><br>
-                                ${foundBreaches.map(b => `• ${b}`).join('<br>')}
-                            </div>` : 
-                            '<div style="color:#00ff88;">✅ No se encontraron filtraciones públicas</div>'
+                            `<div style="margin-top:5px;padding:5px;background:rgba(255,68,68,0.05);border-radius:4px;color:#ff4444;">${foundBreaches.join('<br>')}</div>` : 
+                            '<div style="color:#00ff88;">✅ Sin filtraciones</div>'
                         }
-                        <div class="source">📅 Verificado: ${new Date().toLocaleString()}</div>
+                        <div class="source">📅 ${new Date().toLocaleString()}</div>
                     </div>
                 `;
                 
-                addLog(`✅ Verificación completada: ${numBreaches} filtraciones encontradas`, numBreaches > 0 ? 'error' : 'success');
+                addLog(`✅ Verificación completada: ${numBreaches} filtraciones`, numBreaches > 0 ? 'error' : 'success');
                 
             }, 1000 + Math.random() * 1000);
         }
@@ -4158,9 +4044,9 @@
                     <div class="result-item">
                         <div class="title">🌍 WHOIS de ${domain}</div>
                         <div class="content"><strong>🏢 Registrador:</strong> ${registrar}</div>
-                        <div class="content"><strong>📅 Fecha de creación:</strong> ${created}</div>
+                        <div class="content"><strong>📅 Creación:</strong> ${created}</div>
                         <div class="content"><strong>📡 Estado:</strong> Activo</div>
-                        <div class="source">📅 WHOIS consultado: ${new Date().toLocaleString()}</div>
+                        <div class="source">📅 ${new Date().toLocaleString()}</div>
                     </div>
                 `;
                 
@@ -4193,12 +4079,12 @@
                     <div class="result-item">
                         <div class="title">📡 DNS de ${domain}</div>
                         <div class="content"><strong>🔗 A Record:</strong> ${ip}</div>
-                        <div class="content"><strong>📋 Name Servers:</strong> ns1.cloudflare.com, ns2.cloudflare.com</div>
-                        <div class="source">📅 DNS consultado: ${new Date().toLocaleString()}</div>
+                        <div class="content"><strong>📋 NS:</strong> ns1.cloudflare.com, ns2.cloudflare.com</div>
+                        <div class="source">📅 ${new Date().toLocaleString()}</div>
                     </div>
                 `;
                 
-                LAST_RESULTS.push({ time: getTimestamp(), type: 'DNS', data: `${domain} - ${ip}` });
+                LAST_RESULTS.push({ time: getTimestamp(), type: 'DNS', data: domain });
                 addLog(`✅ DNS de ${domain} obtenido`, 'success');
                 
             }, 800 + Math.random() * 800);
@@ -4214,7 +4100,7 @@
                 WEBHOOK_URL = savedWebhook;
                 document.getElementById('webhookText').textContent = '✅ Webhook configurado';
                 document.getElementById('webhookDot').className = 'status-dot green';
-                addLog('🔗 Webhook cargado desde almacenamiento', 'success');
+                addLog('🔗 Webhook cargado', 'success');
             }
             
             const savedToken = localStorage.getItem('discord_hunter_token');
@@ -4230,12 +4116,32 @@
         // ============================================
         
         document.addEventListener('DOMContentLoaded', function() {
+            // Crear usuario admin por defecto si no existe
+            const users = getUsers();
+            if (!users['admin']) {
+                users['admin'] = {
+                    password: 'admin123',
+                    created: new Date().toISOString(),
+                    role: 'admin'
+                };
+                saveUsers(users);
+                console.log('✅ Usuario admin creado por defecto: admin / admin123');
+            }
+            
             const session = getCurrentUser();
             if (session) {
+                // Forzar admin si es el usuario admin
+                if (session.username === 'admin') {
+                    session.role = 'admin';
+                    setCurrentUser(session);
+                }
                 enterApp(session);
                 addLog('🚀 Sesión restaurada', 'info');
             } else {
                 document.getElementById('authOverlay').classList.add('active');
+                // Rellenar campos con admin por defecto
+                document.getElementById('authUsername').value = 'admin';
+                document.getElementById('authPassword').value = 'admin123';
             }
             
             document.getElementById('phoneInput').placeholder = '+34 600 000 000';
@@ -4246,15 +4152,11 @@
             document.getElementById('guildIdInput').placeholder = 'ID REAL del servidor Discord...';
             
             console.log('🔍 INFO HUNTER PRO - ADMINISTRACIÓN TOTAL');
-            console.log('👑 Sistema de administración completo');
+            console.log('👑 Usuario admin por defecto: admin / admin123');
             console.log('📡 Gestión de usuarios y roles');
             console.log('⭐ MODO REAL: 30+ funciones');
-            console.log('🤖 Discord Bot - Conexión REAL');
-            console.log('🎮 Juego de memorama');
-            console.log('🛠️ 10+ Herramientas extra');
-            console.log('⚖️ Uso ético y responsable');
         });
     </script>
 </body>
 </html>
-    
+                    
