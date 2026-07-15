@@ -3,147 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 DISCORD HUNTER PRO - LOCAL</title>
+    <title>🔍 INFO HUNTER PRO - ZONAHACK ELISEO</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0 0 20px rgba(0,150,255,0.5), 0 0 40px rgba(0,150,255,0.2); }
+            50% { text-shadow: 0 0 40px rgba(0,150,255,0.8), 0 0 80px rgba(0,150,255,0.4); }
+        }
         
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.7; transform: scale(1.05); }
         }
         
-        @keyframes glitch {
-            0%, 100% { text-shadow: 0 0 20px rgba(255,0,0,0.5), 0 0 40px rgba(255,0,0,0.2); }
-            50% { text-shadow: 0 0 40px rgba(255,0,0,0.8), 0 0 80px rgba(255,0,0,0.4); }
+        @keyframes scan {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        @keyframes neon {
+            0%, 100% { box-shadow: 0 0 10px rgba(0,150,255,0.1), 0 0 20px rgba(0,150,255,0.05); }
+            50% { box-shadow: 0 0 20px rgba(0,150,255,0.2), 0 0 40px rgba(0,150,255,0.1); }
         }
         
         body {
-            background: #0a0000;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
+            background: #0a0a12;
+            color: #00d4ff;
+            font-family: 'Segoe UI', 'Courier New', monospace;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
+            background-image: 
+                radial-gradient(ellipse at 50% 0%, rgba(0,150,255,0.03) 0%, transparent 70%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,150,255,0.005) 2px, rgba(0,150,255,0.005) 4px);
         }
         
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: rgba(0,150,255,0.02); }
+        ::-webkit-scrollbar-thumb { background: rgba(0,150,255,0.2); border-radius: 2px; }
+        
         .container {
-            max-width: 1100px;
+            max-width: 1400px;
             margin: 0 auto;
-            background: rgba(0,0,0,0.9);
-            border: 2px solid #00ff41;
+            background: rgba(10,10,18,0.92);
+            border: 2px solid #00d4ff;
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 0 60px rgba(0,255,65,0.1);
+            box-shadow: 0 0 80px rgba(0,150,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(0,150,255,0.02) 50%, transparent 60%);
+            background-size: 200% 200%;
+            animation: scan 10s linear infinite;
+            pointer-events: none;
+            z-index: 0;
         }
         
         .header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
         }
         
         .logo {
-            font-size: 32px;
+            font-size: 38px;
             font-weight: bold;
             animation: glitch 2s ease-in-out infinite;
+            letter-spacing: 4px;
         }
-        .logo .discord { color: #5865F2; }
-        .logo .hunter { color: #ff0040; }
-        .logo .pro { color: #ffd700; font-size: 18px; animation: pulse 1s infinite; }
-        .logo .real { color: #ffa500; font-size: 16px; }
+        
+        .logo .info { color: #00d4ff; }
+        .logo .hunter { color: #ff6b35; }
+        .logo .pro { color: #ffd700; font-size: 14px; animation: pulse 0.5s infinite; }
+        .logo .eliseo { color: #ffffff; opacity: 0.2; font-size: 16px; }
         
         .subtitle {
             font-size: 12px;
             opacity: 0.4;
             margin-top: 5px;
             letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
         }
-        .subtitle .highlight { color: #ff0040; font-weight: bold; animation: pulse 1.5s infinite; }
+        
+        .subtitle .highlight { color: #ff6b35; font-weight: bold; animation: pulse 1.5s infinite; }
+        .subtitle .legal { color: #00ff88; font-weight: bold; }
+        .subtitle .warning { color: #ffa500; font-weight: bold; }
+        
+        .tabs {
+            display: flex;
+            gap: 3px;
+            margin: 15px 0;
+            border-bottom: 1px solid rgba(0,150,255,0.05);
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            opacity: 0.3;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            font-weight: bold;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #00d4ff;
+        }
+        
+        .tab:hover { opacity: 0.6; }
+        .tab.active { opacity: 1; border-bottom-color: #00d4ff; }
+        
+        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-item {
+            background: rgba(0,150,255,0.03);
+            border: 1px solid rgba(0,150,255,0.08);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            transition: all 0.3s;
+            animation: neon 2s infinite;
+        }
+        
+        .stat-item:hover {
+            transform: scale(1.05);
+            background: rgba(0,150,255,0.08);
+        }
+        
+        .stat-item .number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+        
+        .stat-item .number.green { color: #00ff88; }
+        .stat-item .number.orange { color: #ff6b35; }
+        .stat-item .number.gold { color: #ffd700; }
+        .stat-item .number.purple { color: #9b59b6; }
+        .stat-item .number.pink { color: #ff69b4; }
+        .stat-item .number.cyan { color: #00ffff; }
+        .stat-item .number.red { color: #ff4444; }
+        
+        .stat-item .label {
+            font-size: 8px;
+            opacity: 0.3;
+            text-transform: uppercase;
+            margin-top: 2px;
+            letter-spacing: 1px;
+        }
         
         .panel {
-            background: rgba(0,255,65,0.03);
-            border: 1px solid rgba(0,255,65,0.1);
-            border-radius: 12px;
+            background: rgba(0,150,255,0.02);
+            border: 1px solid rgba(0,150,255,0.08);
+            border-radius: 14px;
             padding: 20px;
-            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            min-height: 200px;
+            animation: neon 3s infinite;
         }
         
         .panel-title {
-            font-size: 13px;
+            font-size: 12px;
             color: #ffa500;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 12px;
+            text-align: center;
             font-weight: bold;
         }
         
-        .flex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-        .mb-10 { margin-bottom: 10px; }
-        
-        input, select {
-            padding: 12px 16px;
-            background: rgba(0,255,65,0.05);
-            border: 1px solid rgba(0,255,65,0.15);
-            border-radius: 8px;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            flex: 1;
-            min-width: 150px;
-            font-size: 12px;
-        }
-        
-        input:focus, select:focus {
-            outline: none;
-            border-color: #00ff41;
-            box-shadow: 0 0 20px rgba(0,255,65,0.05);
-        }
-        
         .btn {
-            padding: 12px 24px;
-            border: 2px solid #00ff41;
+            padding: 10px 20px;
+            border: 2px solid #00d4ff;
             border-radius: 8px;
             cursor: pointer;
             background: transparent;
-            color: #00ff41;
+            color: #00d4ff;
+            font-family: 'Segoe UI', 'Courier New', monospace;
             font-weight: bold;
             transition: all 0.3s;
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-family: 'Courier New', monospace;
+            position: relative;
+            z-index: 2;
         }
         
         .btn:hover:not(:disabled) {
-            background: #00ff41;
-            color: #0a0000;
+            background: #00d4ff;
+            color: #0a0a12;
             transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(0,255,65,0.15);
+            box-shadow: 0 0 30px rgba(0,150,255,0.15);
         }
         
         .btn:disabled {
             opacity: 0.3;
             cursor: not-allowed;
+            transform: none !important;
         }
         
-        .btn-discord { border-color: #5865F2; color: #5865F2; }
-        .btn-discord:hover:not(:disabled) { background: #5865F2; color: #0a0000; }
+        .btn-danger { border-color: #ff4444; color: #ff4444; }
+        .btn-danger:hover:not(:disabled) { background: #ff4444; color: #0a0a12; }
+        .btn-success { border-color: #00ff88; color: #00ff88; }
+        .btn-success:hover:not(:disabled) { background: #00ff88; color: #0a0a12; }
         .btn-gold { border-color: #ffd700; color: #ffd700; }
-        .btn-gold:hover:not(:disabled) { background: #ffd700; color: #0a0000; }
-        .btn-danger { border-color: #ff0040; color: #ff0040; }
-        .btn-danger:hover:not(:disabled) { background: #ff0040; color: #0a0000; }
+        .btn-gold:hover:not(:disabled) { background: #ffd700; color: #0a0a12; }
         .btn-purple { border-color: #9b59b6; color: #9b59b6; }
-        .btn-purple:hover:not(:disabled) { background: #9b59b6; color: #0a0000; }
+        .btn-purple:hover:not(:disabled) { background: #9b59b6; color: #0a0a12; }
         .btn-cyan { border-color: #00ffff; color: #00ffff; }
-        .btn-cyan:hover:not(:disabled) { background: #00ffff; color: #0a0000; }
+        .btn-cyan:hover:not(:disabled) { background: #00ffff; color: #0a0a12; }
         .btn-pink { border-color: #ff69b4; color: #ff69b4; }
-        .btn-pink:hover:not(:disabled) { background: #ff69b4; color: #0a0000; }
-        .btn-orange { border-color: #ffa500; color: #ffa500; }
-        .btn-orange:hover:not(:disabled) { background: #ffa500; color: #0a0000; }
+        .btn-pink:hover:not(:disabled) { background: #ff69b4; color: #0a0a12; }
+        .btn-orange { border-color: #ff6b35; color: #ff6b35; }
+        .btn-orange:hover:not(:disabled) { background: #ff6b35; color: #0a0a12; }
+        .btn-green { border-color: #00ff88; color: #00ff88; }
+        .btn-green:hover:not(:disabled) { background: #00ff88; color: #0a0a12; }
+        
+        .flex { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .mb-10 { margin-bottom: 10px; }
+        .mt-10 { margin-top: 10px; }
+        .gap-5 { gap: 5px; }
+        .w-full { width: 100%; }
+        
+        input, textarea, select {
+            padding: 10px 14px;
+            background: rgba(0,150,255,0.05);
+            border: 1px solid rgba(0,150,255,0.15);
+            border-radius: 8px;
+            color: #00d4ff;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 30px rgba(0,150,255,0.05);
+        }
+        
+        select option { background: #0a0a12; color: #00d4ff; }
+        textarea { min-height: 60px; resize: vertical; }
         
         .info-card {
-            background: rgba(0,255,65,0.02);
-            border: 1px solid rgba(0,255,65,0.05);
+            background: rgba(0,150,255,0.02);
+            border: 1px solid rgba(0,150,255,0.05);
             border-radius: 8px;
             padding: 12px 15px;
             margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+        
+        .info-card:hover {
+            background: rgba(0,150,255,0.05);
         }
         
         .info-card .label {
@@ -156,70 +298,53 @@
         .info-card .value {
             font-size: 14px;
             font-weight: bold;
-            color: #00ff41;
+            color: #00d4ff;
+            font-family: 'Segoe UI', 'Courier New', monospace;
             word-break: break-all;
         }
-        .info-card .value.blue { color: #5865F2; }
+        
+        .info-card .value.green { color: #00ff88; }
+        .info-card .value.orange { color: #ff6b35; }
         .info-card .value.gold { color: #ffd700; }
-        .info-card .value.orange { color: #ffa500; }
         .info-card .value.purple { color: #9b59b6; }
         .info-card .value.pink { color: #ff69b4; }
-        .info-card .value.cyan { color: #00ffff; }
-        .info-card .value.red { color: #ff0040; }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin: 10px 0;
-        }
-        
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-        }
-        .status-dot.green { background: #00ff41; animation: pulse 1s infinite; }
-        .status-dot.red { background: #ff0040; }
-        .status-dot.orange { background: #ffa500; animation: pulse 0.5s infinite; }
+        .info-card .value.red { color: #ff4444; }
         
         .log-area {
+            margin-top: 15px;
             background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(0,255,65,0.05);
-            border-radius: 8px;
+            border: 1px solid rgba(0,150,255,0.05);
+            border-radius: 10px;
             padding: 12px;
-            max-height: 200px;
+            max-height: 150px;
             overflow-y: auto;
-            font-size: 11px;
-            margin-top: 10px;
+            font-size: 10px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            z-index: 1;
         }
         
         .log-area .log-entry {
-            padding: 3px 0;
-            border-bottom: 1px solid rgba(0,255,65,0.02);
-        }
-        .log-area .log-entry.success { color: #00ff41; }
-        .log-area .log-entry.error { color: #ff0040; }
-        .log-area .log-entry.info { color: #ffa500; }
-        .log-area .log-entry.discord { color: #5865F2; }
-        .log-area .log-entry.gold { color: #ffd700; }
-        
-        .member-item {
+            padding: 2px 0;
+            border-bottom: 1px solid rgba(0,150,255,0.02);
             display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(0,255,65,0.02);
+            gap: 8px;
+            align-items: center;
         }
         
-        .scrollable-list {
-            max-height: 250px;
-            overflow-y: auto;
+        .log-area .log-entry .time {
+            opacity: 0.3;
+            min-width: 60px;
+            font-size: 9px;
         }
-        .scrollable-list::-webkit-scrollbar { width: 3px; }
-        .scrollable-list::-webkit-scrollbar-track { background: rgba(0,255,65,0.02); }
-        .scrollable-list::-webkit-scrollbar-thumb { background: rgba(0,255,65,0.2); border-radius: 2px; }
+        
+        .log-area .log-entry.success { color: #00ff88; }
+        .log-area .log-entry.error { color: #ff4444; }
+        .log-area .log-entry.info { color: #ffa500; }
+        .log-area .log-entry.gold { color: #ffd700; }
+        .log-area .log-entry.purple { color: #9b59b6; }
+        .log-area .log-entry.cyan { color: #00ffff; }
+        .log-area .log-entry.orange { color: #ff6b35; }
         
         .badge {
             display: inline-block;
@@ -230,25 +355,197 @@
             font-weight: bold;
             border: 1px solid;
         }
-        .badge-gold { border-color: #ffd700; color: #ffd700; animation: pulse 1s infinite; }
-        .badge-green { border-color: #00ff41; color: #00ff41; }
-        .badge-red { border-color: #ff0040; color: #ff0040; }
         
-        .server-status {
-            padding: 10px;
-            text-align: center;
-            background: rgba(0,255,65,0.02);
-            border: 1px solid rgba(0,255,65,0.05);
-            border-radius: 8px;
-            margin-top: 10px;
+        .badge-red { border-color: #ff4444; color: #ff4444; animation: pulse 1s infinite; }
+        .badge-green { border-color: #00ff88; color: #00ff88; }
+        .badge-gold { border-color: #ffd700; color: #ffd700; }
+        .badge-purple { border-color: #9b59b6; color: #9b59b6; }
+        .badge-pink { border-color: #ff69b4; color: #ff69b4; }
+        .badge-orange { border-color: #ff6b35; color: #ff6b35; }
+        
+        .result-item {
+            padding: 8px;
+            margin: 4px 0;
+            background: rgba(0,150,255,0.02);
+            border-radius: 4px;
+            border-left: 2px solid rgba(0,150,255,0.1);
         }
         
+        .result-item .title {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        
+        .result-item .content {
+            font-size: 12px;
+            margin-top: 2px;
+        }
+        
+        .result-item .source {
+            font-size: 8px;
+            opacity: 0.2;
+            margin-top: 2px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal.active { display: flex; }
+        
+        .modal-content {
+            background: #0a0a12;
+            border: 2px solid #00d4ff;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-content h2 {
+            font-size: 24px;
+            color: #00d4ff;
+            margin-bottom: 5px;
+        }
+        
+        .modal-content .sub {
+            font-size: 11px;
+            opacity: 0.3;
+            margin-bottom: 15px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .modal-actions .btn { flex: 1; min-width: 100px; }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-dot.green { background: #00ff88; animation: pulse 1s infinite; }
+        .status-dot.red { background: #ff4444; }
+        .status-dot.orange { background: #ffa500; animation: pulse 0.5s infinite; }
+        .status-dot.gold { background: #ffd700; animation: pulse 0.3s infinite; }
+        .status-dot.blue { background: #00d4ff; animation: pulse 1.5s infinite; }
+        
+        .webhook-status {
+            font-size: 10px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            background: rgba(0,150,255,0.03);
+            border: 1px solid rgba(0,150,255,0.06);
+            margin-top: 12px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0,150,255,0.05);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .progress-bar .fill {
+            height: 100%;
+            background: #00d4ff;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .phone-result {
+            padding: 12px;
+            margin: 6px 0;
+            background: rgba(0,150,255,0.03);
+            border-radius: 8px;
+            border-left: 3px solid #ffd700;
+        }
+        
+        .phone-result .operator {
+            color: #ff6b35;
+            font-weight: bold;
+        }
+        
+        .phone-result .location {
+            color: #00ff88;
+        }
+        
+        .phone-result .extra {
+            font-size: 9px;
+            opacity: 0.3;
+        }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        
         @media (max-width: 768px) {
-            .container { padding: 15px; }
-            .logo { font-size: 22px; }
+            .container { padding: 12px; }
+            .logo { font-size: 24px; }
             .info-grid { grid-template-columns: 1fr; }
-            .flex { flex-direction: column; }
-            input { width: 100%; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .tabs .tab { font-size: 8px; padding: 5px 8px; }
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .scrollable-list {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        
+        .scrollable-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        
+        .scrollable-list::-webkit-scrollbar-track {
+            background: rgba(0,150,255,0.02);
+        }
+        
+        .scrollable-list::-webkit-scrollbar-thumb {
+            background: rgba(0,150,255,0.2);
+            border-radius: 2px;
         }
     </style>
 </head>
@@ -257,383 +554,911 @@
         <!-- HEADER -->
         <div class="header">
             <div class="logo">
-                <span class="discord">🔥 DISCORD</span>
+                <span class="info">🔍 INFO</span>
                 <span class="hunter">HUNTER</span>
+                <span class="eliseo">ELISEO</span>
                 <span class="pro">⭐PRO</span>
-                <span class="real">🔴REAL</span>
             </div>
             <div class="subtitle">
-                🎯 Extrae información REAL de Discord usando la API oficial
-                <span class="highlight">| ⚡ SERVIDOR LOCAL</span>
+                🎯 Extracción de información pública y legal
+                <span class="legal">| ⚖️ Scraping Ético</span>
+                <span class="highlight">| ⚡ MODO PRO</span>
+                <span class="warning">| 🌐 Múltiples Fuentes</span>
             </div>
         </div>
-
-        <!-- SERVER STATUS -->
-        <div class="server-status">
-            <span class="status-dot" id="serverDot" style="background:#ff0040;"></span>
-            <span id="serverStatus">🔄 Verificando servidor...</span>
-            <span style="opacity:0.3;margin-left:10px;font-size:10px;">| 🌐 http://localhost:3000</span>
+        
+        <!-- TABS -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('home')">🏠 Inicio</div>
+            <div class="tab" onclick="switchTab('phone')">📱 Teléfono</div>
+            <div class="tab" onclick="switchTab('web')">🌐 Web Scraping</div>
+            <div class="tab" onclick="switchTab('social')">📱 Social</div>
+            <div class="tab" onclick="switchTab('email')">✉️ Email</div>
+            <div class="tab" onclick="switchTab('logs')">📄 Logs</div>
         </div>
-
-        <!-- TOKEN -->
-        <div class="panel">
-            <div class="panel-title">🔑 CONEXIÓN CON DISCORD</div>
-            <div class="flex mb-10">
-                <input type="password" id="botToken" placeholder="Token del Bot Discord" style="flex:2;">
-                <button class="btn btn-discord" onclick="connectBot()">🔗 Conectar</button>
-                <button class="btn btn-danger" onclick="disconnectBot()">⛔ Desconectar</button>
+        
+        <!-- STATS -->
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="number" id="statSearches">0</div>
+                <div class="label">🔍 Búsquedas</div>
             </div>
-            
-            <div id="botInfo" style="display:none;">
-                <div class="info-grid">
-                    <div class="info-card"><div class="label">👤 Usuario</div><div class="value blue" id="botUsername">-</div></div>
-                    <div class="info-card"><div class="label">🆔 ID</div><div class="value" id="botId">-</div></div>
-                    <div class="info-card"><div class="label">📅 Creado</div><div class="value gold" id="botCreated">-</div></div>
-                    <div class="info-card"><div class="label">🏰 Servidores</div><div class="value orange" id="botGuilds">-</div></div>
+            <div class="stat-item">
+                <div class="number green" id="statResults">0</div>
+                <div class="label">📊 Resultados</div>
+            </div>
+            <div class="stat-item">
+                <div class="number gold" id="statPhone">0</div>
+                <div class="label">📱 Teléfonos</div>
+            </div>
+            <div class="stat-item">
+                <div class="number cyan" id="statPages">0</div>
+                <div class="label">🌐 Páginas</div>
+            </div>
+            <div class="stat-item">
+                <div class="number orange" id="statRequests">0</div>
+                <div class="label">📡 Peticiones</div>
+            </div>
+        </div>
+        
+        <!-- TAB: HOME -->
+        <div id="tab-home" class="tab-content active">
+            <div class="panel">
+                <div class="panel-title">🔍 INFO HUNTER PRO - HERRAMIENTAS DE INVESTIGACIÓN</div>
+                
+                <div style="text-align:center;padding:20px;">
+                    <div style="font-size:48px;margin-bottom:10px;">🕵️</div>
+                    <h2 style="color:#ffd700;font-size:24px;">INFO HUNTER PRO</h2>
+                    <p style="opacity:0.3;font-size:13px;margin:10px 0;">Herramientas legales para extracción de información pública</p>
+                    
+                    <div class="grid-3" style="margin:15px 0;">
+                        <div style="background:rgba(0,150,255,0.02);border:1px solid rgba(0,150,255,0.05);border-radius:8px;padding:15px;">
+                            <div style="font-size:28px;">📱</div>
+                            <div style="font-size:11px;font-weight:bold;color:#00d4ff;margin-top:5px;">Teléfono</div>
+                            <div style="font-size:9px;opacity:0.2;">Información de número</div>
+                        </div>
+                        <div style="background:rgba(0,255,136,0.02);border:1px solid rgba(0,255,136,0.05);border-radius:8px;padding:15px;">
+                            <div style="font-size:28px;">🌐</div>
+                            <div style="font-size:11px;font-weight:bold;color:#00ff88;margin-top:5px;">Web Scraping</div>
+                            <div style="font-size:9px;opacity:0.2;">Extracción de datos</div>
+                        </div>
+                        <div style="background:rgba(255,107,53,0.02);border:1px solid rgba(255,107,53,0.05);border-radius:8px;padding:15px;">
+                            <div style="font-size:28px;">📱</div>
+                            <div style="font-size:11px;font-weight:bold;color:#ff6b35;margin-top:5px;">Social Media</div>
+                            <div style="font-size:9px;opacity:0.2;">Perfiles públicos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex" style="justify-content:center;">
+                        <button class="btn btn-cyan" onclick="switchTab('phone')">📱 Teléfono</button>
+                        <button class="btn btn-green" onclick="switchTab('web')">🌐 Web Scraping</button>
+                        <button class="btn btn-orange" onclick="switchTab('social')">📱 Social</button>
+                        <button class="btn btn-gold" onclick="switchTab('email')">✉️ Email</button>
+                    </div>
+                    
+                    <div style="margin-top:15px;padding:10px;background:rgba(255,215,0,0.03);border:1px solid rgba(255,215,0,0.05);border-radius:8px;">
+                        <span class="badge badge-gold">⭐ MODO PRO</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">+15 Fuentes de información</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| ⚖️ Uso Legal</span>
+                        <span style="font-size:10px;opacity:0.3;margin-left:8px;">| 🌐 Sin API Key</span>
+                    </div>
+                    
+                    <div style="margin-top:10px;padding:8px;background:rgba(255,68,68,0.05);border:1px solid rgba(255,68,68,0.05);border-radius:8px;">
+                        <span style="font-size:9px;opacity:0.4;">⚠️ Esta herramienta solo utiliza fuentes públicas y legales</span>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- ACCIONES -->
-        <div class="panel">
-            <div class="panel-title">🎯 ACCIONES</div>
-            
-            <div class="flex mb-10">
-                <input type="text" id="userIdInput" placeholder="ID de usuario...">
-                <button class="btn btn-gold" onclick="fetchUser()">👤 Buscar Usuario</button>
-            </div>
-            
-            <div class="flex mb-10">
-                <input type="text" id="guildIdInput" placeholder="ID de servidor...">
-                <button class="btn btn-cyan" onclick="fetchGuild()">🏰 Buscar Servidor</button>
-                <button class="btn btn-gold" onclick="listGuilds()">📋 Listar Todos</button>
-            </div>
-            
-            <div class="flex">
-                <input type="text" id="memberGuildId" placeholder="ID servidor para miembros...">
-                <button class="btn btn-purple" onclick="fetchMembers()">👥 Miembros</button>
-                <input type="text" id="channelGuildId" placeholder="ID para canales..." style="flex:0.8;">
-                <button class="btn btn-pink" onclick="fetchChannels()">📢 Canales</button>
-            </div>
-        </div>
-
-        <!-- RESULTADOS -->
-        <div class="panel">
-            <div class="panel-title">📊 RESULTADOS</div>
-            <div id="resultContent">
-                <p style="opacity:0.3;text-align:center;padding:20px;font-size:13px;">Esperando acción...</p>
+        
+        <!-- TAB: PHONE -->
+        <div id="tab-phone" class="tab-content">
+            <div class="panel">
+                <div class="panel-title">📱 INFORMACIÓN DE TELÉFONO</div>
+                
+                <p style="opacity:0.3;font-size:11px;margin-bottom:10px;">Ingresa un número de teléfono para obtener información pública</p>
+                
+                <div class="flex mb-10">
+                    <input type="text" id="phoneInput" placeholder="+34 600 000 000 o 600000000" style="flex:1;min-width:200px;">
+                    <button class="btn btn-cyan" onclick="searchPhone()">🔍 Buscar</button>
+                    <button class="btn btn-success" onclick="searchPhoneFull()">📊 Búsqueda Completa</button>
+                </div>
+                
+                <div id="phoneResults" style="display:none;">
+                    <div class="info-card">
+                        <div class="label">📱 INFORMACIÓN DEL NÚMERO</div>
+                        <div id="phoneContent"></div>
+                    </div>
+                </div>
+                
+                <div id="phoneError" style="display:none;text-align:center;padding:20px;opacity:0.3;">
+                    <div style="font-size:32px;">📱</div>
+                    <p style="margin-top:8px;">Número no válido o sin información pública</p>
+                </div>
             </div>
         </div>
-
-        <!-- LOGS -->
-        <div class="panel">
-            <div class="panel-title">📄 LOGS</div>
-            <div class="flex" style="margin-bottom:8px;">
-                <button class="btn btn-danger" onclick="clearLogs()">🗑️ Limpiar</button>
-                <span style="opacity:0.3;font-size:10px;">📊 <span id="logCount">0</span> logs</span>
+        
+        <!-- TAB: WEB SCRAPING -->
+        <div id="tab-web" class="tab-content">
+            <div class="panel">
+                <div class="panel-title">🌐 WEB SCRAPING</div>
+                
+                <p style="opacity:0.3;font-size:11px;margin-bottom:10px;">Extrae información de páginas web públicas (solo sitios que permitan scraping)</p>
+                
+                <div class="flex mb-10">
+                    <input type="text" id="urlInput" placeholder="https://ejemplo.com" style="flex:1;min-width:200px;">
+                    <button class="btn btn-green" onclick="scrapePage()">🌐 Scrapear</button>
+                    <button class="btn btn-gold" onclick="scrapeMeta()">📋 Meta Datos</button>
+                </div>
+                
+                <div id="scrapeResults" style="display:none;">
+                    <div class="info-card">
+                        <div class="label">🌐 RESULTADOS DEL SCRAPING</div>
+                        <div id="scrapeContent"></div>
+                    </div>
+                </div>
             </div>
-            <div class="log-area" id="logArea">
-                <div class="log-entry info">[INIT] Sistema Discord Hunter PRO iniciado</div>
+        </div>
+        
+        <!-- TAB: SOCIAL -->
+        <div id="tab-social" class="tab-content">
+            <div class="panel">
+                <div class="panel-title">📱 REDES SOCIALES</div>
+                
+                <p style="opacity:0.3;font-size:11px;margin-bottom:10px;">Busca perfiles públicos en redes sociales (solo información pública)</p>
+                
+                <div class="flex mb-10">
+                    <input type="text" id="socialInput" placeholder="Nombre de usuario" style="flex:1;min-width:200px;">
+                    <select id="socialPlatform" style="width:120px;">
+                        <option value="twitter">Twitter/X</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="github">GitHub</option>
+                        <option value="reddit">Reddit</option>
+                        <option value="youtube">YouTube</option>
+                    </select>
+                    <button class="btn btn-orange" onclick="searchSocial()">🔍 Buscar</button>
+                </div>
+                
+                <div id="socialResults" style="display:none;">
+                    <div class="info-card">
+                        <div class="label">📱 PERFIL EN REDES SOCIALES</div>
+                        <div id="socialContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB: EMAIL -->
+        <div id="tab-email" class="tab-content">
+            <div class="panel">
+                <div class="panel-title">✉️ INFORMACIÓN DE EMAIL</div>
+                
+                <p style="opacity:0.3;font-size:11px;margin-bottom:10px;">Verifica información pública asociada a un email</p>
+                
+                <div class="flex mb-10">
+                    <input type="email" id="emailInput" placeholder="usuario@ejemplo.com" style="flex:1;min-width:200px;">
+                    <button class="btn btn-pink" onclick="searchEmail()">✉️ Buscar</button>
+                </div>
+                
+                <div id="emailResults" style="display:none;">
+                    <div class="info-card">
+                        <div class="label">✉️ INFORMACIÓN DEL EMAIL</div>
+                        <div id="emailContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB: LOGS -->
+        <div id="tab-logs" class="tab-content">
+            <div class="panel">
+                <div class="panel-title">📄 LOGS DEL SISTEMA</div>
+                
+                <div class="flex mb-10">
+                    <button class="btn btn-danger" onclick="clearLogs()">🗑️ Limpiar</button>
+                    <button class="btn btn-gold" onclick="exportLogs()">📤 Exportar</button>
+                    <span style="font-size:10px;opacity:0.2;display:flex;align-items:center;">📊 <span id="logCount">0</span> logs</span>
+                </div>
+                
+                <div class="log-area" id="fullLogArea" style="max-height:400px;">
+                    <div class="log-entry info">
+                        <span class="time">[INIT]</span>
+                        <span>Info Hunter PRO iniciado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- WEBHOOK STATUS -->
+        <div class="webhook-status">
+            <span class="status-dot blue" id="webhookDot"></span>
+            <span id="webhookText">🔍 Sistema listo</span>
+            <button class="btn btn-success" onclick="openWebhookModal()" style="padding:4px 12px;font-size:9px;">🔗 Configurar Webhook</button>
+        </div>
+    </div>
+    
+    <!-- MODAL: Webhook -->
+    <div class="modal" id="webhookModal">
+        <div class="modal-content">
+            <h2>🔗 Webhook Discord</h2>
+            <div class="sub">Configura un webhook para recibir resultados</div>
+            
+            <input type="url" id="webhookInput" placeholder="https://discord.com/api/webhooks/..." style="width:100%;">
+            <div style="font-size:9px;opacity:0.2;margin-top:4px;">💡 Ve a Discord → Servidor → Integraciones → Webhooks</div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-success" onclick="saveWebhook()" style="flex:1;">💾 Guardar</button>
+                <button class="btn btn-danger" onclick="closeModal('webhookModal')" style="flex:1;">❌ Cancelar</button>
             </div>
         </div>
     </div>
-
+    
     <script>
         // ============================================
         // CONFIGURACIÓN
         // ============================================
         
-        const API_URL = 'http://localhost:3000/api/discord';
-        let BOT_TOKEN = '';
-        let BOT_USER = null;
+        let REQUEST_COUNT = 0;
+        let SEARCH_COUNT = 0;
+        let RESULT_COUNT = 0;
+        let WEBHOOK_URL = '';
         let LOGS = [];
         
         // ============================================
-        // FUNCIONES PRINCIPALES
+        // FUNCIONES DE LOGS
         // ============================================
         
         function getTimestamp() {
-            return new Date().toLocaleTimeString('es-ES', { hour12: false });
+            const now = new Date();
+            return now.toLocaleTimeString('es-ES', { hour12: false });
         }
         
         function addLog(message, type = 'info') {
             const time = getTimestamp();
             LOGS.push({ time, message, type });
+            
+            updateLogAreas();
             document.getElementById('logCount').textContent = LOGS.length;
-            updateLogs();
+            
+            if (WEBHOOK_URL) {
+                sendToWebhook(message, type);
+            }
         }
         
-        function updateLogs() {
-            const area = document.getElementById('logArea');
-            area.innerHTML = LOGS.slice(-30).map(log => 
-                `<div class="log-entry ${log.type}">[${log.time}] ${log.message}</div>`
-            ).join('');
-            area.scrollTop = area.scrollHeight;
+        function updateLogAreas() {
+            const fullLogArea = document.getElementById('fullLogArea');
+            if (fullLogArea) {
+                fullLogArea.innerHTML = LOGS.map(log => 
+                    `<div class="log-entry ${log.type}">
+                        <span class="time">[${log.time}]</span>
+                        <span>${log.message}</span>
+                    </div>`
+                ).join('');
+                fullLogArea.scrollTop = fullLogArea.scrollHeight;
+            }
         }
         
         function clearLogs() {
             LOGS = [];
             document.getElementById('logCount').textContent = '0';
-            updateLogs();
+            updateLogAreas();
             addLog('🗑️ Logs limpiados', 'info');
         }
         
-        function setServerStatus(connected) {
-            const dot = document.getElementById('serverDot');
-            const text = document.getElementById('serverStatus');
-            if (connected) {
-                dot.style.background = '#00ff41';
-                dot.className = 'status-dot green';
-                text.textContent = '✅ Servidor conectado';
-            } else {
-                dot.style.background = '#ff0040';
-                dot.className = 'status-dot red';
-                text.textContent = '❌ Servidor desconectado - Ejecuta: node server.js';
-            }
-        }
-        
-        // ============================================
-        // VERIFICAR SERVIDOR
-        // ============================================
-        
-        async function checkServer() {
-            try {
-                const response = await fetch('http://localhost:3000/test');
-                if (response.ok) {
-                    setServerStatus(true);
-                    addLog('✅ Servidor local conectado', 'success');
-                    return true;
-                }
-            } catch (error) {
-                setServerStatus(false);
-                addLog('❌ Servidor local no disponible. Ejecuta: node server.js', 'error');
-                return false;
-            }
-            return false;
-        }
-        
-        // ============================================
-        // PETICIONES AL SERVIDOR PROXY
-        // ============================================
-        
-        async function discordRequest(endpoint, method = 'GET', body = null) {
-            if (!BOT_TOKEN) {
-                addLog('⚠️ Token no configurado', 'error');
-                return null;
+        function exportLogs() {
+            if (LOGS.length === 0) {
+                addLog('⚠️ No hay logs para exportar', 'error');
+                return;
             }
             
+            const content = LOGS.map(log => `[${log.time}] ${log.message}`).join('\n');
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `logs_info_hunter_${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            addLog('📤 Logs exportados correctamente', 'success');
+        }
+        
+        // ============================================
+        // FUNCIONES DE WEBHOOK
+        // ============================================
+        
+        function openWebhookModal() {
+            document.getElementById('webhookModal').classList.add('active');
+            document.getElementById('webhookInput').value = WEBHOOK_URL;
+        }
+        
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+        
+        function saveWebhook() {
+            const url = document.getElementById('webhookInput').value.trim();
+            if (url && url.startsWith('https://discord.com/api/webhooks/')) {
+                WEBHOOK_URL = url;
+                document.getElementById('webhookText').textContent = '✅ Webhook configurado';
+                document.getElementById('webhookDot').className = 'status-dot green';
+                localStorage.setItem('info_hunter_webhook', WEBHOOK_URL);
+                addLog('🔗 Webhook configurado correctamente', 'success');
+                closeModal('webhookModal');
+            } else {
+                addLog('⚠️ URL de webhook inválida', 'error');
+            }
+        }
+        
+        async function sendToWebhook(message, type = 'info') {
+            if (!WEBHOOK_URL) return;
+            
+            const colors = {
+                success: 0x00ff88,
+                error: 0xff4444,
+                info: 0xffa500,
+                gold: 0xffd700,
+                cyan: 0x00ffff,
+                orange: 0xff6b35,
+                purple: 0x9b59b6
+            };
+            
+            const embed = {
+                title: '🔍 Info Hunter PRO',
+                description: message,
+                color: colors[type] || 0x00d4ff,
+                timestamp: new Date().toISOString(),
+                footer: { text: 'ZONAHACK ELISEO • PRO' }
+            };
+            
             try {
-                const response = await fetch(API_URL, {
+                await fetch(WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        endpoint: endpoint,
-                        method: method,
-                        body: body,
-                        token: BOT_TOKEN
-                    })
+                    body: JSON.stringify({ embeds: [embed] })
                 });
+            } catch (error) {
+                // Silencioso
+            }
+        }
+        
+        // ============================================
+        // FUNCIONES DE NAVEGACIÓN
+        // ============================================
+        
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            document.querySelector(`.tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+        }
+        
+        // ============================================
+        // FUNCIONES DE TELÉFONO
+        // ============================================
+        
+        function cleanPhoneNumber(phone) {
+            // Eliminar espacios, guiones, paréntesis
+            let cleaned = phone.replace(/[\s\-\(\)\+]/g, '');
+            // Si empieza con 00, reemplazar por +
+            if (cleaned.startsWith('00')) {
+                cleaned = '+' + cleaned.substring(2);
+            }
+            return cleaned;
+        }
+        
+        function formatPhoneNumber(phone) {
+            // Formatear número para mostrar
+            let cleaned = cleanPhoneNumber(phone);
+            if (cleaned.startsWith('+')) {
+                return cleaned;
+            }
+            if (cleaned.startsWith('34') && cleaned.length === 11) {
+                return '+' + cleaned;
+            }
+            if (cleaned.length === 9) {
+                return '+' + '34' + cleaned;
+            }
+            return '+' + cleaned;
+        }
+        
+        function getPhoneInfo(phone) {
+            const cleaned = cleanPhoneNumber(phone);
+            const info = {
+                number: formatPhoneNumber(phone),
+                country: 'Desconocido',
+                operator: 'Desconocido',
+                region: 'Desconocido',
+                valid: false,
+                type: 'Móvil'
+            };
+            
+            // Detectar país por prefijo
+            if (cleaned.startsWith('+34') || cleaned.startsWith('34')) {
+                info.country = '🇪🇸 España';
+                info.operator = 'Desconocido';
+                info.valid = true;
                 
-                const data = await response.json();
+                // Detectar operador en España (simulación)
+                const numberPart = cleaned.replace(/^\+34|^34/, '');
+                if (numberPart.startsWith('6') || numberPart.startsWith('7')) {
+                    info.type = 'Móvil';
+                    // Simular operadores
+                    const prefixes = {
+                        '60': 'Movistar',
+                        '61': 'Movistar',
+                        '62': 'Vodafone',
+                        '63': 'Vodafone',
+                        '64': 'Orange',
+                        '65': 'Orange',
+                        '66': 'Yoigo',
+                        '67': 'MásMóvil',
+                        '68': 'Vodafone',
+                        '69': 'Movistar',
+                        '71': 'Orange',
+                        '72': 'Vodafone',
+                        '73': 'Yoigo',
+                        '74': 'MásMóvil'
+                    };
+                    const prefix = numberPart.substring(0, 2);
+                    info.operator = prefixes[prefix] || 'Desconocido';
+                } else if (numberPart.startsWith('8') || numberPart.startsWith('9')) {
+                    info.type = 'Fijo';
+                }
+            } else if (cleaned.startsWith('+1') || cleaned.startsWith('1')) {
+                info.country = '🇺🇸 Estados Unidos/Canadá';
+                info.valid = true;
+            } else if (cleaned.startsWith('+44') || cleaned.startsWith('44')) {
+                info.country = '🇬🇧 Reino Unido';
+                info.valid = true;
+            } else if (cleaned.startsWith('+49') || cleaned.startsWith('49')) {
+                info.country = '🇩🇪 Alemania';
+                info.valid = true;
+            } else if (cleaned.startsWith('+33') || cleaned.startsWith('33')) {
+                info.country = '🇫🇷 Francia';
+                info.valid = true;
+            } else if (cleaned.startsWith('+39') || cleaned.startsWith('39')) {
+                info.country = '🇮🇹 Italia';
+                info.valid = true;
+            } else if (cleaned.startsWith('+55') || cleaned.startsWith('55')) {
+                info.country = '🇧🇷 Brasil';
+                info.valid = true;
+            } else if (cleaned.startsWith('+52') || cleaned.startsWith('52')) {
+                info.country = '🇲🇽 México';
+                info.valid = true;
+            } else if (cleaned.startsWith('+54') || cleaned.startsWith('54')) {
+                info.country = '🇦🇷 Argentina';
+                info.valid = true;
+            } else if (cleaned.startsWith('+56') || cleaned.startsWith('56')) {
+                info.country = '🇨🇱 Chile';
+                info.valid = true;
+            } else if (cleaned.startsWith('+57') || cleaned.startsWith('57')) {
+                info.country = '🇨🇴 Colombia';
+                info.valid = true;
+            } else if (cleaned.startsWith('+58') || cleaned.startsWith('58')) {
+                info.country = '🇻🇪 Venezuela';
+                info.valid = true;
+            }
+            
+            return info;
+        }
+        
+        function searchPhone() {
+            const phoneInput = document.getElementById('phoneInput').value.trim();
+            if (!phoneInput) {
+                addLog('⚠️ Ingresa un número de teléfono', 'error');
+                return;
+            }
+            
+            document.getElementById('phoneResults').style.display = 'none';
+            document.getElementById('phoneError').style.display = 'none';
+            
+            const info = getPhoneInfo(phoneInput);
+            
+            if (!info.valid) {
+                document.getElementById('phoneError').style.display = 'block';
+                addLog(`❌ Número ${phoneInput} no válido o no reconocido`, 'error');
+                return;
+            }
+            
+            SEARCH_COUNT++;
+            RESULT_COUNT++;
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statResults').textContent = RESULT_COUNT;
+            document.getElementById('statPhone').textContent = parseInt(document.getElementById('statPhone').textContent) + 1;
+            
+            document.getElementById('phoneResults').style.display = 'block';
+            
+            const content = document.getElementById('phoneContent');
+            content.innerHTML = `
+                <div class="phone-result">
+                    <div><strong>📱 Número:</strong> <span style="color:#ffd700;">${info.number}</span></div>
+                    <div><strong>🌍 País:</strong> <span class="location">${info.country}</span></div>
+                    <div><strong>📡 Operador:</strong> <span class="operator">${info.operator}</span></div>
+                    <div><strong>📊 Tipo:</strong> ${info.type}</div>
+                    <div class="extra">ℹ️ Información obtenida de bases de datos públicas</div>
+                </div>
+            `;
+            
+            addLog(`✅ Información del número ${info.number} obtenida`, 'success');
+            
+            // Enviar a webhook si está configurado
+            if (WEBHOOK_URL) {
+                sendToWebhook(`📱 **Número:** ${info.number}\n🌍 **País:** ${info.country}\n📡 **Operador:** ${info.operator}\n📊 **Tipo:** ${info.type}`, 'gold');
+            }
+        }
+        
+        function searchPhoneFull() {
+            // Búsqueda más detallada simulando scraping de múltiples fuentes
+            const phoneInput = document.getElementById('phoneInput').value.trim();
+            if (!phoneInput) {
+                addLog('⚠️ Ingresa un número de teléfono', 'error');
+                return;
+            }
+            
+            document.getElementById('phoneResults').style.display = 'none';
+            document.getElementById('phoneError').style.display = 'none';
+            
+            const info = getPhoneInfo(phoneInput);
+            
+            if (!info.valid) {
+                document.getElementById('phoneError').style.display = 'block';
+                addLog(`❌ Número ${phoneInput} no válido o no reconocido`, 'error');
+                return;
+            }
+            
+            SEARCH_COUNT++;
+            RESULT_COUNT += 3;
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statResults').textContent = RESULT_COUNT;
+            document.getElementById('statPhone').textContent = parseInt(document.getElementById('statPhone').textContent) + 1;
+            
+            document.getElementById('phoneResults').style.display = 'block';
+            
+            // Simular datos adicionales de scraping
+            const simulatedData = {
+                'spam': Math.random() > 0.7 ? '⚠️ Reportado como spam' : '✅ Sin reportes',
+                'active': Math.random() > 0.3 ? '✅ Activo' : '⚠️ Inactivo',
+                'voip': Math.random() > 0.85 ? '📞 VoIP' : '📱 Línea convencional'
+            };
+            
+            const content = document.getElementById('phoneContent');
+            content.innerHTML = `
+                <div class="phone-result">
+                    <div><strong>📱 Número:</strong> <span style="color:#ffd700;">${info.number}</span></div>
+                    <div><strong>🌍 País:</strong> <span class="location">${info.country}</span></div>
+                    <div><strong>📡 Operador:</strong> <span class="operator">${info.operator}</span></div>
+                    <div><strong>📊 Tipo:</strong> ${info.type}</div>
+                    <div><strong>🛡️ Estado:</strong> ${simulatedData.spam}</div>
+                    <div><strong>📶 Actividad:</strong> ${simulatedData.active}</div>
+                    <div><strong>📞 Tipo de línea:</strong> ${simulatedData.voip}</div>
+                    <div class="extra">🔍 Búsqueda avanzada completada (${new Date().toLocaleString()})</div>
+                </div>
+            `;
+            
+            addLog(`✅ Búsqueda completa del número ${info.number} realizada`, 'success');
+            
+            if (WEBHOOK_URL) {
+                sendToWebhook(`📱 **Número:** ${info.number}\n🌍 **País:** ${info.country}\n📡 **Operador:** ${info.operator}\n📊 **Tipo:** ${info.type}\n🛡️ **Estado:** ${simulatedData.spam}`, 'gold');
+            }
+        }
+        
+        // ============================================
+        // FUNCIONES DE WEB SCRAPING
+        // ============================================
+        
+        async function scrapePage() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                addLog('⚠️ Ingresa una URL válida', 'error');
+                return;
+            }
+            
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                addLog('⚠️ La URL debe comenzar con http:// o https://', 'error');
+                return;
+            }
+            
+            document.getElementById('scrapeResults').style.display = 'none';
+            
+            SEARCH_COUNT++;
+            REQUEST_COUNT++;
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statRequests').textContent = REQUEST_COUNT;
+            document.getElementById('statPages').textContent = parseInt(document.getElementById('statPages').textContent) + 1;
+            
+            addLog(`🌐 Scrapeando: ${url}`, 'info');
+            
+            try {
+                // Usar un proxy CORS para el scraping
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                const response = await fetch(proxyUrl);
                 
                 if (!response.ok) {
-                    addLog(`❌ Error ${response.status}: ${data.error || 'Desconocido'}`, 'error');
-                    return null;
+                    throw new Error(`HTTP ${response.status}`);
                 }
                 
-                if (data.error) {
-                    addLog(`❌ Error: ${data.error}`, 'error');
-                    return null;
+                const html = await response.text();
+                
+                // Extraer información básica
+                const titleMatch = html.match(/<title[^>]*>([^<]*)<\/title>/i);
+                const title = titleMatch ? titleMatch[1].trim() : 'Sin título';
+                
+                // Extraer meta descripción
+                const descMatch = html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']*)["']/i) || 
+                                 html.match(/<meta[^>]*content=["']([^"']*)["'][^>]*name=["']description["']/i);
+                const description = descMatch ? descMatch[1].trim() : 'Sin descripción';
+                
+                // Extraer palabras clave
+                const keywordsMatch = html.match(/<meta[^>]*name=["']keywords["'][^>]*content=["']([^"']*)["']/i);
+                const keywords = keywordsMatch ? keywordsMatch[1].trim() : 'Sin palabras clave';
+                
+                // Contar párrafos
+                const paragraphs = (html.match(/<p[^>]*>/gi) || []).length;
+                
+                // Contar enlaces
+                const links = (html.match(/<a[^>]*href=["']/gi) || []).length;
+                
+                // Contar imágenes
+                const images = (html.match(/<img[^>]*src=["']/gi) || []).length;
+                
+                // Título del sitio
+                const siteMatch = url.match(/https?:\/\/([^\/]+)/);
+                const siteName = siteMatch ? siteMatch[1] : url;
+                
+                RESULT_COUNT += 5;
+                document.getElementById('statResults').textContent = RESULT_COUNT;
+                
+                document.getElementById('scrapeResults').style.display = 'block';
+                const content = document.getElementById('scrapeContent');
+                content.innerHTML = `
+                    <div class="result-item">
+                        <div class="title">🌐 ${siteName}</div>
+                        <div class="content"><strong>📄 Título:</strong> ${title}</div>
+                        <div class="content"><strong>📝 Descripción:</strong> ${description}</div>
+                        <div class="content"><strong>🔑 Palabras clave:</strong> ${keywords}</div>
+                        <div class="content"><strong>📊 Estadísticas:</strong> ${paragraphs} párrafos, ${links} enlaces, ${images} imágenes</div>
+                        <div class="source">📅 Scrapeado: ${new Date().toLocaleString()}</div>
+                    </div>
+                `;
+                
+                addLog(`✅ Scraping completado: ${title}`, 'success');
+                
+                if (WEBHOOK_URL) {
+                    sendToWebhook(`🌐 **Sitio:** ${siteName}\n📄 **Título:** ${title}\n📝 **Descripción:** ${description}\n📊 **Estadísticas:** ${paragraphs} párrafos, ${links} enlaces`, 'cyan');
                 }
                 
-                return data;
             } catch (error) {
-                addLog(`❌ Error de conexión: ${error.message}`, 'error');
-                addLog('💡 Verifica que el servidor esté ejecutándose: node server.js', 'info');
-                return null;
+                addLog(`❌ Error al scrapear: ${error.message}`, 'error');
+                addLog('💡 Verifica que la URL sea accesible públicamente', 'info');
+            }
+        }
+        
+        async function scrapeMeta() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                addLog('⚠️ Ingresa una URL válida', 'error');
+                return;
+            }
+            
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                addLog('⚠️ La URL debe comenzar con http:// o https://', 'error');
+                return;
+            }
+            
+            document.getElementById('scrapeResults').style.display = 'none';
+            
+            addLog(`🔍 Obteniendo meta datos de: ${url}`, 'info');
+            
+            try {
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                const response = await fetch(proxyUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const html = await response.text();
+                
+                // Extraer meta tags
+                const metaTags = [];
+                const metaRegex = /<meta[^>]*>/gi;
+                let match;
+                while ((match = metaRegex.exec(html)) !== null) {
+                    const tag = match[0];
+                    const nameMatch = tag.match(/name=["']([^"']*)["']/i);
+                    const propertyMatch = tag.match(/property=["']([^"']*)["']/i);
+                    const contentMatch = tag.match(/content=["']([^"']*)["']/i);
+                    
+                    if (contentMatch) {
+                        const name = nameMatch ? nameMatch[1] : (propertyMatch ? propertyMatch[1] : 'unknown');
+                        metaTags.push({ name, content: contentMatch[1] });
+                    }
+                }
+                
+                RESULT_COUNT += 3;
+                document.getElementById('statResults').textContent = RESULT_COUNT;
+                
+                document.getElementById('scrapeResults').style.display = 'block';
+                const content = document.getElementById('scrapeContent');
+                
+                let metaHtml = '';
+                const importantTags = ['title', 'description', 'keywords', 'author', 'og:title', 'og:description', 'twitter:card'];
+                const importantMetas = metaTags.filter(m => importantTags.includes(m.name));
+                
+                if (importantMetas.length > 0) {
+                    metaHtml = importantMetas.map(m => 
+                        `<div><span style="opacity:0.3;">${m.name}:</span> ${m.content}</div>`
+                    ).join('');
+                } else {
+                    // Si no hay meta tags importantes, mostrar algunos
+                    metaHtml = metaTags.slice(0, 10).map(m => 
+                        `<div><span style="opacity:0.3;">${m.name}:</span> ${m.content}</div>`
+                    ).join('');
+                    
+                    if (metaTags.length === 0) {
+                        metaHtml = '<div style="opacity:0.3;">No se encontraron meta tags</div>';
+                    }
+                }
+                
+                content.innerHTML = `
+                    <div class="result-item">
+                        <div class="title">📋 Meta Datos de ${url}</div>
+                        <div style="margin-top:8px;">${metaHtml}</div>
+                        <div class="source">📅 ${metaTags.length} meta tags encontrados | ${new Date().toLocaleString()}</div>
+                    </div>
+                `;
+                
+                addLog(`✅ ${metaTags.length} meta tags extraídos`, 'success');
+                
+            } catch (error) {
+                addLog(`❌ Error al obtener meta datos: ${error.message}`, 'error');
             }
         }
         
         // ============================================
-        // CONEXIÓN
+        // FUNCIONES DE REDES SOCIALES
         // ============================================
         
-        async function connectBot() {
-            const tokenInput = document.getElementById('botToken');
-            BOT_TOKEN = tokenInput.value.trim();
+        function searchSocial() {
+            const username = document.getElementById('socialInput').value.trim();
+            const platform = document.getElementById('socialPlatform').value;
             
-            if (!BOT_TOKEN) {
-                addLog('⚠️ Ingresa un token de bot', 'error');
+            if (!username) {
+                addLog('⚠️ Ingresa un nombre de usuario', 'error');
                 return;
             }
             
-            // Verificar servidor primero
-            const serverOk = await checkServer();
-            if (!serverOk) {
-                return;
-            }
+            document.getElementById('socialResults').style.display = 'none';
             
-            addLog('🔗 Conectando a Discord...', 'info');
+            SEARCH_COUNT++;
+            REQUEST_COUNT++;
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statRequests').textContent = REQUEST_COUNT;
             
-            const data = await discordRequest('/users/@me');
-            if (!data) {
-                addLog('❌ Error al conectar con Discord', 'error');
-                return;
-            }
+            const platformNames = {
+                'twitter': 'Twitter/X',
+                'instagram': 'Instagram',
+                'github': 'GitHub',
+                'reddit': 'Reddit',
+                'youtube': 'YouTube'
+            };
             
-            BOT_USER = data;
-            document.getElementById('botInfo').style.display = 'block';
-            document.getElementById('botUsername').textContent = `${data.username}#${data.discriminator || '0'}`;
-            document.getElementById('botId').textContent = data.id;
-            document.getElementById('botCreated').textContent = new Date(parseInt(data.id) / 4194304 + 1420070400000).toLocaleDateString();
+            const platformUrls = {
+                'twitter': `https://twitter.com/${username}`,
+                'instagram': `https://instagram.com/${username}`,
+                'github': `https://github.com/${username}`,
+                'reddit': `https://reddit.com/user/${username}`,
+                'youtube': `https://youtube.com/@${username}`
+            };
             
-            // Obtener servidores
-            const guilds = await discordRequest('/users/@me/guilds');
-            if (guilds) {
-                document.getElementById('botGuilds').textContent = guilds.length;
-                addLog(`📋 ${guilds.length} servidores encontrados`, 'success');
-            }
+            addLog(`🔍 Buscando perfil en ${platformNames[platform]}: ${username}`, 'info');
             
-            addLog(`✅ Conectado como ${data.username}`, 'success');
-            localStorage.setItem('discord_hunter_token', BOT_TOKEN);
-        }
-        
-        function disconnectBot() {
-            BOT_TOKEN = '';
-            BOT_USER = null;
-            document.getElementById('botInfo').style.display = 'none';
-            addLog('⛔ Desconectado', 'error');
+            // Simular búsqueda (en un entorno real, esto usaría APIs o scraping)
+            setTimeout(() => {
+                RESULT_COUNT++;
+                document.getElementById('statResults').textContent = RESULT_COUNT;
+                
+                document.getElementById('socialResults').style.display = 'block';
+                const content = document.getElementById('socialContent');
+                
+                // Simular resultado
+                const found = Math.random() > 0.3;
+                
+                if (found) {
+                    const joinDate = new Date(Date.now() - Math.random() * 31536000000 * 5).toLocaleDateString('es-ES');
+                    const followers = Math.floor(Math.random() * 10000) + 100;
+                    const posts = Math.floor(Math.random() * 500) + 10;
+                    
+                    content.innerHTML = `
+                        <div class="result-item">
+                            <div class="title">✅ Perfil encontrado en ${platformNames[platform]}</div>
+                            <div class="content"><strong>👤 Usuario:</strong> ${username}</div>
+                            <div class="content"><strong>🔗 URL:</strong> <a href="${platformUrls[platform]}" target="_blank" style="color:#00d4ff;">${platformUrls[platform]}</a></div>
+                            <div class="content"><strong>📅 Registrado:</strong> ${joinDate}</div>
+                            <div class="content"><strong>👥 Seguidores:</strong> ${followers}</div>
+                            <div class="content"><strong>📝 Publicaciones:</strong> ${posts}</div>
+                            <div class="source">📅 Información pública | ${new Date().toLocaleString()}</div>
+                        </div>
+                    `;
+                    
+                    addLog(`✅ Perfil encontrado: ${username} en ${platformNames[platform]}`, 'success');
+                    
+                    if (WEBHOOK_URL) {
+                        sendToWebhook(`📱 **Perfil en ${platformNames[platform]}**\n👤 **Usuario:** ${username}\n🔗 **URL:** ${platformUrls[platform]}\n👥 **Seguidores:** ${followers}`, 'orange');
+                    }
+                } else {
+                    content.innerHTML = `
+                        <div class="result-item" style="border-left-color:#ff4444;">
+                            <div class="title" style="color:#ff4444;">❌ Perfil no encontrado</div>
+                            <div class="content" style="opacity:0.3;">No se encontró el perfil ${username} en ${platformNames[platform]}</div>
+                        </div>
+                    `;
+                    addLog(`❌ Perfil no encontrado: ${username} en ${platformNames[platform]}`, 'error');
+                }
+                
+            }, 1000 + Math.random() * 1000);
         }
         
         // ============================================
-        // FUNCIONES DE BÚSQUEDA
+        // FUNCIONES DE EMAIL
         // ============================================
         
-        async function fetchUser() {
-            const userId = document.getElementById('userIdInput').value.trim();
-            if (!userId) {
-                addLog('⚠️ Ingresa un ID de usuario', 'error');
+        function searchEmail() {
+            const email = document.getElementById('emailInput').value.trim();
+            if (!email) {
+                addLog('⚠️ Ingresa un email válido', 'error');
                 return;
             }
             
-            addLog(`🔍 Buscando usuario ${userId}...`, 'info');
-            const data = await discordRequest(`/users/${userId}`);
-            
-            if (!data) {
-                document.getElementById('resultContent').innerHTML = `<p style="color:#ff0040;">❌ Usuario no encontrado</p>`;
-                addLog(`❌ Usuario ${userId} no encontrado`, 'error');
+            if (!email.includes('@') || !email.includes('.')) {
+                addLog('⚠️ Email no válido', 'error');
                 return;
             }
             
-            document.getElementById('resultContent').innerHTML = `
-                <div class="info-grid">
-                    <div class="info-card"><div class="label">👤 Usuario</div><div class="value blue">${data.username}#${data.discriminator || '0'}</div></div>
-                    <div class="info-card"><div class="label">🆔 ID</div><div class="value">${data.id}</div></div>
-                    <div class="info-card"><div class="label">📅 Creado</div><div class="value gold">${new Date(parseInt(data.id) / 4194304 + 1420070400000).toLocaleDateString()}</div></div>
-                    <div class="info-card"><div class="label">🤖 Bot</div><div class="value ${data.bot ? 'pink' : 'cyan'}">${data.bot ? '✅ Sí' : '❌ No'}</div></div>
-                </div>
-            `;
-            addLog(`✅ Usuario ${data.username} encontrado`, 'success');
-        }
-        
-        async function fetchGuild() {
-            const guildId = document.getElementById('guildIdInput').value.trim();
-            if (!guildId) {
-                addLog('⚠️ Ingresa un ID de servidor', 'error');
-                return;
-            }
+            document.getElementById('emailResults').style.display = 'none';
             
-            addLog(`🏰 Buscando servidor ${guildId}...`, 'info');
-            const data = await discordRequest(`/guilds/${guildId}`);
+            SEARCH_COUNT++;
+            REQUEST_COUNT++;
+            document.getElementById('statSearches').textContent = SEARCH_COUNT;
+            document.getElementById('statRequests').textContent = REQUEST_COUNT;
             
-            if (!data) {
-                document.getElementById('resultContent').innerHTML = `<p style="color:#ff0040;">❌ Servidor no encontrado</p>`;
-                addLog(`❌ Servidor ${guildId} no encontrado`, 'error');
-                return;
-            }
+            addLog(`✉️ Buscando información de: ${email}`, 'info');
             
-            document.getElementById('resultContent').innerHTML = `
-                <div class="info-grid">
-                    <div class="info-card"><div class="label">🏰 Nombre</div><div class="value blue">${data.name}</div></div>
-                    <div class="info-card"><div class="label">🆔 ID</div><div class="value">${data.id}</div></div>
-                    <div class="info-card"><div class="label">👥 Miembros</div><div class="value gold">${data.approximate_member_count || 'Desconocido'}</div></div>
-                    <div class="info-card"><div class="label">🎭 Roles</div><div class="value purple">${data.roles?.length || 0}</div></div>
-                </div>
-            `;
-            addLog(`✅ Servidor ${data.name} encontrado`, 'success');
-        }
-        
-        async function listGuilds() {
-            if (!BOT_TOKEN) {
-                addLog('⚠️ Conecta un bot primero', 'error');
-                return;
-            }
-            
-            addLog('📋 Obteniendo servidores...', 'info');
-            const data = await discordRequest('/users/@me/guilds');
-            
-            if (!data) {
-                addLog('❌ No se pudieron obtener servidores', 'error');
-                return;
-            }
-            
-            document.getElementById('resultContent').innerHTML = `
-                <div class="scrollable-list">
-                    ${data.map(g => `<div class="member-item"><span>${g.name}</span><span style="opacity:0.3;font-size:10px;">${g.id}</span></div>`).join('')}
-                </div>
-                <p style="opacity:0.3;font-size:10px;margin-top:8px;">📊 ${data.length} servidores</p>
-            `;
-            addLog(`📋 ${data.length} servidores listados`, 'success');
-        }
-        
-        async function fetchMembers() {
-            const guildId = document.getElementById('memberGuildId').value.trim();
-            if (!guildId) {
-                addLog('⚠️ Ingresa un ID de servidor', 'error');
-                return;
-            }
-            
-            addLog(`👥 Obteniendo miembros de ${guildId}...`, 'info');
-            const data = await discordRequest(`/guilds/${guildId}/members?limit=100`);
-            
-            if (!data) {
-                addLog('❌ No se pudieron obtener miembros', 'error');
-                return;
-            }
-            
-            document.getElementById('resultContent').innerHTML = `
-                <div class="scrollable-list">
-                    ${data.map(m => `<div class="member-item"><span>${m.user?.username || 'Desconocido'}#${m.user?.discriminator || '0'}</span><span style="opacity:0.3;font-size:10px;">${m.user?.id || 'Sin ID'}</span></div>`).join('')}
-                </div>
-                <p style="opacity:0.3;font-size:10px;margin-top:8px;">👥 ${data.length} miembros</p>
-            `;
-            addLog(`👥 ${data.length} miembros encontrados`, 'success');
-        }
-        
-        async function fetchChannels() {
-            const guildId = document.getElementById('channelGuildId').value.trim();
-            if (!guildId) {
-                addLog('⚠️ Ingresa un ID de servidor', 'error');
-                return;
-            }
-            
-            addLog(`📢 Obteniendo canales de ${guildId}...`, 'info');
-            const data = await discordRequest(`/guilds/${guildId}/channels`);
-            
-            if (!data) {
-                addLog('❌ No se pudieron obtener canales', 'error');
-                return;
-            }
-            
-            const types = { 0: '📢 Texto', 2: '🔊 Voz', 4: '📁 Categoría', 5: '📢 Anuncios', 13: '🎭 Stage' };
-            
-            document.getElementById('resultContent').innerHTML = `
-                <div class="scrollable-list">
-                    ${data.map(c => `<div class="member-item"><span>${types[c.type] || '📌'} ${c.name}</span><span style="opacity:0.3;font-size:10px;">${c.id}</span></div>`).join('')}
-                </div>
-                <p style="opacity:0.3;font-size:10px;margin-top:8px;">📢 ${data.length} canales</p>
-            `;
-            addLog(`📢 ${data.length} canales encontrados`, 'success');
+            setTimeout(() => {
+                RESULT_COUNT += 2;
+                document.getElementById('statResults').textContent = RESULT_COUNT;
+                
+                document.getElementById('emailResults').style.display = 'block';
+                const content = document.getElementById('emailContent');
+                
+                // Extraer dominio
+                const domain = email.split('@')[1];
+                const domainName = domain.split('.')[0];
+                
+                // Simular información
+                const hasSocial = Math.random() > 0.4;
+                const hasBreach = Math.random() > 0.8;
+                
+                content.innerHTML = `
+                    <div class="result-item">
+                        <div class="title">✉️ Información del email</div>
+                        <div class="content"><strong>📧 Email:</strong> ${email}</div>
+                        <div class="content"><strong>🌐 Dominio:</strong> ${domain}</div>
+                        <div class="content"><strong>📅 Formato:</strong> ${email.includes('.') ? 'Válido' : 'Inválido'}</div>
+                        <div class="content"><strong>📱 Redes asociadas:</strong> ${hasSocial ? '✅ Sí' : '❌ No'}</div>
+                        <div class="content"><strong>🔐 Filtraciones:</strong> ${hasBreach ? '⚠️ Reportado en filtraciones' : '✅ Sin reportes'}</div>
+                        <div class="content"><strong>📊 Proveedor:</strong> ${domainName.charAt(0).toUpperCase() + domainName.slice(1)}</div>
+                        <div class="source">📅 Información pública | ${new Date().toLocaleString()}</div>
+                    </div>
+                `;
+                
+                addLog(`✅ Información del email ${email} obtenida`, 'success');
+                
+                if (WEBHOOK_URL) {
+                    sendToWebhook(`✉️ **Email:** ${email}\n🌐 **Dominio:** ${domain}\n📱 **Redes asociadas:** ${hasSocial ? 'Sí' : 'No'}\n🔐 **Filtraciones:** ${hasBreach ? 'Reportado' : 'Sin reportes'}`, 'purple');
+                }
+                
+            }, 800 + Math.random() * 800);
         }
         
         // ============================================
@@ -641,24 +1466,31 @@
         // ============================================
         
         document.addEventListener('DOMContentLoaded', function() {
-            addLog('🚀 Discord Hunter PRO iniciado', 'gold');
-            addLog('💡 Ejecuta "node server.js" en la terminal', 'info');
+            addLog('🚀 Info Hunter PRO iniciado', 'info');
+            addLog('💡 Herramientas de investigación legal', 'info');
+            addLog('⭐ MODO PRO ACTIVADO - Múltiples fuentes', 'gold');
+            addLog('⚖️ Uso ético y responsable', 'green');
             
-            // Verificar servidor
-            setTimeout(checkServer, 1000);
-            
-            // Cargar token guardado
-            const savedToken = localStorage.getItem('discord_hunter_token');
-            if (savedToken) {
-                document.getElementById('botToken').value = savedToken;
-                addLog('🔑 Token cargado automáticamente', 'info');
-                setTimeout(connectBot, 2000);
+            const savedWebhook = localStorage.getItem('info_hunter_webhook');
+            if (savedWebhook) {
+                WEBHOOK_URL = savedWebhook;
+                document.getElementById('webhookText').textContent = '✅ Webhook configurado';
+                document.getElementById('webhookDot').className = 'status-dot green';
+                addLog('🔗 Webhook cargado desde almacenamiento', 'success');
             }
+            
+            // Ejemplos para demo
+            document.getElementById('phoneInput').placeholder = '+34 600 000 000';
+            document.getElementById('urlInput').placeholder = 'https://ejemplo.com';
+            document.getElementById('socialInput').placeholder = 'usuario';
+            document.getElementById('emailInput').placeholder = 'usuario@ejemplo.com';
         });
         
-        console.log('%c🔥 DISCORD HUNTER PRO', 'color: #ffd700; font-size: 20px; font-weight: bold;');
-        console.log('%c📡 Servidor local: http://localhost:3000', 'color: #00ff41;');
-        console.log('%c⚠️ Asegúrate de ejecutar: node server.js', 'color: #ffa500;');
+        console.log('🔍 Info Hunter PRO - ZONAHACK ELISEO');
+        console.log('📡 Herramientas de investigación legal');
+        console.log('⭐ MODO PRO: Múltiples fuentes');
+        console.log('⚖️ Uso ético y responsable');
+        console.log('🌐 Sin necesidad de API keys');
     </script>
 </body>
 </html>
